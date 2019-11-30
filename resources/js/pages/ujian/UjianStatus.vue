@@ -3,26 +3,21 @@
 		<div class="col-lg-12">
 			<div class="card">
 				<div class="card-header">
-					<button @click="$bvModal.show('modal-scoped')" class="btn btn-sm btn-primary rounded-0">Tambah jadwal</button>
+					Status ujian
 				</div>
 				<div class="card-body">
 					<b-table striped hover bordered :busy="isBusy" small :fields="fields" :items="ujians.data" show-empty>
 						<template v-slot:table-busy>
-                            <div class="text-center text-warning my-2">
+                            <div class="text-center text-primary my-2">
                               <b-spinner class="align-middle"></b-spinner>
                               <strong>Loading...</strong>
                             </div>
                         </template>
+                        <template v-slot:cell(index)="data">
+                            {{ data.index + 1 }}
+                        </template>
 						<template v-slot:cell(lama)="row">
 							{{ parseInt(row.item.lama)/60+ " Menit" }}
-						</template>
-						<template v-slot:cell(status)="row">
-							<b-form-checkbox size="lg" v-model="row.item.status_ujian" @change="seterStatus(row.item.id,row.item.status_ujian)" value="1">Aktif</b-form-checkbox>
-						</template>
-						<template v-slot:cell(action)="row">
-							<router-link :to="{ name: 'ujian.peserta', params: { ujian_id: row.item.id } }" class="btn btn-sm btn-success rounded-0">
-								<font-awesome-icon icon="list" />
-							</router-link>
 						</template>
                     </b-table>
                     <div class="row">
@@ -43,83 +38,29 @@
                     </div>
 				</div>
 				<div class="card-footer">
+					<small><font-awesome-icon icon="info" class="text-info"/> &nbsp; Token berubah interval 15 menit </small>
 				</div>
 			</div>
 		</div>
-		 <b-modal id="modal-scoped" size="lg" hide-backdrop>
-		    <template v-slot:modal-header="{ close }">
-		      <h5>Setting ujian</h5>
-		    </template>
-		    <div class="form-group">
-		    	<label>Banksoal</label>
-		    	<select class="form-control" :class="{ 'is-invalid' : errors.banksoal_id }" v-model="data.banksoal_id">
-		    		<option v-for="banksoal in banksoals" :value="banksoal.id">{{ banksoal.kode_banksoal}} - {{ banksoal.matpel.nama }}</option>
-		    	</select>
-		    	<div class="invalid-feedback" v-if="errors.banksoal_id">{{ errors.banksoal_id[0] }}</div>
-		    </div>
-		    <div class="form-group">
-		    	<label>Tanggal ujian</label>
-		    	<datetime v-model="data.tanggal" input-class="form-control" :class="{ 'is-invalid' : errors.tanggal }"></datetime>
-		    	<div class="invalid-feedback" v-if="errors.tanggal">{{ errors.tanggal[0] }}</div>
-		    </div>
-		    <div class="row">
-		    	<div class="col-md-4">
-		    		<div class="form-group">
-				    	<label>Jam mulai</label>
-				    	<datetime v-model="data.mulai" input-class="form-control" :class="{ 'is-invalid' : errors.mulai }" type="time"></datetime>
-				    	<div class="invalid-feedback" v-if="errors.mulai">{{ errors.mulai[0] }}</div>
-				    </div>
-		    	</div>
-		    	<div class="col-md-4">
-					<div class="form-group">
-				    	<label>Jam ditutup</label>
-				    	<datetime v-model="data.berakhir" input-class="form-control" :class="{ 'is-invalid' : errors.berakhir }" type="time"></datetime>
-				    	<div class="invalid-feedback" v-if="errors.berakhir">{{ errors.berakhir[0] }}</div>
-				    </div>
-		    	</div>
-		    	<div class="col-md-4">
-					<div class="form-gorup">
-				    	<label>Durasi</label>
-				    	<input type="number" class="form-control" :class="{ 'is-invalid' : errors.lama }" name="" placeholder="Menit" v-model="data.lama">
-				    	<div class="invalid-feedback" v-if="errors.lama">{{ errors.lama[0] }}</div>
-				    </div>
-		    	</div>
-		    </div>
-		    <template v-slot:modal-footer="{ cancel }">
-		      <b-button size="sm" variant="success" squared @click="postUjian">
-		        Submit
-		      </b-button>
-		      <b-button size="sm" variant="secondary" squared @click="cancel()">
-		        Cancel
-		      </b-button>
-		    </template>
-		</b-modal>
 	</div>
 </template>
 <script>
 import { mapActions, mapState, mapMutations } from 'vuex'
-import { Datetime } from 'vue-datetime'
-import 'vue-datetime/dist/vue-datetime.css'
 
 export default {
 	name: 'DataUjian',
-	components: {
-	    datetime: Datetime
-	},
 	created() {
 		this.getUjians()
-		this.getBanksoals()
 	},
 	data() {
 		return {
 			fields: [
+				{ key: 'index', label: 'No' },
 				{ key: 'banksoal.kode_banksoal', label: 'Kode banksoal' },
 				{ key: 'tanggal', label: 'Tanggal' },
 				{ key: 'mulai', label: 'Waktu mulai' },
 				{ key: 'lama', label: 'Durasi' },
-				{ key: 'token', label: 'Token' },
-				{ key: 'status', label: 'Status ujian' },
-				{ key: 'action', label: 'Aksi' }
+				{ key: 'token', label: 'Token' }
 			],
 			search: '',
 			data: {
@@ -139,9 +80,6 @@ export default {
 		...mapState('ujian', {
 			ujians: state => state.ujians
 		}),
-		...mapState('banksoal', {
-			banksoals: state => state.banksoals.data
-		}),
 		page: {
 			get() {
 				return this.$store.state.ujian.page
@@ -153,7 +91,6 @@ export default {
 	},
 	methods: {
 		...mapActions('ujian', ['getUjians','addUjian','setStatus','changeToken']),
-		...mapActions('banksoal', ['getBanksoals']),
 		...mapMutations(['CLEAR_ERROR', 'SET_LOADING'])
 	},
 	watch: {

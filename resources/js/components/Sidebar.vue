@@ -10,7 +10,7 @@
         </li>
         <li class="c-sidebar-nav-title">Menu utama</li>
         <li class="c-sidebar-nav-item">
-          <router-link class="c-sidebar-nav-link" to="/filemedia">
+          <router-link class="c-sidebar-nav-link" :to="{ name: 'ujian.status' }">
             <font-awesome-icon icon="clipboard-list" class="c-sidebar-nav-icon" /> Status ujian
           </router-link>
         </li>

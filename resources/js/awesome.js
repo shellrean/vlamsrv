@@ -27,7 +27,8 @@ import {
 	faUser,
 	faEnvelope,
 	faSync,
-	faServer
+	faServer,
+	faInfo
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
  
@@ -58,7 +59,8 @@ library.add({
 	faUser,
 	faEnvelope,
 	faSync,
-	faServer
+	faServer,
+	faInfo
 })
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)

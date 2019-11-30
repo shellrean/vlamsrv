@@ -3,13 +3,16 @@ import Vuex from 'vuex'
 
 import auth from './stores/auth.js'
 import pusat from './stores/pusat.js'
+import banksoal from './stores/banksoal.js'
+import ujian from './stores/ujian.js'
 
 Vue.use(Vuex)
 
 const store = new Vuex.Store({
 	modules: {
 		auth,
-		pusat
+		pusat,
+		ujian
 	},
 	state: {
 		token: localStorage.getItem('token'),

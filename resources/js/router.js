@@ -8,7 +8,7 @@ import Home from './pages/Home.vue'
 
 import Sinkron from './pages/sinkron/Sinkron.vue'
 
-import UjianIndex from './pages/ujian/Indexs.vue'
+import UjianIndex from './pages/ujian/Index.vue'
 import UjianStatus from './pages/ujian/UjianStatus.vue'
 
 Vue.use(Router)

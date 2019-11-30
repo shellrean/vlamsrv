@@ -10,6 +10,7 @@ use App\Matpel;
 use App\Banksoal;
 use App\Soal;
 use App\JawabanSoal;
+use App\Jadwal;
 use DB;
 
 class PusatController extends Controller
@@ -44,6 +45,9 @@ class PusatController extends Controller
 		DB::table('jawaban_soals')->delete();
 		JawabanSoal::insert($deco['jawaban']);
 
+		DB::table('jadwals')->delete();
+		Jadwal::insert($deco['jadwal']);
+		
 		return response()->json(['data' => 'insert']);
     }
 }
