@@ -2,12 +2,14 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 
 import auth from './stores/auth.js'
+import pusat from './stores/pusat.js'
 
 Vue.use(Vuex)
 
 const store = new Vuex.Store({
 	modules: {
-		auth
+		auth,
+		pusat
 	},
 	state: {
 		token: localStorage.getItem('token'),

@@ -17,3 +17,5 @@ Route::post('/login', 'Auth\LoginController@login');
 Route::group(['middleware' => 'auth.api'], function() {
     Route::get('logout', 'AuthController@logout');
 });
+
+Route::post('/v2/pusat/sinkron', 'API\v2\PusatController@sinkron');

@@ -6,6 +6,10 @@ import VueCookies from 'vue-cookies';
 import Login from './pages/Login.vue'
 import Home from './pages/Home.vue'
 
+import Sinkron from './pages/sinkron/Sinkron.vue'
+
+import UjianIndex from './pages/ujian/Indexs.vue'
+import UjianStatus from './pages/ujian/UjianStatus.vue'
 
 Vue.use(Router)
 Vue.use(VueCookies);
@@ -23,6 +27,25 @@ const router = new Router({
 			name: 'home',
 			component: Home,
 			meta: { requiresAuth: true }
+		},
+		{
+			path: '/sinkron',
+			name: 'sinkron',
+			component: Sinkron,
+			meta: { requiresAuth: true }
+		},
+		{
+			path: '/ujian',
+			component: UjianIndex,
+			meta: { requiresAuth: true },
+			children: [
+				{
+					path: 'status',
+					name: 'ujian.status',
+					component: UjianStatus,
+					meta: { title: 'Status ujian'}
+				}
+			]
 		}
 	]
 })

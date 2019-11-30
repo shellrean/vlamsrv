@@ -3,7 +3,7 @@ import store from './store.js'
 import router from './router.js'
 
 const $axios = axios.create({
-	baseURL: '/api',
+	baseURL: '/api/v2',
 	headers: {
 		'Content-Type' : 'application/json'
 	}
