@@ -115,4 +115,23 @@ class PusatController extends Controller
     	$exists = Storage::disk('ftp')->get('bahasa-indonesia/20191123-6.png');
     	Storage::disk('public')->put('bahasa-indonesia/20191123-6.png', $exists);
     }
+
+    public function serial() 
+    {
+    	ob_start();  
+
+		system('ipconfig /all');  
+		
+		$mycom=ob_get_contents();  
+		ob_clean();  
+		 
+		$findme = "Physical";  
+		$pmac = strpos($mycom, $findme);  
+		
+		$mac=substr($mycom,($pmac+36),17);  
+	  
+		$list = strtoupper(md5($mac));
+
+		return response()->json(['data' => $list]);  
+    }
 }

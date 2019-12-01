@@ -12,7 +12,14 @@
           <div >
             <div class="alert alert-danger rounded-0" v-if="errors.invalid">{{ errors.invalid }}</div>
             <p class="text-muted">Selamat datang di aplikasi Vlam-Sys. Silahkan masukkan username dan password</p>
-            
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text rounded-0">
+                  Nomor seri
+                </span>
+              </div>
+              <input class="form-control" readonly v-model="srial.data">
+            </div>
             <div class="input-group mb-3">
               <div class="input-group-prepend">
                 <span class="input-group-text rounded-0">
@@ -56,12 +63,17 @@ export default {
     if (this.isAuth) {
       this.$router.push({ name: 'home' })
     }
+    this.getSerial()
   },
   computed: {
+    ...mapState('pusat', {
+       srial : state => state.serial
+    }),
     ...mapGetters(['isAuth','isLoading']),
     ...mapState(['errors'])
   },
   methods: {
+    ...mapActions('pusat',['getSerial']),
     ...mapActions('auth', ['submit']),
     ...mapActions('user',['getUserLogin']),
     ...mapMutations(['CLEAR_ERRORS','SET_LOADING']),

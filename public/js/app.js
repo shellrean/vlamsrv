@@ -18313,6 +18313,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -18329,9 +18336,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         name: 'home'
       });
     }
+
+    this.getSerial();
   },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(['isAuth', 'isLoading']), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(['errors'])),
-  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])('auth', ['submit']), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])('user', ['getUserLogin']), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapMutations"])(['CLEAR_ERRORS', 'SET_LOADING']), {
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])('pusat', {
+    srial: function srial(state) {
+      return state.serial;
+    }
+  }), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(['isAuth', 'isLoading']), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])(['errors'])),
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])('pusat', ['getSerial']), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])('auth', ['submit']), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])('user', ['getUserLogin']), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapMutations"])(['CLEAR_ERRORS', 'SET_LOADING']), {
     postLogin: function postLogin() {
       var _this = this;
 
@@ -56986,6 +56999,32 @@ var render = function() {
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "input-group mb-3" }, [
+                    _vm._m(2),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.srial.data,
+                          expression: "srial.data"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: { readonly: "" },
+                      domProps: { value: _vm.srial.data },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(_vm.srial, "data", $event.target.value)
+                        }
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "input-group mb-3" }, [
                     _c("div", { staticClass: "input-group-prepend" }, [
                       _c(
                         "span",
@@ -57135,6 +57174,16 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", [_c("h4", [_vm._v("Vlam-Srv Login")])])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "input-group-prepend" }, [
+      _c("span", { staticClass: "input-group-text rounded-0" }, [
+        _vm._v("\n                Nomor seri\n              ")
+      ])
+    ])
   }
 ]
 render._withStripped = true
@@ -75113,7 +75162,8 @@ _fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_1__["library"].add({
   faSync: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__["faSync"],
   faServer: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__["faServer"],
   faInfoCircle: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__["faInfoCircle"],
-  faUsers: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__["faUsers"]
+  faUsers: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__["faUsers"],
+  faKey: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__["faKey"]
 });
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('font-awesome-icon', _fortawesome_vue_fontawesome__WEBPACK_IMPORTED_MODULE_3__["FontAwesomeIcon"]);
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -76398,7 +76448,8 @@ __webpack_require__.r(__webpack_exports__);
 var state = function state() {
   return {
     identify: '',
-    status: ''
+    status: '',
+    serial: ''
   };
 };
 
@@ -76408,6 +76459,9 @@ var mutations = {
   },
   CONNECTIVITY: function CONNECTIVITY(state, payload) {
     state.status = payload;
+  },
+  SERIAL_ADDR: function SERIAL_ADDR(state, payload) {
+    state.serial = payload;
   }
 };
 var actions = {
@@ -76433,6 +76487,15 @@ var actions = {
     return new Promise(function (resolve, reject) {
       _api_js__WEBPACK_IMPORTED_MODULE_0__["default"].get("/pusat/connect").then(function (response) {
         commit('CONNECTIVITY', response.data);
+        resolve(response.data);
+      });
+    });
+  },
+  getSerial: function getSerial(_ref4, payload) {
+    var commit = _ref4.commit;
+    return new Promise(function (resolve, reject) {
+      _api_js__WEBPACK_IMPORTED_MODULE_0__["default"].get("/pusat/serial").then(function (response) {
+        commit('SERIAL_ADDR', response.data);
         resolve(response.data);
       });
     });

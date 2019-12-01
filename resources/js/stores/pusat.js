@@ -2,7 +2,8 @@ import $axios from '../api.js'
 
 const state = () => ({
 	identify: '',
-	status: ''
+	status: '',
+	serial: ''
 })
 
 const mutations = {
@@ -11,6 +12,9 @@ const mutations = {
 	},
 	CONNECTIVITY(state, payload) {
 		state.status = payload
+	},
+	SERIAL_ADDR(state, payload) {
+		state.serial = payload
 	}
 }
 
@@ -37,6 +41,15 @@ const actions = {
 			$axios.get(`/pusat/connect`)
 			.then((response) => {
 				commit('CONNECTIVITY', response.data) 
+				resolve(response.data)
+			})
+		})
+	},
+	getSerial({ commit }, payload) {
+		return new Promise((resolve, reject) => {
+			$axios.get(`/pusat/serial`)
+			.then((response) => {
+				commit('SERIAL_ADDR', response.data)
 				resolve(response.data)
 			})
 		})
