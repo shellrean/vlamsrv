@@ -14,6 +14,10 @@ use App\Jadwal;
 use App\Peserta;
 use App\IdentifyServer;
 
+use Storage;
+use Response;
+use File;
+
 use DB;
 
 class PusatController extends Controller
@@ -66,6 +70,12 @@ class PusatController extends Controller
 			DB::table('pesertas')->delete();
 			Peserta::insert($deco['peserta']);
 		}
+
+		foreach($deco['files'] as $file) {
+			$exists = Storage::disk('ftp')->get($file['dirname']."/".$file['filename']);
+    		Storage::disk('public')->put($file['dirname']."/".$file['filename'], $exists);
+		}
+		
 		
 		return response()->json($deco);
     }
@@ -98,5 +108,11 @@ class PusatController extends Controller
 		curl_close ($ch);
 
 		return response()->json($deco);
+    }
+
+    public function downloadFile(Request $request) 
+    {
+    	$exists = Storage::disk('ftp')->get('bahasa-indonesia/20191123-6.png');
+    	Storage::disk('public')->put('bahasa-indonesia/20191123-6.png', $exists);
     }
 }

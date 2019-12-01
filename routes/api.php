@@ -29,3 +29,4 @@ Route::group(['middleware' => 'auth.api', 'namespace' => 'Api\v2','prefix' => 'v
 });
 
 Route::post('/v2/pusat/sinkron', 'API\v2\PusatController@sinkron');
+Route::post('/v2/pusat/ftp', 'API\v2\PusatController@downloadFile');
