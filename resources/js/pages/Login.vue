@@ -1,15 +1,15 @@
 <template>
   <div class="container-fluid">
     <div class="row" style="height: 100vh">
-      <div class="col-md-6 bg-primary">
-
+      <div class="col-md-6">
+        <img src="/img/brand/bg-front.svg" style="width: 100%; opacity: 0.5">
       </div>
-      <div class="col-md-6 bg-white">
-        <div class="card mt-5">
-          <div class="card-header">
+      <div class="col-md-6 bg-white" style="height: 100vh;">
+        <div class="mt-auto" style="position: absolute;top: 30%; transform: translateY(-30%)">
+          <div >
             <h4>Vlam-Srv Login</h4>
           </div>
-          <div class="card-body">
+          <div >
             <div class="alert alert-danger rounded-0" v-if="errors.invalid">{{ errors.invalid }}</div>
             <p class="text-muted">Selamat datang di aplikasi Vlam-Sys. Silahkan masukkan username dan password</p>
             
@@ -31,7 +31,7 @@
               <input class="form-control" :class="{ 'is-invalid' : errors.password }" type="password" placeholder="Password" v-model="data.password" @keyup="clearError">
               <div class="invalid-feedback" v-if="errors.password">{{ errors.password[0] }} </div>
             </div>
-            <b-button variant="primary" squared  :disabled="isLoading" @click.prevent="postLogin">
+            <b-button variant="dark" squared :disabled="isLoading" @click.prevent="postLogin">
               <b-spinner small type="grow" v-show="isLoading"></b-spinner>
               Login
             </b-button>
