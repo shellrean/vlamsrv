@@ -15,6 +15,7 @@ class CreatePesertasTable extends Migration
     {
         Schema::create('pesertas', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('name_server');
             $table->string('no_ujian');
             $table->string('nama');
             $table->string('password');

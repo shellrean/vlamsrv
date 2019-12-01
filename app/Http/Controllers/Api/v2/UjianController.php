@@ -6,7 +6,11 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Jadwal;
+use App\SiswaUjian;
+
 use App\Http\Resources\AppCollection;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class UjianController extends Controller
 {
@@ -17,12 +21,40 @@ class UjianController extends Controller
      */
     public function index()
     {
-        $ujian = Jadwal::with('banksoal')->orderBy('created_at', 'DESC');
+        $ujian = Jadwal::with(['banksoal','banksoal.matpel']);
         if (request()->q != '') {
             $ujian = $ujian->where('token', 'LIKE', '%'. request()->q.'%');
         }
 
         $ujian = $ujian->paginate(10);
         return new AppCollection($ujian);
+    }
+
+    /**
+     * Change token.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function changeToken(Request $request)
+    {
+        $jadwal = Jadwal::find($request->id);
+        $jadwal->token = strtoupper(Str::random(6));
+        $jadwal->save();
+
+        return response()->json(['data' => $jadwal]);
+    }
+
+    public function getPeserta($id)
+    {
+        $siswa = SiswaUjian::with('peserta')->where(['jadwal_id' => $id])->get();
+
+        return response()->json(['data' => $siswa]);
+    }
+
+    public function pesertaAll()
+    {
+        $siswa = SiswaUjian::with('peserta');
+        return response()->json(['data' => $siswa]);
     }
 }

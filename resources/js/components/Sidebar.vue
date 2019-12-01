@@ -10,12 +10,17 @@
         </li>
         <li class="c-sidebar-nav-title">Menu utama</li>
         <li class="c-sidebar-nav-item">
+          <router-link class="c-sidebar-nav-link" :to="{ name: 'peserta.data' }">
+            <font-awesome-icon icon="users" class="c-sidebar-nav-icon" /> Daftar peserta
+          </router-link>
+        </li>
+        <li class="c-sidebar-nav-item">
           <router-link class="c-sidebar-nav-link" :to="{ name: 'ujian.status' }">
             <font-awesome-icon icon="clipboard-list" class="c-sidebar-nav-icon" /> Status ujian
           </router-link>
         </li>
         <li class="c-sidebar-nav-item">
-          <router-link class="c-sidebar-nav-link" to="/filemedia">
+          <router-link class="c-sidebar-nav-link" :to="{ name: 'ujian.peserta' }">
             <font-awesome-icon icon="user" class="c-sidebar-nav-icon" /> Status peserta
           </router-link>
         </li>

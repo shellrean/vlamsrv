@@ -11,18 +11,22 @@ use App\Banksoal;
 use App\Soal;
 use App\JawabanSoal;
 use App\Jadwal;
+use App\Peserta;
+use App\IdentifyServer;
+
 use DB;
 
 class PusatController extends Controller
 {
     public function sinkron()
     {
+    	$server = IdentifyServer::first();
     	$ch = curl_init();
 
 		curl_setopt($ch, CURLOPT_URL,"http://localhost:8000/api/pusat/sinkron");
 		curl_setopt($ch, CURLOPT_POST, 1);
 		curl_setopt($ch, CURLOPT_POSTFIELDS,
-		            "postvar1=value1&postvar2=value2&postvar3=value3");
+		            "server_name=$server->kode_server");
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
 		$server_output = curl_exec($ch);
@@ -33,21 +37,66 @@ class PusatController extends Controller
 
 		$deco = $deco['data'];
 
-		DB::table('matpels')->delete();
-		Matpel::insert($deco['matpels']);
+		if($deco['matpels'] > 0) {
+			DB::table('matpels')->delete();
+			Matpel::insert($deco['matpels']);
+		}
 
-		DB::table('banksoals')->delete();
-		Banksoal::insert($deco['banksoal']);
+		if($deco['banksoal'] > 0) {
+			DB::table('banksoals')->delete();
+			Banksoal::insert($deco['banksoal']);
+		}
 
-		DB::table('soals')->delete();
-		Soal::insert($deco['soal']);
-
-		DB::table('jawaban_soals')->delete();
-		JawabanSoal::insert($deco['jawaban']);
-
-		DB::table('jadwals')->delete();
-		Jadwal::insert($deco['jadwal']);
+		if($deco['soal'] > 0) {
+			DB::table('soals')->delete();
+			Soal::insert($deco['soal']);
+		}
 		
-		return response()->json(['data' => 'insert']);
+		if($deco['jawaban'] > 0) {
+			DB::table('jawaban_soals')->delete();
+			JawabanSoal::insert($deco['jawaban']);
+		}
+		
+		if($deco['jadwal'] > 0) {
+			DB::table('jadwals')->delete();
+			Jadwal::insert($deco['jadwal']);
+		}
+		
+		if($deco['peserta'] > 0) {
+			DB::table('pesertas')->delete();
+			Peserta::insert($deco['peserta']);
+		}
+		
+		return response()->json($deco);
+    }
+
+    public function identify()
+    {
+    	$dentify = IdentifyServer::first();
+    	return response()->json(['data' => $dentify]);
+    }
+
+    public function connect()
+    {
+    	$server = IdentifyServer::first();
+    	$ch = curl_init();
+
+		curl_setopt($ch, CURLOPT_URL,"http://localhost:8000/api/pusat/connect");
+		curl_setopt($ch, CURLOPT_POST, 1);
+		curl_setopt($ch, CURLOPT_POSTFIELDS,
+		            "server_name=$server->kode_server");
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+		$server_output = curl_exec($ch);
+
+		if(!$server_output) {
+			return response()->json(['data' => 'unconnect']);
+		}
+		
+		$deco = json_decode( $server_output, true );
+
+		curl_close ($ch);
+
+		return response()->json($deco);
     }
 }

@@ -19,6 +19,9 @@ const mutations = {
 	},
 	ASSIGN_HASIL_UJIAN(state, payload) {
 		state.hasilUjian = payload
+	},
+	ASSIGN_DATA_PESERTA(state, payload) {
+		state.pesertas = payload
 	}
 }
 
@@ -29,6 +32,15 @@ const actions = {
 			$axios.get(`/ujian?page=${state.page}&q=${search}`)
 			.then((response) => {
 				commit('ASSIGN_DATA', response.data)
+				resolve(response.data)
+			})
+		})
+	},
+	getAllPeserta({ commit, state}, payload) {
+		return new Promise((resolve, reject) => {
+			$axios.get(`/ujian/get-peserta`)
+			.then((response) => {
+				commit('ASSIGN_DATA_PESERTA', response.data)
 				resolve(response.data)
 			})
 		})

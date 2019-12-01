@@ -38,7 +38,7 @@
                     </div>
 				</div>
 				<div class="card-footer">
-					<small><font-awesome-icon icon="info" class="text-info"/> &nbsp; Token berubah interval 15 menit </small>
+					<small><font-awesome-icon icon="info-circle" class="text-info"/> &nbsp; Token berubah interval 15 menit </small>
 				</div>
 			</div>
 		</div>
@@ -56,8 +56,7 @@ export default {
 		return {
 			fields: [
 				{ key: 'index', label: 'No' },
-				{ key: 'banksoal.kode_banksoal', label: 'Kode banksoal' },
-				{ key: 'tanggal', label: 'Tanggal' },
+				{ key: 'banksoal.matpel.nama', label: 'Mata pelajaran' },
 				{ key: 'mulai', label: 'Waktu mulai' },
 				{ key: 'lama', label: 'Durasi' },
 				{ key: 'token', label: 'Token' }
@@ -112,7 +111,9 @@ export default {
 				this.changeToken({ id: item.id})
 			})
 
-			this.getUjians()
+			if(filter.length != 0) {
+				this.getUjians()
+			} 
 		}
 	},
 	mounted() {

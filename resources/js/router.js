@@ -8,8 +8,12 @@ import Home from './pages/Home.vue'
 
 import Sinkron from './pages/sinkron/Sinkron.vue'
 
+import PesertaIndex from './pages/peserta/Index.vue'
+import PesertaData from './pages/peserta/Peserta.vue'
+
 import UjianIndex from './pages/ujian/Index.vue'
 import UjianStatus from './pages/ujian/UjianStatus.vue'
+import UjianPeserta from './pages/ujian/UjianPeserta.vue'
 
 Vue.use(Router)
 Vue.use(VueCookies);
@@ -35,6 +39,19 @@ const router = new Router({
 			meta: { requiresAuth: true }
 		},
 		{
+			path: '/peserta',
+			component: PesertaIndex,
+			meta: { requiresAuth: true },
+			children: [
+				{
+					path: '',
+					name: 'peserta.data',
+					component: PesertaData,
+					meta: { title: 'Daftar peserta ujian'}
+				}
+			]
+		},
+		{
 			path: '/ujian',
 			component: UjianIndex,
 			meta: { requiresAuth: true },
@@ -44,6 +61,12 @@ const router = new Router({
 					name: 'ujian.status',
 					component: UjianStatus,
 					meta: { title: 'Status ujian'}
+				},
+				{
+					path: 'peserta',
+					name: 'ujian.peserta',
+					component: UjianPeserta,
+					meta: { title: 'Status peserta'}
 				}
 			]
 		}
