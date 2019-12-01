@@ -57389,7 +57389,7 @@ var render = function() {
                         "\n                            " +
                           _vm._s(
                             row.item.status_ujian == "0"
-                              ? "Masih mengerjakan"
+                              ? "Sedang mengerjakan"
                               : "Selesai"
                           ) +
                           "\n                        "

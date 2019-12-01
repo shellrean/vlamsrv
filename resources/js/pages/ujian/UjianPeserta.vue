@@ -14,7 +14,7 @@
                             </div>
                         </template>
                         <template v-slot:cell(status)="row">
-                            {{ ( row.item.status_ujian == '0' ? "Masih mengerjakan" : 'Selesai') }}
+                            {{ ( row.item.status_ujian == '0' ? "Sedang mengerjakan" : 'Selesai') }}
                         </template>
                         <template v-slot:cell(sisa)="row">
                         	{{ Math.floor(row.item.sisa_waktu/60)+' Menit' }}

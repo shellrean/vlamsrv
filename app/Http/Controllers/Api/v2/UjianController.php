@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 use App\Jadwal;
 use App\SiswaUjian;
+use Carbon\Carbon;
 
 use App\Http\Resources\AppCollection;
 use Illuminate\Support\Facades\Validator;
@@ -45,6 +46,12 @@ class UjianController extends Controller
         return response()->json(['data' => $jadwal]);
     }
 
+    /**
+     * Get peserta.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
     public function getPeserta($id)
     {
         $siswa = SiswaUjian::with('peserta')->where(['jadwal_id' => $id])->get();
@@ -52,9 +59,15 @@ class UjianController extends Controller
         return response()->json(['data' => $siswa]);
     }
 
+    /**
+     * Get all peserta.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
     public function pesertaAll()
     {
-        $siswa = SiswaUjian::with('peserta');
+        $siswa = SiswaUjian::with('peserta')->whereDate('created_at', Carbon::today())->get();
         return response()->json(['data' => $siswa]);
     }
 }
