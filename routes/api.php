@@ -13,6 +13,9 @@ use Illuminate\Http\Request;
 |
 */
 
+Route::post('/v2/pusat/status', 'API\v2\PusatController@status');
+Route::post('/v2/pusat/register-server', 'API\v2\PusatController@registerServer');
+
 Route::post('/v2/login', 'Auth\LoginController@login');
 Route::group(['middleware' => 'auth.api', 'namespace' => 'Api\v2','prefix' => 'v2'], function() {
     // Route::get('logout', 'AuthController@logout');

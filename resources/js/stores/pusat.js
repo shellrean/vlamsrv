@@ -3,7 +3,8 @@ import $axios from '../api.js'
 const state = () => ({
 	identify: '',
 	status: '',
-	serial: ''
+	serial: '',
+	install: ''
 })
 
 const mutations = {
@@ -15,6 +16,9 @@ const mutations = {
 	},
 	SERIAL_ADDR(state, payload) {
 		state.serial = payload
+	},
+	STATUS_ASSIGN(state, payload) {
+		state.install = payload
 	}
 }
 
@@ -50,6 +54,23 @@ const actions = {
 			$axios.get(`/pusat/serial`)
 			.then((response) => {
 				commit('SERIAL_ADDR', response.data)
+				resolve(response.data)
+			})
+		})
+	},
+	getStatusInstal({ commit }, payload) {
+		return new Promise((resolve, reject) => {
+			$axios.post(`/pusat/status`, payload)
+			.then((response) => {
+				commit('STATUS_ASSIGN', response.data)
+				resolve(response.data)
+			})
+		})
+	},
+	registerServer({ commit }, payload) {
+		return new Promise((resolve, reject) => {
+			$axios.post(`/pusat/register-server`, payload)
+			.then((response) => {
 				resolve(response.data)
 			})
 		})

@@ -9,7 +9,7 @@
           <div >
             <h4>Vlam-Srv Login</h4>
           </div>
-          <div >
+          <div v-if="install.status == 'installed'">
             <div class="alert alert-danger rounded-0" v-if="errors.invalid">{{ errors.invalid }}</div>
             <p class="text-muted">Selamat datang di aplikasi Vlam-Sys. Silahkan masukkan username dan password</p>
             <div class="input-group mb-3">
@@ -18,7 +18,7 @@
                   Nomor seri
                 </span>
               </div>
-              <input class="form-control" readonly v-model="srial.data">
+              <input class="form-control" readonly v-model="serial.data">
             </div>
             <div class="input-group mb-3">
               <div class="input-group-prepend">
@@ -43,6 +43,40 @@
               Login
             </b-button>
           </div>
+          <div v-else="install.status == 'installed'">
+            <div class="alert alert-danger rounded-0" v-if="errors.invalid">{{ errors.invalid }}</div>
+            <p class="text-muted">Selamat datang di aplikasi Vlam-Sys. masukkan ID Server dan password</p>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text rounded-0">
+                  Nomor seri
+                </span>
+              </div>
+              <input class="form-control" readonly v-model="serial.data">
+            </div>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text rounded-0">
+                  <font-awesome-icon icon="server" />
+                </span>
+              </div>
+              <input class="form-control" :class="{ 'is-invalid' : errors.id_server }" type="email" placeholder="ID Server" v-model="server.id_server" @keyup="clearError">
+              <div class="invalid-feedback" v-if="errors.id_server">{{ errors.id_server[0] }}</div>
+            </div>
+            <div class="input-group mb-4">
+              <div class="input-group-prepend rounded-0">
+                <span class="input-group-text rounded-0">
+                  <font-awesome-icon icon="lock" />
+                </span>
+              </div>
+              <input class="form-control" :class="{ 'is-invalid' : errors.password }" type="password" placeholder="Password" v-model="server.password" @keyup="clearError">
+              <div class="invalid-feedback" v-if="errors.password">{{ errors.password[0] }} </div>
+            </div>
+            <b-button variant="dark" squared :disabled="isLoading" @click.prevent="postSubmit">
+              <b-spinner small type="grow" v-show="isLoading"></b-spinner>
+              Submit
+            </b-button>
+          </div>
         </div>
       </div>
     </div>
@@ -56,6 +90,10 @@ export default {
       data: {
         email: '',
         password: ''
+      },
+      server: {
+        id_server: '',
+        password: '',
       }
     }
   },
@@ -67,13 +105,14 @@ export default {
   },
   computed: {
     ...mapState('pusat', {
-       srial : state => state.serial
+       serial : state => state.serial,
+       install: state => state.install
     }),
     ...mapGetters(['isAuth','isLoading']),
     ...mapState(['errors'])
   },
   methods: {
-    ...mapActions('pusat',['getSerial']),
+    ...mapActions('pusat',['getSerial','getStatusInstal','registerServer']),
     ...mapActions('auth', ['submit']),
     ...mapActions('user',['getUserLogin']),
     ...mapMutations(['CLEAR_ERRORS','SET_LOADING']),
@@ -87,12 +126,24 @@ export default {
         }
       })
     },
+    postSubmit() {
+      this.SET_LOADING(true)
+      this.registerServer({ server: this.server, serial: this.serial })
+      .then(() => {
+
+      })
+    },
     clearError() {
       this.CLEAR_ERRORS()
     }
   },
   destroyed() {
     this.getUserLogin()
+  },
+  watch: {
+    serial() {
+      this.getStatusInstal(this.serial)
+    }
   }
 }
 </script>

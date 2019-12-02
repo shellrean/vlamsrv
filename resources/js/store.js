@@ -26,7 +26,7 @@ const store = new Vuex.Store({
 			return state.token != 'null' && state.token != null
 		},
 		isLoading: state => {
-			return state.isLoding
+			return state.isLoading
 		}
 	},
 	mutations: {

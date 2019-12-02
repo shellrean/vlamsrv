@@ -4,7 +4,7 @@
           <div class="container-fluid">
             <div class="fade-in">
 		        <div class="row">
-		        	<div class="col-sm-6 col-md-4" v-if="status.server_name">
+		        	<div class="col-sm-6 col-md-4" v-if="status.status == 1">
 		        		<h5 class="text-info">AKTIF</h5>
 						<div class="card text-white bg-info">
 							<div class="card-body">
@@ -14,16 +14,16 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-sm-6 col-md-4" v-if="status.status == 2">
+					<div class="col-sm-6 col-md-4" v-if="status == 'unregistered'">
 		        		<h5 class="text-warning">STAND BY</h5>
 						<div class="card text-white bg-warning">
 							<div class="card-body">
-								Server nonaktif di server pusat <br>
+								Id server tidak sesuai dengan server pusat <br>
 								SERVER-ID: <span class="badge badge-light">{{ identify.kode_server }} </span><br> <br>
 							</div>
 						</div>
 					</div>
-					<div class="col-sm-6 col-md-4" v-if="status.status == 3">
+					<div class="col-sm-6 col-md-4" v-if="status == 'unconnect'">
 		        		<h5 class="text-danger">TIDAK AKTIF</h5>
 						<div class="card text-white bg-danger">
 							<div class="card-body">
@@ -32,11 +32,11 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-sm-6 col-md-4" v-if="status == 'unregistered'">
-		        		<h5 class="text-danger">TIDAK AKTIF</h5>
+					<div class="col-sm-6 col-md-4" v-if="status.status == 0">
+		        		<h5 class="text-danger">OFFLINE</h5>
 						<div class="card text-white bg-danger">
 							<div class="card-body">
-								Server name tidak sesuai dengan pusat <br>
+								Server nonaktif di server pusat <br>
 								SERVER-ID: <span class="badge badge-light">{{ identify.kode_server }} </span><br> <br>
 							</div>
 						</div>

@@ -16,6 +16,8 @@ class CreateIdentifyServerTable extends Migration
         Schema::create('identify_server', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('kode_server');
+            $table->char('isregister');
+            $table->string('serial_number');
             $table->timestamps();
         });
     }

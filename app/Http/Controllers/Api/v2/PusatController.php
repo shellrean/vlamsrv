@@ -13,6 +13,7 @@ use App\JawabanSoal;
 use App\Jadwal;
 use App\Peserta;
 use App\IdentifyServer;
+use App\User;
 
 use Storage;
 use Response;
@@ -105,6 +106,10 @@ class PusatController extends Controller
 		
 		$deco = json_decode( $server_output, true );
 
+		if($deco['data'] == 'unregistered') {
+			return response()->json(['data' => 'unregistered']);
+		}
+
 		curl_close ($ch);
 
 		return response()->json($deco);
@@ -133,5 +138,62 @@ class PusatController extends Controller
 		$list = strtoupper(md5($mac));
 
 		return response()->json(['data' => $list]);  
+    }
+
+    public function status(Request $request)
+    {
+    	$dentify = IdentifyServer::first();
+    	if($dentify) {
+    		if($dentify->serial_number != $request->data) {
+    			return response()->json(['status' => 'uninstalled']);
+    		}
+    		return response()->json(['status' => 'installed']);
+    	}
+
+    	return response()->json(['status' => 'uninstalled']);
+    }
+
+    public function registerServer(Request $request)
+    {
+    	$data = $request->all();
+
+    	$identify = IdentifyServer::first();
+  	
+  		if($identify) {
+  			return response()->json(['status' => 'lock']);
+  		}
+
+  		$kode_server  = $data['server']['id_server'];
+  		$serial_number = $data['serial']['data'];
+
+  		$ch = curl_init();
+
+		curl_setopt($ch, CURLOPT_URL,"http://localhost:8000/api/pusat/register-server");
+		curl_setopt($ch, CURLOPT_POST, 1);
+		curl_setopt($ch, CURLOPT_POSTFIELDS,
+		            "server_name=$kode_server&serial_number=$serial_number");
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+		$server_output = curl_exec($ch);
+		$deco = json_decode( $server_output, true );
+		curl_close ($ch);
+
+		if($deco['status'] == 'error') {
+			return response()->json(['status' => 'serial_number pada server sudah ada']);
+		}
+
+  		IdentifyServer::create([
+  			'serial_number'		=> $serial_number,
+  			'kode_server'		=> $kode_server,
+  			'isregister'		=> 1 
+  		]);
+
+  		User::create([
+  			'name'				=> 'Administrator',
+  			'email'				=> 'admin@shellrean.com',
+  			'password'			=> bcrypt($data['server']['password'])
+  		]);	
+
+    	return response()->json(['status' => 'register berhasil']);
     }
 }
