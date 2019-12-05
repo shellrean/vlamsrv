@@ -18232,6 +18232,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   created: function created() {
@@ -56877,113 +56886,141 @@ var render = function() {
     _c("main", { staticClass: "c-main" }, [
       _c("div", { staticClass: "container-fluid" }, [
         _c("div", { staticClass: "fade-in" }, [
-          _c("div", { staticClass: "row" }, [
-            _vm.status.status == 1
-              ? _c("div", { staticClass: "col-sm-6 col-md-4" }, [
-                  _c("h5", { staticClass: "text-info" }, [_vm._v("AKTIF")]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "card text-white bg-info" }, [
-                    _c(
-                      "div",
-                      { staticClass: "card-body" },
-                      [
-                        _vm._v(
-                          "\n\t\t\t\t\t\t\t\tSinkronisasi siap dilakukan "
-                        ),
-                        _c("br"),
-                        _vm._v("\n\t\t\t\t\t\t\t\tSERVER-ID: "),
-                        _c("span", { staticClass: "badge badge-light" }, [
-                          _vm._v(_vm._s(_vm.identify.kode_server) + " ")
-                        ]),
-                        _c("br"),
-                        _vm._v(" "),
-                        _c("br"),
-                        _vm._v(" "),
+          _vm.status
+            ? _c("div", { staticClass: "row" }, [
+                _vm.status.status == 1
+                  ? _c("div", { staticClass: "col-sm-6 col-md-4" }, [
+                      _c("h5", { staticClass: "text-info" }, [_vm._v("AKTIF")]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "card text-white bg-info" }, [
                         _c(
-                          "router-link",
-                          {
-                            staticClass: "btn btn-light btn-sm",
-                            attrs: { to: { name: "sinkron" } }
-                          },
-                          [_vm._v("Sinkron")]
+                          "div",
+                          { staticClass: "card-body" },
+                          [
+                            _vm._v(
+                              "\n\t\t\t\t\t\t\t\tSinkronisasi siap dilakukan "
+                            ),
+                            _c("br"),
+                            _vm._v("\n\t\t\t\t\t\t\t\tSERVER-ID: "),
+                            _c("span", { staticClass: "badge badge-light" }, [
+                              _vm._v(_vm._s(_vm.identify.kode_server) + " ")
+                            ]),
+                            _c("br"),
+                            _vm._v(" "),
+                            _c("br"),
+                            _vm._v(" "),
+                            _c(
+                              "router-link",
+                              {
+                                staticClass: "btn btn-light btn-sm",
+                                attrs: { to: { name: "sinkron" } }
+                              },
+                              [_vm._v("Sinkron")]
+                            )
+                          ],
+                          1
                         )
-                      ],
-                      1
-                    )
-                  ])
-                ])
-              : _vm._e(),
-            _vm._v(" "),
-            _vm.status == "unregistered"
-              ? _c("div", { staticClass: "col-sm-6 col-md-4" }, [
-                  _c("h5", { staticClass: "text-warning" }, [
-                    _vm._v("STAND BY")
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "card text-white bg-warning" }, [
-                    _c("div", { staticClass: "card-body" }, [
-                      _vm._v(
-                        "\n\t\t\t\t\t\t\t\tId server tidak sesuai dengan server pusat "
-                      ),
-                      _c("br"),
-                      _vm._v("\n\t\t\t\t\t\t\t\tSERVER-ID: "),
-                      _c("span", { staticClass: "badge badge-light" }, [
-                        _vm._v(_vm._s(_vm.identify.kode_server) + " ")
-                      ]),
-                      _c("br"),
-                      _vm._v(" "),
-                      _c("br")
+                      ])
                     ])
-                  ])
-                ])
-              : _vm._e(),
-            _vm._v(" "),
-            _vm.status == "unconnect"
-              ? _c("div", { staticClass: "col-sm-6 col-md-4" }, [
-                  _c("h5", { staticClass: "text-danger" }, [
-                    _vm._v("TIDAK AKTIF")
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "card text-white bg-danger" }, [
-                    _c("div", { staticClass: "card-body" }, [
-                      _vm._v(
-                        "\n\t\t\t\t\t\t\t\tKoneksi tidak terhubung ke server pusat "
-                      ),
-                      _c("br"),
-                      _vm._v("\n\t\t\t\t\t\t\t\tSERVER-ID: "),
-                      _c("span", { staticClass: "badge badge-light" }, [
-                        _vm._v(_vm._s(_vm.identify.kode_server) + " ")
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.status == "unregistered"
+                  ? _c("div", { staticClass: "col-sm-6 col-md-4" }, [
+                      _c("h5", { staticClass: "text-warning" }, [
+                        _vm._v("STAND BY")
                       ]),
-                      _c("br"),
                       _vm._v(" "),
-                      _c("br")
+                      _c("div", { staticClass: "card text-white bg-warning" }, [
+                        _c("div", { staticClass: "card-body" }, [
+                          _vm._v(
+                            "\n\t\t\t\t\t\t\t\tId server tidak sesuai dengan server pusat "
+                          ),
+                          _c("br"),
+                          _vm._v("\n\t\t\t\t\t\t\t\tSERVER-ID: "),
+                          _c("span", { staticClass: "badge badge-light" }, [
+                            _vm._v(_vm._s(_vm.identify.kode_server) + " ")
+                          ]),
+                          _c("br"),
+                          _vm._v(" "),
+                          _c("br")
+                        ])
+                      ])
                     ])
-                  ])
-                ])
-              : _vm._e(),
-            _vm._v(" "),
-            _vm.status.status == 0
-              ? _c("div", { staticClass: "col-sm-6 col-md-4" }, [
-                  _c("h5", { staticClass: "text-danger" }, [_vm._v("OFFLINE")]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "card text-white bg-danger" }, [
-                    _c("div", { staticClass: "card-body" }, [
-                      _vm._v(
-                        "\n\t\t\t\t\t\t\t\tServer nonaktif di server pusat "
-                      ),
-                      _c("br"),
-                      _vm._v("\n\t\t\t\t\t\t\t\tSERVER-ID: "),
-                      _c("span", { staticClass: "badge badge-light" }, [
-                        _vm._v(_vm._s(_vm.identify.kode_server) + " ")
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.status == "block"
+                  ? _c("div", { staticClass: "col-sm-6 col-md-4" }, [
+                      _c("h5", { staticClass: "text-warning" }, [
+                        _vm._v("STAND BY")
                       ]),
-                      _c("br"),
                       _vm._v(" "),
-                      _c("br")
+                      _c("div", { staticClass: "card text-white bg-warning" }, [
+                        _c("div", { staticClass: "card-body" }, [
+                          _vm._v(
+                            "\n\t\t\t\t\t\t\t\tSerial number tidak sesuai dengan pusat "
+                          ),
+                          _c("br"),
+                          _vm._v("\n\t\t\t\t\t\t\t\tSERVER-ID: "),
+                          _c("span", { staticClass: "badge badge-light" }, [
+                            _vm._v(_vm._s(_vm.identify.kode_server) + " ")
+                          ]),
+                          _c("br"),
+                          _vm._v(" "),
+                          _c("br")
+                        ])
+                      ])
                     ])
-                  ])
-                ])
-              : _vm._e()
-          ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.status == "unconnect"
+                  ? _c("div", { staticClass: "col-sm-6 col-md-4" }, [
+                      _c("h5", { staticClass: "text-danger" }, [
+                        _vm._v("TIDAK AKTIF")
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "card text-white bg-danger" }, [
+                        _c("div", { staticClass: "card-body" }, [
+                          _vm._v(
+                            "\n\t\t\t\t\t\t\t\tKoneksi tidak terhubung ke server pusat "
+                          ),
+                          _c("br"),
+                          _vm._v("\n\t\t\t\t\t\t\t\tSERVER-ID: "),
+                          _c("span", { staticClass: "badge badge-light" }, [
+                            _vm._v(_vm._s(_vm.identify.kode_server) + " ")
+                          ]),
+                          _c("br"),
+                          _vm._v(" "),
+                          _c("br")
+                        ])
+                      ])
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.status.status == 0
+                  ? _c("div", { staticClass: "col-sm-6 col-md-4" }, [
+                      _c("h5", { staticClass: "text-danger" }, [
+                        _vm._v("OFFLINE")
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "card text-white bg-danger" }, [
+                        _c("div", { staticClass: "card-body" }, [
+                          _vm._v(
+                            "\n\t\t\t\t\t\t\t\tServer nonaktif di server pusat "
+                          ),
+                          _c("br"),
+                          _vm._v("\n\t\t\t\t\t\t\t\tSERVER-ID: "),
+                          _c("span", { staticClass: "badge badge-light" }, [
+                            _vm._v(_vm._s(_vm.identify.kode_server) + " ")
+                          ]),
+                          _c("br"),
+                          _vm._v(" "),
+                          _c("br")
+                        ])
+                      ])
+                    ])
+                  : _vm._e()
+              ])
+            : _vm._e()
         ])
       ])
     ])

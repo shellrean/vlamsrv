@@ -3,7 +3,7 @@
         <main class="c-main">
           <div class="container-fluid">
             <div class="fade-in">
-		        <div class="row">
+		        <div class="row" v-if="status">
 		        	<div class="col-sm-6 col-md-4" v-if="status.status == 1">
 		        		<h5 class="text-info">AKTIF</h5>
 						<div class="card text-white bg-info">
@@ -19,6 +19,15 @@
 						<div class="card text-white bg-warning">
 							<div class="card-body">
 								Id server tidak sesuai dengan server pusat <br>
+								SERVER-ID: <span class="badge badge-light">{{ identify.kode_server }} </span><br> <br>
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-6 col-md-4" v-if="status == 'block'">
+		        		<h5 class="text-warning">STAND BY</h5>
+						<div class="card text-white bg-warning">
+							<div class="card-body">
+								Serial number tidak sesuai dengan pusat <br>
 								SERVER-ID: <span class="badge badge-light">{{ identify.kode_server }} </span><br> <br>
 							</div>
 						</div>

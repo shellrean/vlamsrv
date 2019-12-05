@@ -23,12 +23,19 @@ use DB;
 
 class PusatController extends Controller
 {
+	/**
+     * Sinkron data with server pusat
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function sinkron()
     {
+    	$hostname = env("SERVER_CENTER");
+
     	$server = IdentifyServer::first();
     	$ch = curl_init();
 
-		curl_setopt($ch, CURLOPT_URL,"http://localhost:8000/api/pusat/sinkron");
+		curl_setopt($ch, CURLOPT_URL,"$hostname/api/pusat/sinkron");
 		curl_setopt($ch, CURLOPT_POST, 1);
 		curl_setopt($ch, CURLOPT_POSTFIELDS,
 		            "server_name=$server->kode_server");
@@ -38,7 +45,6 @@ class PusatController extends Controller
 		$deco = json_decode( $server_output, true );
 
 		curl_close ($ch);
-
 
 		$deco = $deco['data'];
 
@@ -77,25 +83,36 @@ class PusatController extends Controller
     		Storage::disk('public')->put($file['dirname']."/".$file['filename'], $exists);
 		}
 		
-		
 		return response()->json($deco);
     }
 
+    /**
+     * Get server lokal identify
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function identify()
     {
     	$dentify = IdentifyServer::first();
     	return response()->json(['data' => $dentify]);
     }
 
+    /**
+     * Check connection with server pusat
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function connect()
     {
+    	$hostname = env("SERVER_CENTER");
+
     	$server = IdentifyServer::first();
     	$ch = curl_init();
 
-		curl_setopt($ch, CURLOPT_URL,"http://localhost:8000/api/pusat/connect");
+		curl_setopt($ch, CURLOPT_URL,"$hostname/api/pusat/connect");
 		curl_setopt($ch, CURLOPT_POST, 1);
 		curl_setopt($ch, CURLOPT_POSTFIELDS,
-		            "server_name=$server->kode_server");
+		            "server_name=$server->kode_server&serial_number=$server->serial_number");
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
 		$server_output = curl_exec($ch);
@@ -110,17 +127,20 @@ class PusatController extends Controller
 			return response()->json(['data' => 'unregistered']);
 		}
 
+        if($deco['data'] == 'block') {
+            return response()->json(['data' => 'block']);
+        }
+
 		curl_close ($ch);
 
 		return response()->json($deco);
     }
 
-    public function downloadFile(Request $request) 
-    {
-    	$exists = Storage::disk('ftp')->get('bahasa-indonesia/20191123-6.png');
-    	Storage::disk('public')->put('bahasa-indonesia/20191123-6.png', $exists);
-    }
-
+    /**
+     * Get serial number of device
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function serial() 
     {
     	ob_start();  
@@ -140,6 +160,12 @@ class PusatController extends Controller
 		return response()->json(['data' => $list]);  
     }
 
+    /**
+     * Check sttus installation of server lokal
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
     public function status(Request $request)
     {
     	$dentify = IdentifyServer::first();
@@ -153,8 +179,15 @@ class PusatController extends Controller
     	return response()->json(['status' => 'uninstalled']);
     }
 
+    /**
+     * Register server lokal
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
     public function registerServer(Request $request)
     {
+    	$hostname = env("SERVER_CENTER");
     	$data = $request->all();
 
     	$identify = IdentifyServer::first();
@@ -168,7 +201,7 @@ class PusatController extends Controller
 
   		$ch = curl_init();
 
-		curl_setopt($ch, CURLOPT_URL,"http://localhost:8000/api/pusat/register-server");
+		curl_setopt($ch, CURLOPT_URL,"$hostname/api/pusat/register-server");
 		curl_setopt($ch, CURLOPT_POST, 1);
 		curl_setopt($ch, CURLOPT_POSTFIELDS,
 		            "server_name=$kode_server&serial_number=$serial_number");

@@ -65,7 +65,7 @@ return [
         ],
         'ftp' => [
             'driver' => 'ftp',
-            'host' => '172.16.2.251'
+            'host' => env('SERVER_FTP')
         ]
     ]
 
