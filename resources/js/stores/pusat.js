@@ -25,7 +25,7 @@ const mutations = {
 const actions = {
 	getSinkronServer({ state }, payload) {
 		return new Promise((resolve, reject) => {
-			$axios.post(`/pusat/sinkron`)
+			$axios.post(`/pusat/sinkron`,payload)
 			.then((response) => {
 				resolve(response.data)
 			})
@@ -60,7 +60,12 @@ const actions = {
 	},
 	getStatusInstal({ commit }, payload) {
 		return new Promise((resolve, reject) => {
-			$axios.post(`/pusat/status`, payload)
+			let config = {
+			  onUploadProgress: progressEvent => {
+			    let percentCompleted = Math.floor((progressEvent.loaded * 100) / progressEvent.total);
+			  }
+			}
+			$axios.post(`/pusat/status`, payload, config)
 			.then((response) => {
 				commit('STATUS_ASSIGN', response.data)
 				resolve(response.data)

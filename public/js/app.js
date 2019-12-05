@@ -18577,22 +18577,128 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'Sinkron',
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(['isAuth', 'isLoading'])),
+  data: function data() {
+    return {
+      animate: true,
+      sinkron: {
+        peserta: 0,
+        matpel: 0,
+        banksoal: 0,
+        soal: 0,
+        pilihan: 0,
+        gambar: 0,
+        sync: false
+      }
+    };
+  },
   methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])('pusat', ['getSinkronServer']), {
     sinkronData: function sinkronData() {
       var _this = this;
 
-      this.getSinkronServer().then(function () {
+      this.getSinkronServer({
+        req: 'peserta'
+      }).then(function () {
+        _this.sinkron.peserta = 100;
+      }).then(function () {
         _this.$notify({
           group: 'foo',
           title: 'Sukses',
           type: 'success',
-          text: 'Soal berhasil ditambah.'
-        }), _this.SET_LOADING(false);
+          text: 'Data peserta berhasil didownload.'
+        });
       });
+      this.getSinkronServer({
+        req: 'matpel'
+      }).then(function () {
+        _this.sinkron.matpel = 100;
+      }).then(function () {
+        _this.$notify({
+          group: 'foo',
+          title: 'Sukses',
+          type: 'success',
+          text: 'Data matpel berhasil didownload.'
+        });
+      });
+      this.getSinkronServer({
+        req: 'banksoal'
+      }).then(function () {
+        _this.sinkron.banksoal = 100;
+      }).then(function () {
+        _this.$notify({
+          group: 'foo',
+          title: 'Sukses',
+          type: 'success',
+          text: 'Data banksoal berhasil didownload.'
+        });
+      });
+      this.getSinkronServer({
+        req: 'soal'
+      }).then(function () {
+        _this.sinkron.soal = 100;
+      }).then(function () {
+        _this.$notify({
+          group: 'foo',
+          title: 'Sukses',
+          type: 'success',
+          text: 'Data soal berhasil didownload.'
+        });
+      });
+      this.getSinkronServer({
+        req: 'jawaban_soal'
+      }).then(function () {
+        _this.sinkron.pilihan = 100;
+      }).then(function () {
+        _this.$notify({
+          group: 'foo',
+          title: 'Sukses',
+          type: 'success',
+          text: 'Data pilihan berhasil didownload.'
+        });
+      });
+      this.getSinkronServer({
+        req: 'jadwal'
+      });
+      this.getSinkronServer({
+        req: 'file'
+      }).then(function () {
+        _this.sinkron.gambar = 100;
+      }).then(function () {
+        _this.$notify({
+          group: 'foo',
+          title: 'Sukses',
+          type: 'success',
+          text: 'Data gambar berhasil didownload.'
+        });
+      });
+      this.sync = true;
     }
   })
 });
@@ -57610,12 +57716,132 @@ var render = function() {
               { staticClass: "card-body" },
               [
                 _c(
+                  "div",
+                  { staticClass: "form-group" },
+                  [
+                    _c("label", [_vm._v("Data peserta")]),
+                    _vm._v(" "),
+                    _c("b-progress", {
+                      staticClass: "mt-2",
+                      attrs: {
+                        value: _vm.sinkron.peserta,
+                        variant: "info",
+                        striped: "",
+                        "show-progress": "",
+                        animated: _vm.animate
+                      }
+                    })
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "form-group" },
+                  [
+                    _c("label", [_vm._v("Data matpel")]),
+                    _vm._v(" "),
+                    _c("b-progress", {
+                      staticClass: "mt-2",
+                      attrs: {
+                        value: _vm.sinkron.matpel,
+                        variant: "info",
+                        striped: "",
+                        "show-progress": "",
+                        animated: _vm.animate
+                      }
+                    })
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "form-group" },
+                  [
+                    _c("label", [_vm._v("Data banksoal")]),
+                    _vm._v(" "),
+                    _c("b-progress", {
+                      staticClass: "mt-2",
+                      attrs: {
+                        value: _vm.sinkron.banksoal,
+                        variant: "info",
+                        striped: "",
+                        "show-progress": "",
+                        animated: _vm.animate
+                      }
+                    })
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "form-group" },
+                  [
+                    _c("label", [_vm._v("Data soal")]),
+                    _vm._v(" "),
+                    _c("b-progress", {
+                      staticClass: "mt-2",
+                      attrs: {
+                        value: _vm.sinkron.soal,
+                        variant: "info",
+                        striped: "",
+                        "show-progress": "",
+                        animated: _vm.animate
+                      }
+                    })
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "form-group" },
+                  [
+                    _c("label", [_vm._v("Data pilihan soal")]),
+                    _vm._v(" "),
+                    _c("b-progress", {
+                      staticClass: "mt-2",
+                      attrs: {
+                        value: _vm.sinkron.pilihan,
+                        variant: "info",
+                        striped: "",
+                        "show-progress": "",
+                        animated: _vm.animate
+                      }
+                    })
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "form-group" },
+                  [
+                    _c("label", [_vm._v("Data Gambar")]),
+                    _vm._v(" "),
+                    _c("b-progress", {
+                      staticClass: "mt-2",
+                      attrs: {
+                        value: _vm.sinkron.gambar,
+                        variant: "info",
+                        striped: "",
+                        "show-progress": "",
+                        animated: _vm.animate
+                      }
+                    })
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
                   "b-button",
                   {
                     attrs: {
                       variant: "primary",
                       size: "sm",
-                      disabled: _vm.isLoading
+                      disabled: _vm.sync
                     },
                     on: { click: _vm.sinkronData }
                   },
@@ -76755,7 +76981,7 @@ var actions = {
   getSinkronServer: function getSinkronServer(_ref, payload) {
     var state = _ref.state;
     return new Promise(function (resolve, reject) {
-      _api_js__WEBPACK_IMPORTED_MODULE_0__["default"].post("/pusat/sinkron").then(function (response) {
+      _api_js__WEBPACK_IMPORTED_MODULE_0__["default"].post("/pusat/sinkron", payload).then(function (response) {
         resolve(response.data);
       });
     });
@@ -76790,7 +77016,12 @@ var actions = {
   getStatusInstal: function getStatusInstal(_ref5, payload) {
     var commit = _ref5.commit;
     return new Promise(function (resolve, reject) {
-      _api_js__WEBPACK_IMPORTED_MODULE_0__["default"].post("/pusat/status", payload).then(function (response) {
+      var config = {
+        onUploadProgress: function onUploadProgress(progressEvent) {
+          var percentCompleted = Math.floor(progressEvent.loaded * 100 / progressEvent.total);
+        }
+      };
+      _api_js__WEBPACK_IMPORTED_MODULE_0__["default"].post("/pusat/status", payload, config).then(function (response) {
         commit('STATUS_ASSIGN', response.data);
         resolve(response.data);
       });

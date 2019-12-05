@@ -28,62 +28,95 @@ class PusatController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function sinkron()
+  //   public function sinkron()
+  //   {
+  //   	$hostname = env("SERVER_CENTER");
+
+  //   	$server = IdentifyServer::first();
+  //   	$ch = curl_init();
+
+		// curl_setopt($ch, CURLOPT_URL,"$hostname/api/pusat/sinkron");
+		// curl_setopt($ch, CURLOPT_POST, 1);
+		// curl_setopt($ch, CURLOPT_POSTFIELDS,
+		//             "server_name=$server->kode_server");
+		// curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+		// $server_output = curl_exec($ch);
+		// $deco = json_decode( $server_output, true );
+
+		// curl_close ($ch);
+
+		// $deco = $deco['data'];
+
+		// if($deco['matpels'] > 0) {
+		// 	DB::table('matpels')->delete();
+		// 	Matpel::insert($deco['matpels']);
+		// }
+
+		// if($deco['banksoal'] > 0) {
+		// 	DB::table('banksoals')->delete();
+		// 	Banksoal::insert($deco['banksoal']);
+		// }
+
+		// if($deco['soal'] > 0) {
+		// 	DB::table('soals')->delete();
+		// 	Soal::insert($deco['soal']);
+		// }
+		
+		// if($deco['jawaban'] > 0) {
+		// 	DB::table('jawaban_soals')->delete();
+		// 	JawabanSoal::insert($deco['jawaban']);
+		// }
+		
+		// if($deco['jadwal'] > 0) {
+		// 	DB::table('jadwals')->delete();
+		// 	Jadwal::insert($deco['jadwal']);
+		// }
+		
+		// if($deco['peserta'] > 0) {
+		// 	DB::table('pesertas')->delete();
+		// 	Peserta::insert($deco['peserta']);
+		// }
+
+		// foreach($deco['files'] as $file) {
+		// 	$exists = Storage::disk('ftp')->get($file['dirname']."/".$file['filename']);
+  //   		Storage::disk('public')->put($file['dirname']."/".$file['filename'], $exists);
+		// }
+		 
+		// return response()->json($deco);
+  //   }
+    public function sinkron(Request $request)
     {
-    	$hostname = env("SERVER_CENTER");
+     $hostname = env("SERVER_CENTER");
 
-    	$server = IdentifyServer::first();
-    	$ch = curl_init();
+     $server = IdentifyServer::first();
+     $ch = curl_init();
 
-		curl_setopt($ch, CURLOPT_URL,"$hostname/api/pusat/sinkron");
-		curl_setopt($ch, CURLOPT_POST, 1);
-		curl_setopt($ch, CURLOPT_POSTFIELDS,
-		            "server_name=$server->kode_server");
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_URL,"$hostname/api/pusat/sinkron");
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS,
+                    "server_name=$server->kode_server&req=$request->req");
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
-		$server_output = curl_exec($ch);
-		$deco = json_decode( $server_output, true );
+        $server_output = curl_exec($ch);
+        $deco = json_decode( $server_output, true );
 
-		curl_close ($ch);
+        curl_close ($ch);
 
-		$deco = $deco['data'];
+        $deco = $deco['data'];
 
-		if($deco['matpels'] > 0) {
-			DB::table('matpels')->delete();
-			Matpel::insert($deco['matpels']);
-		}
+        if(isset($deco['table'])) {   
+          DB::table($deco['table'])->delete();
+          DB::table($deco['table'])->insert($deco['data']);
+        }
+        else {
+          foreach($deco['files'] as $file) {
+            $exists = Storage::disk('ftp')->get($file['dirname']."/".$file['filename']);
+            Storage::disk('public')->put($file['dirname']."/".$file['filename'], $exists);
+          }
+        }
 
-		if($deco['banksoal'] > 0) {
-			DB::table('banksoals')->delete();
-			Banksoal::insert($deco['banksoal']);
-		}
-
-		if($deco['soal'] > 0) {
-			DB::table('soals')->delete();
-			Soal::insert($deco['soal']);
-		}
-		
-		if($deco['jawaban'] > 0) {
-			DB::table('jawaban_soals')->delete();
-			JawabanSoal::insert($deco['jawaban']);
-		}
-		
-		if($deco['jadwal'] > 0) {
-			DB::table('jadwals')->delete();
-			Jadwal::insert($deco['jadwal']);
-		}
-		
-		if($deco['peserta'] > 0) {
-			DB::table('pesertas')->delete();
-			Peserta::insert($deco['peserta']);
-		}
-
-		foreach($deco['files'] as $file) {
-			$exists = Storage::disk('ftp')->get($file['dirname']."/".$file['filename']);
-    		Storage::disk('public')->put($file['dirname']."/".$file['filename'], $exists);
-		}
-		
-		return response()->json($deco);
+        return response()->json($deco);
     }
 
     /**
