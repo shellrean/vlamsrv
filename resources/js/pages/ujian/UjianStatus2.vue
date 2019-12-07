@@ -12,9 +12,9 @@
 								<label>Status</label>
 							</div>
 							<div class="col-8">
-								<span class="badge badge-danger rounded-0 py-1" v-if="!dikerjakan">Belum mulai</span>
-								<span class="badge badge-primary rounded-0 py-1" v-if="dikerjakan && !selesai">Sedang dikerjakan</span>
-								<span class="badge badge-success rounded-0 py-1" v-if="selesai">Selesai</span>
+								<span class="badge badge-danger rounded-0 py-1" v-if="status == 1">Belum mulai</span>
+								<span class="badge badge-primary rounded-0 py-1" v-if="status == 2">Sedang dikerjakan</span>
+								<span class="badge badge-success rounded-0 py-1" v-if="status == 3">Selesai</span>
 							</div>
 						</div>
 					</div>
@@ -85,7 +85,8 @@ export default {
 		return {
 			timeout: 0,
 			dikerjakan: false,
-			selesai: false
+			selesai: false,
+			status: 1
 		}
 	},
 	created() {
@@ -160,11 +161,11 @@ export default {
 			const date = new Date(this.fulled.jadwal.tanggal+' '+this.fulled.jadwal.mulai)
 			const date2 = new Date(this.fulled.jadwal.tanggal+' '+this.fulled.jadwal.berakhir)
 			const now = new Date()
-			if(now > date) {
-				this.dikerjakan = true
+			if(now > date && now < date2) {
+				this.status = 2
 			} 
 			else if(now > date2) {
-				this.selesai = true
+				this.status = 3
 			}
 		}
 	},

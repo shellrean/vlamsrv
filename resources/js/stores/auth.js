@@ -34,6 +34,12 @@ const actions = {
 				}
 			})
 		})
+	},
+	loggedOut({ commit }, payload) {
+		$axios.get('logout')
+		.then((response) => {
+			resolve(response.message)
+		})
 	}
 }
 

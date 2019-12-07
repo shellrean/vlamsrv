@@ -36,7 +36,7 @@
 </template>
 <script>
   import Breadcrumb from './Breadcrumb.vue'
-  import { mapState } from 'vuex'
+  import { mapState, mapActions } from 'vuex'
   export default {
     components: {
       'breadcrumb' : Breadcrumb
@@ -47,8 +47,10 @@
       })
     },
     methods: {
+      ...mapActions('auth',['loggedOut']),
       logout() { 
         return new Promise((resolve, reject) => {
+            this.loggedOut()
             localStorage.removeItem('token')
             resolve()
         }).then(() => {

@@ -89,27 +89,36 @@ class PusatController extends Controller
   //   }
     public function sinkron(Request $request)
     {
-     $hostname = env("SERVER_CENTER");
+     // $hostname = env("SERVER_CENTER");
 
      $server = IdentifyServer::first();
-     $ch = curl_init();
+     // $ch = curl_init();
 
-        curl_setopt($ch, CURLOPT_URL,"$hostname/api/pusat/sinkron");
-        curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS,
-                    "server_name=$server->kode_server&req=$request->req");
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+     //    curl_setopt($ch, CURLOPT_URL,"$hostname/api/pusat/sinkron");
+     //    curl_setopt($ch, CURLOPT_POST, 1);
+     //    curl_setopt($ch, CURLOPT_POSTFIELDS,
+     //                "server_name=$server->kode_server&req=$request->req");
+     //    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
-        $server_output = curl_exec($ch);
-        $deco = json_decode( $server_output, true );
+     //    $server_output = curl_exec($ch);
+     //    $deco = json_decode( $server_output, true );
 
-        curl_close ($ch);
+     //    curl_close ($ch);
 
-        $deco = $deco['data'];
+     //    $deco = $deco['data'];
 
-        if(isset($deco['table'])) {   
-          DB::table($deco['table'])->delete();
-          DB::table($deco['table'])->insert($deco['data']);
+        if(isset($request->table)) {   
+          DB::table($request->table)->delete();
+          DB::table($request->table)->insert($request->data);
+          switch ($request->table) {
+            case 'pesertas':
+              $server->peserta = 1;
+              $server->save();
+            case 'matpels':
+              $server->matpel = 1;
+              $server->save();
+            default:
+          }
         }
         else {
           foreach($deco['files'] as $file) {
@@ -118,7 +127,7 @@ class PusatController extends Controller
           }
         }
 
-        return response()->json($deco);
+        return response()->json(['status' => 'OK']);
     }
 
     /**
@@ -306,5 +315,17 @@ class PusatController extends Controller
         }
 
         return response()->json(['data' => $deco]);
+    }
+
+    public function checkData()
+    {
+        $peserta = Peserta::all()->count();
+        $matpel = Matpel::all()->count();
+        $data = [
+          'peserta' => $peserta,
+          'matpel'  => $matpel,
+        ];
+
+        return response()->json(['data' => $data]);
     }
 }

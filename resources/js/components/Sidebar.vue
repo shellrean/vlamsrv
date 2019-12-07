@@ -35,14 +35,32 @@
           </router-link>
         </li>
         <li class="c-sidebar-nav-item">
-          <router-link class="c-sidebar-nav-link" to="/">
+          <a class="c-sidebar-nav-link" href="#" @click="logout">
             <font-awesome-icon icon="sign-out-alt" class="c-sidebar-nav-icon" /> Logout
-          </router-link>
+          </a>
         </li>
       </ul>
       <button class="c-sidebar-minimizer c-class-toggler" type="button" data-target="_parent" data-class="c-sidebar-minimized"></button>
     </div>
 </template>
+<script>
+import { mapState, mapActions } from 'vuex'
+export default {
+    methods: {  
+      ...mapActions('auth',['loggedOut']),
+      logout() { 
+        return new Promise((resolve, reject) => {
+            this.loggedOut()
+            localStorage.removeItem('token')
+            resolve()
+        }).then(() => {
+            this.$store.state.token = localStorage.getItem('token')
+            this.$router.push('/login')
+        })
+      }
+    }
+}
+</script>
 <style>
 .c-sidebar-nav-icon {
   margin-top: -2px;
