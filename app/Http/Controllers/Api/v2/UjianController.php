@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use App\Jadwal;
 use App\SiswaUjian;
 use Carbon\Carbon;
+use App\Peserta;
+use App\UjianAktif;
 
 use App\Http\Resources\AppCollection;
 use Illuminate\Support\Facades\Validator;
@@ -39,8 +41,9 @@ class UjianController extends Controller
      */
     public function changeToken(Request $request)
     {
-        $jadwal = Jadwal::find($request->id);
+        $jadwal = UjianAktif::first();
         $jadwal->token = strtoupper(Str::random(6));
+        $jadwal->status_token = 0;
         $jadwal->save();
 
         return response()->json(['data' => $jadwal]);
@@ -67,7 +70,113 @@ class UjianController extends Controller
      */
     public function pesertaAll()
     {
+        $ujian = UjianAktif::first();
         $siswa = SiswaUjian::with('peserta')->whereDate('created_at', Carbon::today())->get();
         return response()->json(['data' => $siswa]);
     }
+
+    /**
+     * Reset peserta
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param \Illuminate\Http\Response
+     */
+    public function resetPeserta(Request $request)
+    {
+        $siswa = Peserta::find($request->id);
+        $siswa->api_token = '';
+        $siswa->save();
+
+        return response()->json(['status' => 'reseted']);
+    }
+
+    /**
+     * Reset peserta
+     *
+     * @param \Illuminate\Http\Response
+     */
+    public function ujianAktif()
+    {
+        $ujian = UjianAktif::with(['jadwal'])->first();
+
+        return response()->json(['data' => $ujian]);
+    }
+
+    /**
+     * Kelompok 
+     *
+     * @param \Illuminate\Http\Response
+     */
+    public function kelompok(Request $request)
+    {
+        $ujian = UjianAktif::first();
+        $siswa = SiswaUjian::where(['status_ujian' => 3])->first();
+        if($siswa) {
+            return response()->json(['status' => 'ERR']);
+        }
+        if($ujian) {
+            $ujian->kelompok = $request->kelompok;
+            $ujian->save();
+
+            return response()->json(['status' => "OK"]);
+        }
+
+        UjianAktif::create([
+            'kelompok'  => $request->kelompok,
+            'token'     => strtoupper(Str::random(6))
+        ]);
+
+        return response()->json(['status' => 'OK']);
+    }
+
+    /**
+     * Ubah test
+     *
+     * @param \Illuminate\Http\Response
+     */
+    public function ubahTest(Request $request)
+    {
+        $ujian = UjianAktif::first();
+        $siswa = SiswaUjian::where(['status_ujian' => 3])->first();
+        if($siswa) {
+            return response()->json(['status' => 'ERR']);
+        }
+        if($ujian) {
+            $ujian->ujian_id = $request->jadwal;
+            $ujian->save();
+
+            return response()->json(['status' => "OK"]);
+        }
+
+        UjianAktif::create([
+            'kelompok'  => $request->jadwal,
+            'token'     => strtoupper(Str::random(6))
+        ]);
+
+        return response()->json(['status' => 'OK']);
+    }
+
+    /**
+     * Relese token
+     *
+     * @param \Illuminate\Http\Response
+     */
+    public function rilisToken(Request $request)
+    {
+        $ujian = UjianAktif::first();
+        if($ujian) {
+            $ujian->token = $request->token;
+            $ujian->status_token = 1;
+            $ujian->save();
+
+            return response()->json(['status' => "OK"]);
+        }
+
+        UjianAktif::create([
+            'token'  => $request->token,
+        ]);
+
+        return response()->json(['status' => 'OK']);
+    }
+
 }

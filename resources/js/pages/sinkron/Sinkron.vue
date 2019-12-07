@@ -5,37 +5,38 @@
             <div class="fade-in">
             	<div class="card">
             		<div class="card-header">
-            			Sinkronisasi
+            			<b-button size="sm" squared variant="light">Mulai sync</b-button> <b-button size="sm" squared variant="primary">Refresh status</b-button>
             		</div>
             		<div class="card-body">
             			<div class="form-group">
-            				<label>Data peserta</label>
-            				<b-progress :value="sinkron.peserta" variant="info" striped show-progress :animated="animate" class="mt-2"></b-progress>
+            				<label>Data 1</label>
+            				<b-progress :value="sinkron.peserta" variant="info" show-progress class="mt-2"></b-progress>
             			</div>
             			<div class="form-group">
-            				<label>Data matpel</label>
-            				<b-progress :value="sinkron.matpel" variant="info" striped show-progress :animated="animate" class="mt-2"></b-progress>
+            				<label>Data 2</label>
+            				<b-progress :value="sinkron.matpel" variant="info" show-progress class="mt-2"></b-progress>
             			</div>
             			<div class="form-group">
-            				<label>Data banksoal</label>
-            				<b-progress :value="sinkron.banksoal" variant="info" striped show-progress :animated="animate" class="mt-2"></b-progress>
+            				<label>Data 3</label>
+            				<b-progress :value="sinkron.banksoal" variant="info" show-progress class="mt-2"></b-progress>
             			</div>
             			<div class="form-group">
-            				<label>Data soal</label>
-            				<b-progress :value="sinkron.soal" variant="info" striped show-progress :animated="animate" class="mt-2"></b-progress>
+            				<label>Data 4</label>
+            				<b-progress :value="sinkron.soal" variant="info" show-progress  class="mt-2"></b-progress>
             			</div>
             			<div class="form-group">
-            				<label>Data pilihan soal</label>
-            				<b-progress :value="sinkron.pilihan" variant="info" striped show-progress :animated="animate" class="mt-2"></b-progress>
+            				<label>Data 5</label>
+            				<b-progress :value="sinkron.pilihan" variant="info" show-progress  class="mt-2"></b-progress>
             			</div>
             			<div class="form-group">
-            				<label>Data Gambar</label>
-            				<b-progress :value="sinkron.gambar" variant="info" striped show-progress :animated="animate" class="mt-2"></b-progress>
+            				<label>Data 6</label>
+            				<b-progress :value="sinkron.gambar" variant="info" show-progress  class="mt-2"></b-progress>
             			</div>
-            			<b-button variant="primary" size="sm" :disabled="sync" @click="sinkronData">
+            			<!-- <b-button variant="primary" size="sm" :disabled="sync" @click="sinkronData">
             			<b-spinner small type="grow" v-show="isLoading"></b-spinner>
-            			Sinkron</b-button>
+            			Sinkron</b-button> -->
             		</div>
+            		<div class="card-footer"></div>
             	</div>
             </div>
           </div>
@@ -54,12 +55,12 @@ export default {
       return {
         animate: true,
         sinkron: {
-        	peserta: 0,
-        	matpel: 0,
-        	banksoal: 0,
-        	soal: 0,
-        	pilihan: 0,
-        	gambar: 0,
+        	peserta: 100,
+        	matpel: 100,
+        	banksoal: 100,
+        	soal: 100,
+        	pilihan: 100,
+        	gambar: 100,
         	sync: false
         }
       }

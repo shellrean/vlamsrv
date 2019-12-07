@@ -3,10 +3,15 @@
 		<div class="col-lg-12">
 			<div class="card">
 				<div class="card-header">
-					<b-button variant="info" size="sm" @click="refreshTable">Refresh</b-button>
+					<b-button variant="light" squared size="sm" @click="refreshTable">Refresh</b-button>
+					<b-button variant="info" squared size="sm" @click="uploadHasil">Upload hasil</b-button>
 				</div>
 				<div class="card-body">
 					<b-table striped hover bordered :busy="isBusy" small :fields="fields" :items="pesertas.data" show-empty>
+						<template v-slot:cell(upload)="row">
+                            <font-awesome-icon icon="hourglass" v-show="row.item.uploaded == 0" class="text-muted"/>
+                            <font-awesome-icon icon="clipboard-check" v-show="!row.item.uploaded == 0" class="text-success" />
+                        </template>
 						<template v-slot:table-busy>
                             <div class="text-center text-primary my-2">
                               <b-spinner class="align-middle"></b-spinner>
@@ -14,7 +19,7 @@
                             </div>
                         </template>
                         <template v-slot:cell(status)="row">
-                            {{ ( row.item.status_ujian == '0' ? "Sedang mengerjakan" : 'Selesai') }}
+                            {{ row.item.status }}
                         </template>
                         <template v-slot:cell(sisa)="row">
                         	{{ Math.floor(row.item.sisa_waktu/60)+' Menit' }}
@@ -38,6 +43,7 @@ export default {
 	data() {
 		return {
 			fields: [
+				{ key: 'upload', label: 'Upload' },
 				{ key: 'peserta.no_ujian', label: 'No ujian' },
 				{ key: 'peserta.nama', label: 'Nama peserta' },
 				{ key: 'status', label: 'Status' },
@@ -52,9 +58,20 @@ export default {
 		})
 	},
 	methods: {
-		...mapActions('ujian', ['getAllPeserta']),
+		...mapActions('ujian', ['getAllPeserta','uploadNilai']),
 		refreshTable() {
 			this.getAllPeserta()
+		},
+		uploadHasil() {
+			this.uploadNilai()
+			.then(() => {
+				this.$notify({
+		            group: 'foo',
+		            title: 'Sukses',
+		            type: 'success',
+		            text: 'Hasil ujian berhasil diupload.'
+		        })
+			})
 		}
 	},
 	watch: {

@@ -3,13 +3,16 @@
 		<div class="col-md-12">
 			<div class="card">
 				<div class="card-header">
-					Daftar peserta
+					Reset peserta
 					<div class="float-right">
                         <input type="text" class="form-control" placeholder="Cari nama..." v-model="search">
                     </div>
 				</div>
 				<div class="card-body">
-					<b-table id="table-transition-example" striped hover bordered small :fields="fields" :items="pesertas.data" :busy="isBusy" show-empty :tbody-transition-props="transProps">
+					<b-table striped hover bordered small :fields="fields" :items="pesertas.data" :busy="isBusy" show-empty>
+						<template v-slot:cell(reset)="row">
+							<b-button size="sm" variant="danger" squared @click="resetPeserta(row.item.id)"><font-awesome-icon icon="sync" /></b-button>
+						</template>
 					</b-table>
 					<div class="row">
                         <div class="col-md-6">
@@ -43,15 +46,12 @@ export default {
 	data() {
 		return {
 			fields: [
-				{ key: 'id', label: 'No' },
 				{ key: 'no_ujian', label: 'No ujian', sortable: true },
-				{ key: 'nama', label: 'Nama peserta', sortable: true }
+				{ key: 'nama', label: 'Nama peserta', sortable: true },
+				{ key: 'reset', label: 'Reset'}
 			],
 			search: '',
-			isBusy: true,
-			transProps: {
-	          name: 'flip-list'
-	        },
+			isBusy: true
 		}
 	},
 	computed: {
@@ -68,7 +68,22 @@ export default {
 		}
 	},
 	methods: {
-		...mapActions('peserta', ['getPesertas','removePeserta'])
+		...mapActions('peserta', ['getPesertas','removePeserta','resetLoginPeserta']),
+		resetPeserta(id) {
+			this.$swal({
+				title: 'Reset peserta',
+				text: 'Peserta akan logout secara otomatis',
+				type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Iya, Lanjutkan!'
+			}).then((result) => {
+                if (result.value) {
+                    this.resetLoginPeserta({ id: id })
+                }
+            })
+		}
 	},
 	watch: {
 		page() {
@@ -83,8 +98,3 @@ export default {
 	}
 }
 </script>
-<style lang="scss">
-	table#table-transition-example .flip-list-move {
-	  transition: transform 1s;
-	}
-</style>

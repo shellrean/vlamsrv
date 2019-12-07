@@ -30,7 +30,12 @@ import {
 	faServer,
 	faInfoCircle,
 	faUsers,
-	faKey
+	faKey,
+	faCloudDownloadAlt,
+	faHome,
+	faHourglass,
+	faCheckDouble,
+	faClipboardCheck
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
  
@@ -64,7 +69,12 @@ library.add({
 	faServer,
 	faInfoCircle,
 	faUsers,
-	faKey
+	faKey,
+	faCloudDownloadAlt,
+	faHome,
+	faHourglass,
+	faCheckDouble,
+	faClipboardCheck
 })
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)

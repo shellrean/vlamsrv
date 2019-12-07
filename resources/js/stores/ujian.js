@@ -4,7 +4,14 @@ const state = () => ({
 	ujians: [],
 	pesertas: [],
 	page: 1,
-	hasilUjian: []
+	hasilUjian: [],
+	ujianAktif: {
+		kelompok: '',
+		jadwal: '',
+		token: '',
+		status_token: ''
+	},
+	aktif: ''
 })
 
 const mutations = {
@@ -22,6 +29,15 @@ const mutations = {
 	},
 	ASSIGN_DATA_PESERTA(state, payload) {
 		state.pesertas = payload
+	},
+	ASSIGN_UJIAN_AKTIF(state, payload) {
+		state.ujianAktif = {
+			kelompok: payload.kelompok,
+			jadwal: payload.ujian_id,
+			token: payload.token,
+			status_token: payload.status_token
+		}
+		state.aktif = payload
 	}
 }
 
@@ -69,11 +85,11 @@ const actions = {
 			})
 		})
 	},
-	changeToken({ commit, state }, payload) {
+	changeToken({ dispatch, state }, payload) {
 		return new Promise((resolve, reject) => {
 			$axios.post(`/ujian/change-token`, payload)
 			.then((response) => {
-				resolve(response.data)
+				dispatch('getUjianAktif').then(() => response())
 			})
 		})
 	},
@@ -95,6 +111,59 @@ const actions = {
 			.then((response) => {
 				commit('ASSIGN_HASIL_UJIAN', response.data)
 				resolve(response.data)
+			})
+		})
+	},
+	getUjianAktif({ commit, state }, payload) {
+		return new Promise((resolve, reject) => {
+			$axios.get(`/ujian/aktif`, payload)
+			.then((response) => {
+				commit('ASSIGN_UJIAN_AKTIF', response.data.data)
+				resolve(response.data)
+			})
+		})
+	},
+	pilihKelompok({ dispatch, state }, payload) {
+		return new Promise((resolve, reject) => {
+			$axios.post(`/ujian/kelompok`, { kelompok: state.ujianAktif.kelompok})
+			.then((response) => {
+				if(response.data.status == 'OK') {
+					dispatch('getUjianAktif').then(() => resolve())
+				}
+				else {
+					dispatch('getUjianAktif')
+					reject(response.data)
+				}
+			})
+		})
+	},
+	pilihTest({ dispatch, state }, payload) {
+		return new Promise((resolve, reject) => {
+			$axios.post(`/ujian/ubah-test`, { jadwal: state.ujianAktif.jadwal })
+			.then((response) => {
+				if(response.data.status == 'OK') {
+					dispatch('getUjianAktif').then(() => resolve())
+				}
+				else {
+					dispatch('getUjianAktif')
+					reject(response.data)
+				}
+			})
+		})
+	},
+	rilistToken({ dispatch, state }, payload) {
+		return new Promise((resolve, reject) => {
+			$axios.post(`/ujian/rilis-token`, { token: state.ujianAktif.token })
+			.then((response) => {
+				dispatch('getUjianAktif').then(() => resolve())
+			})
+		})
+	},
+	uploadNilai({ dispatch, state }, payload) {
+		return new Promise((resolve, reject) => {
+			$axios.get(`/pusat/upload-hasil`)
+			.then((response) => {
+				dispatch('getAllPeserta').then(() => resolve())
 			})
 		})
 	}

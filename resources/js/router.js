@@ -10,9 +10,10 @@ import Sinkron from './pages/sinkron/Sinkron.vue'
 
 import PesertaIndex from './pages/peserta/Index.vue'
 import PesertaData from './pages/peserta/Peserta.vue'
+import PesertaReset from './pages/peserta/ResetPeserta.vue'
 
 import UjianIndex from './pages/ujian/Index.vue'
-import UjianStatus from './pages/ujian/UjianStatus.vue'
+import UjianStatus from './pages/ujian/UjianStatus2.vue'
 import UjianPeserta from './pages/ujian/UjianPeserta.vue'
 
 Vue.use(Router)
@@ -33,10 +34,10 @@ const router = new Router({
 			meta: { requiresAuth: true }
 		},
 		{
-			path: '/sinkron',
-			name: 'sinkron',
+			path: '/download',
+			name: 'download',
 			component: Sinkron,
-			meta: { requiresAuth: true }
+			meta: { requiresAuth: true, title: 'Sync' }
 		},
 		{
 			path: '/peserta',
@@ -48,6 +49,12 @@ const router = new Router({
 					name: 'peserta.data',
 					component: PesertaData,
 					meta: { title: 'Daftar peserta ujian'}
+				},
+				{
+					path: 'reset',
+					name: 'peserta.reset',
+					component: PesertaReset,
+					meta: { title: 'Reset peserta ujian' }
 				}
 			]
 		},

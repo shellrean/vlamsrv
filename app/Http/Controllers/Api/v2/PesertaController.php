@@ -22,7 +22,7 @@ class PesertaController extends Controller
             $peserta = $peserta->where('nama', 'LIKE', '%'.request()->q.'%');
         }
 
-        $peserta = $peserta->paginate(10);
+        $peserta = $peserta->paginate(30);
         return new AppCollection($peserta);
     }
 }

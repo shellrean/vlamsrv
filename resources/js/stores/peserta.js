@@ -67,6 +67,14 @@ const actions = {
 				dispatch('getPesertas').then(() => resolve())
 			})
 		})
+	},
+	resetLoginPeserta({ dispatch }, payload) {
+		return new Promise((resolve, reject) => {
+			$axios.post(`/peserta/reset`,payload)
+			.then((response) => {
+				dispatch('getPesertas').then(() => resolve())
+			})
+		})
 	}
 }
 

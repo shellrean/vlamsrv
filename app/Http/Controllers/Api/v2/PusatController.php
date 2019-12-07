@@ -14,6 +14,8 @@ use App\Jadwal;
 use App\Peserta;
 use App\IdentifyServer;
 use App\User;
+use App\UjianAktif;
+use App\SiswaUjian;
 
 use Storage;
 use Response;
@@ -261,5 +263,48 @@ class PusatController extends Controller
   		]);	
 
     	return response()->json(['status' => 'register berhasil']);
+    }
+
+    /**
+     * Upload hasil ujian
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function uploadHasil()
+    {
+        $ujian = UjianAktif::first();
+        $siswa_ujian = SiswaUjian::where([
+          'jadwal_id' => $ujian->ujian_id, 
+          'uploaded' => 0,
+          'status_ujian' => 1
+        ])->with('hasil')->get();
+
+        $identify = IdentifyServer::first();
+
+        $ch = curl_init();
+
+        $hostname = env("SERVER_CENTER");
+        curl_setopt($ch, CURLOPT_URL,"$hostname/api/pusat/upload-hasil");
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS,
+                    "server_name=$identify->kode_server&req=$siswa_ujian");
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+        $server_output = curl_exec($ch);
+        $deco = json_decode( $server_output, true );
+
+        curl_close ($ch);
+
+        $deco = $deco['data'];
+
+        if($deco == 'OK') {
+          foreach($siswa_ujian as $s) {
+            $siswa = SiswaUjian::find($s->id);
+            $siswa->uploaded = 1;
+            $siswa->save();
+          }
+        }
+
+        return response()->json(['data' => $deco]);
     }
 }

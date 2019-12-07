@@ -27,8 +27,15 @@ Route::group(['middleware' => 'auth.api', 'namespace' => 'Api\v2','prefix' => 'v
 
     Route::get('pusat/identify', 'PusatController@identify');
     Route::get('pusat/connect', 'PusatController@connect');
+    Route::get('pusat/upload-hasil', 'PusatController@uploadHasil');
 
     Route::get('ujian/get-peserta', 'UjianController@pesertaAll');
+    Route::post('peserta/reset', 'UjianController@resetPeserta');
+
+    Route::get('/ujian/aktif', 'UjianController@ujianAktif');
+    Route::post('/ujian/kelompok', 'UjianController@kelompok');
+    Route::post('/ujian/ubah-test', 'UjianController@ubahTest');
+    Route::post('/ujian/rilis-token', 'UjianController@rilisToken');
 });
 
 Route::post('/v2/pusat/sinkron', 'API\v2\PusatController@sinkron');
