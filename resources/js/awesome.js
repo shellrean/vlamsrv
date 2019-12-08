@@ -35,7 +35,8 @@ import {
 	faHome,
 	faHourglass,
 	faCheckDouble,
-	faClipboardCheck
+	faClipboardCheck,
+	faCog
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
  
@@ -74,7 +75,8 @@ library.add({
 	faHome,
 	faHourglass,
 	faCheckDouble,
-	faClipboardCheck
+	faClipboardCheck,
+	faCog
 })
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)

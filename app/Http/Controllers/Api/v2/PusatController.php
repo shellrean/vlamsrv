@@ -16,6 +16,8 @@ use App\IdentifyServer;
 use App\User;
 use App\UjianAktif;
 use App\SiswaUjian;
+use App\JawabanPeserta;
+use App\HasilUjian;
 
 use Storage;
 use Response;
@@ -25,87 +27,9 @@ use DB;
 
 class PusatController extends Controller
 {
-	/**
-     * Sinkron data with server pusat
-     *
-     * @return \Illuminate\Http\Response
-     */
-  //   public function sinkron()
-  //   {
-  //   	$hostname = env("SERVER_CENTER");
-
-  //   	$server = IdentifyServer::first();
-  //   	$ch = curl_init();
-
-		// curl_setopt($ch, CURLOPT_URL,"$hostname/api/pusat/sinkron");
-		// curl_setopt($ch, CURLOPT_POST, 1);
-		// curl_setopt($ch, CURLOPT_POSTFIELDS,
-		//             "server_name=$server->kode_server");
-		// curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-
-		// $server_output = curl_exec($ch);
-		// $deco = json_decode( $server_output, true );
-
-		// curl_close ($ch);
-
-		// $deco = $deco['data'];
-
-		// if($deco['matpels'] > 0) {
-		// 	DB::table('matpels')->delete();
-		// 	Matpel::insert($deco['matpels']);
-		// }
-
-		// if($deco['banksoal'] > 0) {
-		// 	DB::table('banksoals')->delete();
-		// 	Banksoal::insert($deco['banksoal']);
-		// }
-
-		// if($deco['soal'] > 0) {
-		// 	DB::table('soals')->delete();
-		// 	Soal::insert($deco['soal']);
-		// }
-		
-		// if($deco['jawaban'] > 0) {
-		// 	DB::table('jawaban_soals')->delete();
-		// 	JawabanSoal::insert($deco['jawaban']);
-		// }
-		
-		// if($deco['jadwal'] > 0) {
-		// 	DB::table('jadwals')->delete();
-		// 	Jadwal::insert($deco['jadwal']);
-		// }
-		
-		// if($deco['peserta'] > 0) {
-		// 	DB::table('pesertas')->delete();
-		// 	Peserta::insert($deco['peserta']);
-		// }
-
-		// foreach($deco['files'] as $file) {
-		// 	$exists = Storage::disk('ftp')->get($file['dirname']."/".$file['filename']);
-  //   		Storage::disk('public')->put($file['dirname']."/".$file['filename'], $exists);
-		// }
-		 
-		// return response()->json($deco);
-  //   }
     public function sinkron(Request $request)
     {
-     // $hostname = env("SERVER_CENTER");
-
      $server = IdentifyServer::first();
-     // $ch = curl_init();
-
-     //    curl_setopt($ch, CURLOPT_URL,"$hostname/api/pusat/sinkron");
-     //    curl_setopt($ch, CURLOPT_POST, 1);
-     //    curl_setopt($ch, CURLOPT_POSTFIELDS,
-     //                "server_name=$server->kode_server&req=$request->req");
-     //    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-
-     //    $server_output = curl_exec($ch);
-     //    $deco = json_decode( $server_output, true );
-
-     //    curl_close ($ch);
-
-     //    $deco = $deco['data'];
 
         if(isset($request->table)) {   
           DB::table($request->table)->delete();
@@ -114,16 +38,36 @@ class PusatController extends Controller
             case 'pesertas':
               $server->peserta = 1;
               $server->save();
+              break;
             case 'matpels':
               $server->matpel = 1;
               $server->save();
+              break;
+            case 'banksoals':
+              $server->banksoal = 1;
+              $server->save();
+              break;
+            case 'soals':
+              $server->soal = 1;
+              $server->save();
+              break;
+            case 'jawaban_soals':
+              $server->pilihan_soal = 1;
+              $server->save();
+              break;
+            case 'file':
+              $server->gambar = 1;
+              $server->save();
+              break;
             default:
           }
         }
         else {
-          foreach($deco['files'] as $file) {
+          foreach($request->all()['files'] as $file) {
             $exists = Storage::disk('ftp')->get($file['dirname']."/".$file['filename']);
             Storage::disk('public')->put($file['dirname']."/".$file['filename'], $exists);
+            $server->gambar = 1;
+            $server->save();
           }
         }
 
@@ -321,11 +265,44 @@ class PusatController extends Controller
     {
         $peserta = Peserta::all()->count();
         $matpel = Matpel::all()->count();
+        $banksoal = Banksoal::all()->count();
+        $soal = Soal::all()->count();
+        $jawaban_soals = JawabanSoal::all()->count();
+
         $data = [
           'peserta' => $peserta,
           'matpel'  => $matpel,
+          'banksoal' => $banksoal,
+          'soal'    => $soal,
+          'jawaban_soal'  => $jawaban_soals
         ];
 
         return response()->json(['data' => $data]);
+    }
+
+    public function hapusData()
+    {
+      DB::table('ujian_aktif')->delete();
+      DB::table('siswa_ujians')->delete();
+      DB::table('soals')->delete();
+      DB::table('pesertas')->delete();
+      DB::table('matpels')->delete();
+      DB::table('jawaban_soals')->delete();
+      DB::table('jawaban_pesertas')->delete();
+      DB::table('jadwals')->delete();
+      DB::table('hasil_ujians')->delete();
+      DB::table('banksoals')->delete();
+
+      $server = IdentifyServer::first();
+      
+      $server->peserta = 0;
+      $server->matpel = 0;
+      $server->banksoal = 0;
+      $server->soal = 0;
+      $server->pilihan_soal = 0;
+      $server->gambar = 0;
+      $server->save();
+
+      return response()->json(['status' => 'OK']);
     }
 }

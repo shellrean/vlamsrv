@@ -18230,6 +18230,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])('auth', ['loggedOut']), {
@@ -18760,6 +18765,79 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/sinkron/Hapus.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/sinkron/Hapus.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: 'Hapus',
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])('pusat', {
+    hapus: function hapus(state) {
+      return state.hapus;
+    }
+  })),
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])('pusat', ['hapusDataLocal']), {
+    hapusData: function hapusData() {
+      var _this = this;
+
+      this.$swal({
+        title: 'Hapus data local',
+        text: 'Hapus seluruh data local',
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Iya, Lanjutkan!'
+      }).then(function (result) {
+        if (result.value) {
+          _this.hapusDataLocal().then(function () {
+            _this.$notify({
+              group: 'foo',
+              title: 'Sukses',
+              type: 'success',
+              text: 'Data lokal berhasil dihapus.'
+            });
+          });
+        }
+      });
+    }
+  })
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/sinkron/Sinkron.vue?vue&type=script&lang=js&":
 /*!*********************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/sinkron/Sinkron.vue?vue&type=script&lang=js& ***!
@@ -18776,6 +18854,9 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+//
+//
+//
 //
 //
 //
@@ -18904,6 +18985,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     matpel: function matpel(state) {
       return state.matpel;
     },
+    banksoal: function banksoal(state) {
+      return state.banksoal;
+    },
+    soal: function soal(state) {
+      return state.soal;
+    },
+    jawaban: function jawaban(state) {
+      return state.jawaban;
+    },
+    gambar: function gambar(state) {
+      return state.gambar;
+    },
     count: function count(state) {
       return state.countData.data;
     },
@@ -18942,6 +19035,22 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       if (this.identify.matpel == 0) {
         this.cbtSync('matpel');
+      }
+
+      if (this.identify.banksoal == 0) {
+        this.cbtSync('banksoal');
+      }
+
+      if (this.identify.soal == 0) {
+        this.cbtSync('soal');
+      }
+
+      if (this.identify.pilihan_soal == 0) {
+        this.cbtSync('jawaban_soal');
+      }
+
+      if (this.identify.gambar == 0) {
+        this.cbtSync('file');
       }
     },
     sinkronData: function sinkronData() {
@@ -57424,6 +57533,29 @@ var render = function() {
           1
         ),
         _vm._v(" "),
+        _c(
+          "li",
+          { staticClass: "c-sidebar-nav-item" },
+          [
+            _c(
+              "router-link",
+              {
+                staticClass: "c-sidebar-nav-link",
+                attrs: { to: { name: "hapus" } }
+              },
+              [
+                _c("font-awesome-icon", {
+                  staticClass: "c-sidebar-nav-icon",
+                  attrs: { icon: "cog" }
+                }),
+                _vm._v(" Backup & Hapus\n          ")
+              ],
+              1
+            )
+          ],
+          1
+        ),
+        _vm._v(" "),
         _c("li", { staticClass: "c-sidebar-nav-item" }, [
           _c(
             "a",
@@ -58490,6 +58622,71 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/sinkron/Hapus.vue?vue&type=template&id=fea0186a&":
+/*!***********************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/sinkron/Hapus.vue?vue&type=template&id=fea0186a& ***!
+  \***********************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "c-body" }, [
+    _c("main", { staticClass: "c-main" }, [
+      _c("div", { staticClass: "container-fluid" }, [
+        _c("div", { staticClass: "fade-in" }, [
+          _c("div", { staticClass: "card" }, [
+            _c("div", { staticClass: "card-header" }, [
+              _vm._v(
+                "\n                        Hapus data lokal\n            \t\t"
+              )
+            ]),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "card-body" },
+              [
+                _c(
+                  "b-button",
+                  {
+                    attrs: { squared: "", size: "sm", variant: "info" },
+                    on: { click: _vm.hapusData }
+                  },
+                  [_vm._v("Hapus")]
+                ),
+                _vm._v(" "),
+                _c("br"),
+                _vm._v(" "),
+                _c("b-progress", {
+                  staticClass: "mt-2",
+                  attrs: {
+                    value: _vm.hapus,
+                    variant: "info",
+                    "show-progress": ""
+                  }
+                })
+              ],
+              1
+            )
+          ])
+        ])
+      ])
+    ])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/sinkron/Sinkron.vue?vue&type=template&id=1ec0d6b4&":
 /*!*************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/sinkron/Sinkron.vue?vue&type=template&id=1ec0d6b4& ***!
@@ -58701,11 +58898,67 @@ var render = function() {
                         _c("b-progress", {
                           staticClass: "mt-2",
                           attrs: {
-                            value: _vm.sinkron.banksoal,
+                            value: _vm.identify.banksoal
+                              ? 100
+                              : _vm.banksoal.progress,
                             variant: "info",
                             "show-progress": ""
                           }
-                        })
+                        }),
+                        _vm._v(" "),
+                        _c(
+                          "small",
+                          {
+                            directives: [
+                              {
+                                name: "show",
+                                rawName: "v-show",
+                                value: _vm.identify.banksoal
+                                  ? 0
+                                  : _vm.banksoal.step == 1,
+                                expression:
+                                  "identify.banksoal ? 0 : banksoal.step == 1"
+                              }
+                            ]
+                          },
+                          [_vm._v("Step 1 of 2- Download data dari pusat")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "small",
+                          {
+                            directives: [
+                              {
+                                name: "show",
+                                rawName: "v-show",
+                                value: _vm.identify.banksoal
+                                  ? 0
+                                  : _vm.banksoal.step == 2,
+                                expression:
+                                  "identify.banksoal ? 0 : banksoal.step == 2"
+                              }
+                            ]
+                          },
+                          [_vm._v("Step 2 of 2- Memasukkan adata ke database")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "small",
+                          {
+                            directives: [
+                              {
+                                name: "show",
+                                rawName: "v-show",
+                                value: _vm.identify.banksoal
+                                  ? 1
+                                  : _vm.banksoal.step == 3,
+                                expression:
+                                  "identify.banksoal ? 1 : banksoal.step == 3"
+                              }
+                            ]
+                          },
+                          [_vm._v("Complete")]
+                        )
                       ],
                       1
                     ),
@@ -58719,11 +58972,62 @@ var render = function() {
                         _c("b-progress", {
                           staticClass: "mt-2",
                           attrs: {
-                            value: _vm.sinkron.soal,
+                            value: _vm.identify.soal ? 100 : _vm.soal.progress,
                             variant: "info",
                             "show-progress": ""
                           }
-                        })
+                        }),
+                        _vm._v(" "),
+                        _c(
+                          "small",
+                          {
+                            directives: [
+                              {
+                                name: "show",
+                                rawName: "v-show",
+                                value: _vm.identify.soal
+                                  ? 0
+                                  : _vm.soal.step == 1,
+                                expression: "identify.soal ? 0 : soal.step == 1"
+                              }
+                            ]
+                          },
+                          [_vm._v("Step 1 of 2- Download data dari pusat")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "small",
+                          {
+                            directives: [
+                              {
+                                name: "show",
+                                rawName: "v-show",
+                                value: _vm.identify.soal
+                                  ? 0
+                                  : _vm.soal.step == 2,
+                                expression: "identify.soal ? 0 : soal.step == 2"
+                              }
+                            ]
+                          },
+                          [_vm._v("Step 2 of 2- Memasukkan adata ke database")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "small",
+                          {
+                            directives: [
+                              {
+                                name: "show",
+                                rawName: "v-show",
+                                value: _vm.identify.soal
+                                  ? 1
+                                  : _vm.soal.step == 3,
+                                expression: "identify.soal ? 1 : soal.step == 3"
+                              }
+                            ]
+                          },
+                          [_vm._v("Complete")]
+                        )
                       ],
                       1
                     ),
@@ -58737,11 +59041,67 @@ var render = function() {
                         _c("b-progress", {
                           staticClass: "mt-2",
                           attrs: {
-                            value: _vm.sinkron.pilihan,
+                            value: _vm.identify.pilihan_soal
+                              ? 100
+                              : _vm.jawaban.progress,
                             variant: "info",
                             "show-progress": ""
                           }
-                        })
+                        }),
+                        _vm._v(" "),
+                        _c(
+                          "small",
+                          {
+                            directives: [
+                              {
+                                name: "show",
+                                rawName: "v-show",
+                                value: _vm.identify.pilihan_soal
+                                  ? 0
+                                  : _vm.jawaban.step == 1,
+                                expression:
+                                  "identify.pilihan_soal ? 0 : jawaban.step == 1"
+                              }
+                            ]
+                          },
+                          [_vm._v("Step 1 of 2- Download data dari pusat")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "small",
+                          {
+                            directives: [
+                              {
+                                name: "show",
+                                rawName: "v-show",
+                                value: _vm.identify.pilihan_soal
+                                  ? 0
+                                  : _vm.jawaban.step == 2,
+                                expression:
+                                  "identify.pilihan_soal ? 0 : jawaban.step == 2"
+                              }
+                            ]
+                          },
+                          [_vm._v("Step 2 of 2- Memasukkan adata ke database")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "small",
+                          {
+                            directives: [
+                              {
+                                name: "show",
+                                rawName: "v-show",
+                                value: _vm.identify.pilihan_soal
+                                  ? 1
+                                  : _vm.jawaban.step == 3,
+                                expression:
+                                  "identify.pilihan_soal ? 1 : jawaban.step == 3"
+                              }
+                            ]
+                          },
+                          [_vm._v("Complete")]
+                        )
                       ],
                       1
                     ),
@@ -58755,11 +59115,67 @@ var render = function() {
                         _c("b-progress", {
                           staticClass: "mt-2",
                           attrs: {
-                            value: _vm.sinkron.gambar,
+                            value: _vm.identify.gambar
+                              ? 100
+                              : _vm.gambar.progress,
                             variant: "info",
                             "show-progress": ""
                           }
-                        })
+                        }),
+                        _vm._v(" "),
+                        _c(
+                          "small",
+                          {
+                            directives: [
+                              {
+                                name: "show",
+                                rawName: "v-show",
+                                value: _vm.identify.gambar
+                                  ? 0
+                                  : _vm.gambar.step == 1,
+                                expression:
+                                  "identify.gambar ? 0 : gambar.step == 1"
+                              }
+                            ]
+                          },
+                          [_vm._v("Step 1 of 2- Download data dari pusat")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "small",
+                          {
+                            directives: [
+                              {
+                                name: "show",
+                                rawName: "v-show",
+                                value: _vm.identify.gambar
+                                  ? 0
+                                  : _vm.gambar.step == 2,
+                                expression:
+                                  "identify.gambar ? 0 : gambar.step == 2"
+                              }
+                            ]
+                          },
+                          [_vm._v("Step 2 of 2- Memasukkan adata ke database")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "small",
+                          {
+                            directives: [
+                              {
+                                name: "show",
+                                rawName: "v-show",
+                                value: _vm.identify.gambar
+                                  ? 1
+                                  : _vm.gambar.step == 3,
+                                expression:
+                                  "identify.gambar ? 1 : gambar.step == 3"
+                              }
+                            ]
+                          },
+                          [_vm._v("Complete")]
+                        )
                       ],
                       1
                     )
@@ -58820,51 +59236,57 @@ var render = function() {
                       _c("tr", [
                         _c("td", [_c("b", [_vm._v("Data 3")])]),
                         _vm._v(" "),
-                        _c("td", [_vm._v("85")]),
+                        _c("td", {
+                          domProps: { textContent: _vm._s(_vm.center.banksoal) }
+                        }),
                         _vm._v(" "),
                         _c("td", [_vm._v("-")]),
                         _vm._v(" "),
-                        _c("td", [_vm._v("0")])
+                        _c("td", [
+                          _vm._v(_vm._s(_vm.count ? _vm.count.banksoal : 0))
+                        ])
                       ]),
                       _vm._v(" "),
                       _c("tr", [
                         _c("td", [_c("b", [_vm._v("Data 4")])]),
                         _vm._v(" "),
-                        _c("td", [_vm._v("85")]),
+                        _c("td", {
+                          domProps: { textContent: _vm._s(_vm.center.soal) }
+                        }),
                         _vm._v(" "),
                         _c("td", [_vm._v("-")]),
                         _vm._v(" "),
-                        _c("td", [_vm._v("0")])
+                        _c("td", [
+                          _vm._v(_vm._s(_vm.count ? _vm.count.soal : 0))
+                        ])
                       ]),
                       _vm._v(" "),
                       _c("tr", [
                         _c("td", [_c("b", [_vm._v("Data 5")])]),
                         _vm._v(" "),
-                        _c("td", [_vm._v("85")]),
+                        _c("td", {
+                          domProps: {
+                            textContent: _vm._s(_vm.center.jawaban_soal)
+                          }
+                        }),
                         _vm._v(" "),
                         _c("td", [_vm._v("-")]),
                         _vm._v(" "),
-                        _c("td", [_vm._v("0")])
+                        _c("td", [
+                          _vm._v(_vm._s(_vm.count ? _vm.count.jawaban_soal : 0))
+                        ])
                       ]),
                       _vm._v(" "),
                       _c("tr", [
                         _c("td", [_c("b", [_vm._v("Data 6")])]),
                         _vm._v(" "),
-                        _c("td", [_vm._v("85")]),
+                        _c("td", {
+                          domProps: { textContent: _vm._s(_vm.center.gambar) }
+                        }),
                         _vm._v(" "),
                         _c("td", [_vm._v("-")]),
                         _vm._v(" "),
-                        _c("td", [_vm._v("0")])
-                      ]),
-                      _vm._v(" "),
-                      _c("tr", [
-                        _c("td", [_c("b", [_vm._v("Data 7")])]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v("85")]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v("-")]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v("0")])
+                        _c("td", [_vm._v("...")])
                       ])
                     ])
                   : _vm._e()
@@ -76897,7 +77319,8 @@ _fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_1__["library"].add({
   faHome: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__["faHome"],
   faHourglass: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__["faHourglass"],
   faCheckDouble: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__["faCheckDouble"],
-  faClipboardCheck: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__["faClipboardCheck"]
+  faClipboardCheck: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__["faClipboardCheck"],
+  faCog: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__["faCog"]
 });
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('font-awesome-icon', _fortawesome_vue_fontawesome__WEBPACK_IMPORTED_MODULE_3__["FontAwesomeIcon"]);
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -77590,6 +78013,76 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/pages/sinkron/Hapus.vue":
+/*!**********************************************!*\
+  !*** ./resources/js/pages/sinkron/Hapus.vue ***!
+  \**********************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Hapus_vue_vue_type_template_id_fea0186a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Hapus.vue?vue&type=template&id=fea0186a& */ "./resources/js/pages/sinkron/Hapus.vue?vue&type=template&id=fea0186a&");
+/* harmony import */ var _Hapus_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Hapus.vue?vue&type=script&lang=js& */ "./resources/js/pages/sinkron/Hapus.vue?vue&type=script&lang=js&");
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _Hapus_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _Hapus_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _Hapus_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Hapus_vue_vue_type_template_id_fea0186a___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _Hapus_vue_vue_type_template_id_fea0186a___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/pages/sinkron/Hapus.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/pages/sinkron/Hapus.vue?vue&type=script&lang=js&":
+/*!***********************************************************************!*\
+  !*** ./resources/js/pages/sinkron/Hapus.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Hapus_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./Hapus.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/sinkron/Hapus.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Hapus_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/pages/sinkron/Hapus.vue?vue&type=template&id=fea0186a&":
+/*!*****************************************************************************!*\
+  !*** ./resources/js/pages/sinkron/Hapus.vue?vue&type=template&id=fea0186a& ***!
+  \*****************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Hapus_vue_vue_type_template_id_fea0186a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./Hapus.vue?vue&type=template&id=fea0186a& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/sinkron/Hapus.vue?vue&type=template&id=fea0186a&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Hapus_vue_vue_type_template_id_fea0186a___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Hapus_vue_vue_type_template_id_fea0186a___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/pages/sinkron/Sinkron.vue":
 /*!************************************************!*\
   !*** ./resources/js/pages/sinkron/Sinkron.vue ***!
@@ -77885,12 +78378,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _pages_Login_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./pages/Login.vue */ "./resources/js/pages/Login.vue");
 /* harmony import */ var _pages_Home_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./pages/Home.vue */ "./resources/js/pages/Home.vue");
 /* harmony import */ var _pages_sinkron_Sinkron_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./pages/sinkron/Sinkron.vue */ "./resources/js/pages/sinkron/Sinkron.vue");
-/* harmony import */ var _pages_peserta_Index_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./pages/peserta/Index.vue */ "./resources/js/pages/peserta/Index.vue");
-/* harmony import */ var _pages_peserta_Peserta_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./pages/peserta/Peserta.vue */ "./resources/js/pages/peserta/Peserta.vue");
-/* harmony import */ var _pages_peserta_ResetPeserta_vue__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./pages/peserta/ResetPeserta.vue */ "./resources/js/pages/peserta/ResetPeserta.vue");
-/* harmony import */ var _pages_ujian_Index_vue__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./pages/ujian/Index.vue */ "./resources/js/pages/ujian/Index.vue");
-/* harmony import */ var _pages_ujian_UjianStatus2_vue__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./pages/ujian/UjianStatus2.vue */ "./resources/js/pages/ujian/UjianStatus2.vue");
-/* harmony import */ var _pages_ujian_UjianPeserta_vue__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./pages/ujian/UjianPeserta.vue */ "./resources/js/pages/ujian/UjianPeserta.vue");
+/* harmony import */ var _pages_sinkron_Hapus_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./pages/sinkron/Hapus.vue */ "./resources/js/pages/sinkron/Hapus.vue");
+/* harmony import */ var _pages_peserta_Index_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./pages/peserta/Index.vue */ "./resources/js/pages/peserta/Index.vue");
+/* harmony import */ var _pages_peserta_Peserta_vue__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./pages/peserta/Peserta.vue */ "./resources/js/pages/peserta/Peserta.vue");
+/* harmony import */ var _pages_peserta_ResetPeserta_vue__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./pages/peserta/ResetPeserta.vue */ "./resources/js/pages/peserta/ResetPeserta.vue");
+/* harmony import */ var _pages_ujian_Index_vue__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./pages/ujian/Index.vue */ "./resources/js/pages/ujian/Index.vue");
+/* harmony import */ var _pages_ujian_UjianStatus2_vue__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./pages/ujian/UjianStatus2.vue */ "./resources/js/pages/ujian/UjianStatus2.vue");
+/* harmony import */ var _pages_ujian_UjianPeserta_vue__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./pages/ujian/UjianPeserta.vue */ "./resources/js/pages/ujian/UjianPeserta.vue");
+
 
 
 
@@ -77929,46 +78424,54 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
     }
   }, {
     path: '/peserta',
-    component: _pages_peserta_Index_vue__WEBPACK_IMPORTED_MODULE_7__["default"],
+    component: _pages_peserta_Index_vue__WEBPACK_IMPORTED_MODULE_8__["default"],
     meta: {
       requiresAuth: true
     },
     children: [{
       path: '',
       name: 'peserta.data',
-      component: _pages_peserta_Peserta_vue__WEBPACK_IMPORTED_MODULE_8__["default"],
+      component: _pages_peserta_Peserta_vue__WEBPACK_IMPORTED_MODULE_9__["default"],
       meta: {
         title: 'Daftar peserta ujian'
       }
     }, {
       path: 'reset',
       name: 'peserta.reset',
-      component: _pages_peserta_ResetPeserta_vue__WEBPACK_IMPORTED_MODULE_9__["default"],
+      component: _pages_peserta_ResetPeserta_vue__WEBPACK_IMPORTED_MODULE_10__["default"],
       meta: {
         title: 'Reset peserta ujian'
       }
     }]
   }, {
     path: '/ujian',
-    component: _pages_ujian_Index_vue__WEBPACK_IMPORTED_MODULE_10__["default"],
+    component: _pages_ujian_Index_vue__WEBPACK_IMPORTED_MODULE_11__["default"],
     meta: {
       requiresAuth: true
     },
     children: [{
       path: 'status',
       name: 'ujian.status',
-      component: _pages_ujian_UjianStatus2_vue__WEBPACK_IMPORTED_MODULE_11__["default"],
+      component: _pages_ujian_UjianStatus2_vue__WEBPACK_IMPORTED_MODULE_12__["default"],
       meta: {
         title: 'Status ujian'
       }
     }, {
       path: 'peserta',
       name: 'ujian.peserta',
-      component: _pages_ujian_UjianPeserta_vue__WEBPACK_IMPORTED_MODULE_12__["default"],
+      component: _pages_ujian_UjianPeserta_vue__WEBPACK_IMPORTED_MODULE_13__["default"],
       meta: {
         title: 'Status peserta'
       }
     }]
+  }, {
+    path: '/data/hapus',
+    component: _pages_sinkron_Hapus_vue__WEBPACK_IMPORTED_MODULE_7__["default"],
+    name: 'hapus',
+    meta: {
+      requiresAuth: true,
+      title: 'Hapus data lokal'
+    }
   }]
 });
 router.beforeEach(function (to, from, next) {
@@ -78011,6 +78514,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _stores_banksoal_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./stores/banksoal.js */ "./resources/js/stores/banksoal.js");
 /* harmony import */ var _stores_ujian_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./stores/ujian.js */ "./resources/js/stores/ujian.js");
 /* harmony import */ var _stores_peserta_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./stores/peserta.js */ "./resources/js/stores/peserta.js");
+/* harmony import */ var _stores_user_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./stores/user.js */ "./resources/js/stores/user.js");
+
 
 
 
@@ -78024,7 +78529,8 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
     auth: _stores_auth_js__WEBPACK_IMPORTED_MODULE_2__["default"],
     pusat: _stores_pusat_js__WEBPACK_IMPORTED_MODULE_3__["default"],
     ujian: _stores_ujian_js__WEBPACK_IMPORTED_MODULE_5__["default"],
-    peserta: _stores_peserta_js__WEBPACK_IMPORTED_MODULE_6__["default"]
+    peserta: _stores_peserta_js__WEBPACK_IMPORTED_MODULE_6__["default"],
+    user: _stores_user_js__WEBPACK_IMPORTED_MODULE_7__["default"]
   },
   state: {
     token: localStorage.getItem('token'),
@@ -78370,7 +78876,28 @@ var state = function state() {
       step: 1,
       status: 0
     },
-    countData: ''
+    banksoal: {
+      progress: 0,
+      step: 1,
+      status: 0
+    },
+    soal: {
+      progress: 0,
+      step: 1,
+      status: 0
+    },
+    jawaban: {
+      progress: 0,
+      step: 1,
+      status: 0
+    },
+    gambar: {
+      progress: 0,
+      step: 1,
+      status: 0
+    },
+    countData: '',
+    hapus: 0
   };
 };
 
@@ -78402,11 +78929,38 @@ var mutations = {
   UPLOAD_PROGRESS_BAR_MATPEL: function UPLOAD_PROGRESS_BAR_MATPEL(state, payload) {
     state.matpel.progress = payload;
   },
+  UPLOAD_PROGRESS_BAR_BANKSOAL: function UPLOAD_PROGRESS_BAR_BANKSOAL(state, payload) {
+    state.banksoal.progress = payload;
+  },
+  UPLOAD_PROGRESS_BAR_SOAL: function UPLOAD_PROGRESS_BAR_SOAL(state, payload) {
+    state.soal.progress = payload;
+  },
+  UPLOAD_PROGRESS_BAR_JAWABAN: function UPLOAD_PROGRESS_BAR_JAWABAN(state, payload) {
+    state.jawaban.progress = payload;
+  },
+  UPLOAD_PROGRESS_BAR_GAMBAR: function UPLOAD_PROGRESS_BAR_GAMBAR(state, payload) {
+    state.gambar.progress = payload;
+  },
   STEP_UPLOAD_BAR_PESERTA: function STEP_UPLOAD_BAR_PESERTA(state, payload) {
     state.peserta.step = payload;
   },
   STEP_UPLOAD_BAR_MATPEL: function STEP_UPLOAD_BAR_MATPEL(state, payload) {
     state.matpel.step = payload;
+  },
+  STEP_UPLOAD_BAR_BANKSOAL: function STEP_UPLOAD_BAR_BANKSOAL(state, payload) {
+    state.banksoal.step = payload;
+  },
+  STEP_UPLOAD_BAR_SOAL: function STEP_UPLOAD_BAR_SOAL(state, payload) {
+    state.soal.step = payload;
+  },
+  STEP_UPLOAD_BAR_JAWABAN: function STEP_UPLOAD_BAR_JAWABAN(state, payload) {
+    state.jawaban.step = payload;
+  },
+  STEP_UPLOAD_BAR_GAMBAR: function STEP_UPLOAD_BAR_GAMBAR(state, payload) {
+    state.gambar.step = payload;
+  },
+  HAPUS_DATA_PROGRESS: function HAPUS_DATA_PROGRESS(state, payload) {
+    state.hapus = payload;
   }
 };
 var actions = {
@@ -78499,6 +79053,14 @@ var actions = {
               commit('UPLOAD_PROGRESS_BAR_PESERTA', parseInt(Math.round(progressEvent.loaded / progressEvent.total * 50)));
             } else if (payload == 'matpel') {
               commit('UPLOAD_PROGRESS_BAR_MATPEL', parseInt(Math.round(progressEvent.loaded / progressEvent.total * 50)));
+            } else if (payload == 'banksoal') {
+              commit('UPLOAD_PROGRESS_BAR_BANKSOAL', parseInt(Math.round(progressEvent.loaded / progressEvent.total * 50)));
+            } else if (payload == 'soal') {
+              commit('UPLOAD_PROGRESS_BAR_SOAL', parseInt(Math.round(progressEvent.loaded / progressEvent.total * 50)));
+            } else if (payload == 'jawaban_soal') {
+              commit('UPLOAD_PROGRESS_BAR_JAWABAN', parseInt(Math.round(progressEvent.loaded / progressEvent.total * 50)));
+            } else if (payload == 'file') {
+              commit('UPLOAD_PROGRESS_BAR_GAMBAR', parseInt(Math.round(progressEvent.loaded / progressEvent.total * 50)));
             }
           }
         };
@@ -78510,6 +79072,14 @@ var actions = {
             commit('STEP_UPLOAD_BAR_PESERTA', 2);
           } else if (payload == 'matpel') {
             commit('STEP_UPLOAD_BAR_MATPEL', 2);
+          } else if (payload == 'banksoal') {
+            commit('STEP_UPLOAD_BAR_BANKSOAL', 2);
+          } else if (payload == 'soal') {
+            commit('STEP_UPLOAD_BAR_SOAL', 2);
+          } else if (payload == 'jawaban_soal') {
+            commit('STEP_UPLOAD_BAR_JAWABAN', 2);
+          } else if (payload == 'file') {
+            commit('STEP_UPLOAD_BAR_GAMBAR', 2);
           }
 
           var config = {
@@ -78518,6 +79088,14 @@ var actions = {
                 commit('UPLOAD_PROGRESS_BAR_PESERTA', parseInt(Math.round(progressEvent.loaded / progressEvent.total * 100)));
               } else if (payload == 'matpel') {
                 commit('UPLOAD_PROGRESS_BAR_MATPEL', parseInt(Math.round(progressEvent.loaded / progressEvent.total * 100)));
+              } else if (payload == 'banksoal') {
+                commit('UPLOAD_PROGRESS_BAR_BANKSOAL', parseInt(Math.round(progressEvent.loaded / progressEvent.total * 100)));
+              } else if (payload == 'soal') {
+                commit('UPLOAD_PROGRESS_BAR_SOAL', parseInt(Math.round(progressEvent.loaded / progressEvent.total * 100)));
+              } else if (payload == 'jawaban_soal') {
+                commit('UPLOAD_PROGRESS_BAR_JAWABAN', parseInt(Math.round(progressEvent.loaded / progressEvent.total * 100)));
+              } else if (payload == 'file') {
+                commit('UPLOAD_PROGRESS_BAR_GAMBAR', parseInt(Math.round(progressEvent.loaded / progressEvent.total * 100)));
               }
             }
           };
@@ -78526,16 +79104,37 @@ var actions = {
               commit('STEP_UPLOAD_BAR_PESERTA', 3);
             } else if (payload == 'matpel') {
               commit('STEP_UPLOAD_BAR_MATPEL', 3);
+            } else if (payload == 'banksoal') {
+              commit('STEP_UPLOAD_BAR_BANKSOAL', 3);
+            } else if (payload == 'soal') {
+              commit('STEP_UPLOAD_BAR_SOAL', 3);
+            } else if (payload == 'jawaban_soal') {
+              commit('STEP_UPLOAD_BAR_JAWABAN', 3);
+            } else if (payload == 'file') {
+              commit('STEP_UPLOAD_BAR_GAMBAR', 3);
             }
           });
         });
       });
     });
   },
-  checkDataLocal: function checkDataLocal(_ref9, payload) {
-    var dispatch = _ref9.dispatch,
-        state = _ref9.state,
-        commit = _ref9.commit;
+  hapusDataLocal: function hapusDataLocal(_ref9, payload) {
+    var commit = _ref9.commit;
+    return new Promise(function (resolve, reject) {
+      var config = {
+        onUploadProgress: function onUploadProgress(progressEvent) {
+          commit('HAPUS_DATA_PROGRESS', parseInt(Math.round(progressEvent.loaded / progressEvent.total * 100)));
+        }
+      };
+      _api_js__WEBPACK_IMPORTED_MODULE_0__["default"].post('/pusat/hapus-data', payload, config).then(function (response) {
+        resolve(response.data);
+      });
+    });
+  },
+  checkDataLocal: function checkDataLocal(_ref10, payload) {
+    var dispatch = _ref10.dispatch,
+        state = _ref10.state,
+        commit = _ref10.commit;
     return new Promise(function (resolve, reject) {
       _api_js__WEBPACK_IMPORTED_MODULE_0__["default"].get('/pusat/check-data').then(function (response) {
         commit('DATA_LOCAL_ASSIGN_COUNT', response.data);
@@ -78750,6 +79349,143 @@ var actions = {
         dispatch('getAllPeserta').then(function () {
           return resolve();
         });
+      });
+    });
+  }
+};
+/* harmony default export */ __webpack_exports__["default"] = ({
+  namespaced: true,
+  state: state,
+  actions: actions,
+  mutations: mutations
+});
+
+/***/ }),
+
+/***/ "./resources/js/stores/user.js":
+/*!*************************************!*\
+  !*** ./resources/js/stores/user.js ***!
+  \*************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _api_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../api.js */ "./resources/js/api.js");
+
+
+var state = function state() {
+  return {
+    users: [],
+    roles: [],
+    permissions: [],
+    role_permission: [],
+    authenticated: []
+  };
+};
+
+var mutations = {
+  ASSIGN_USER: function ASSIGN_USER(state, payload) {
+    state.users = payload;
+  },
+  ASSIGN_ROLES: function ASSIGN_ROLES(state, payload) {
+    state.roles = payload;
+  },
+  ASSIGN_PERMISSION: function ASSIGN_PERMISSION(state, payload) {
+    state.permissions = payload;
+  },
+  ASSIGN_ROLE_PERMISSION: function ASSIGN_ROLE_PERMISSION(state, payload) {
+    state.role_permission = payload;
+  },
+  CLEAR_ROLE_PERMISSION: function CLEAR_ROLE_PERMISSION(state, payload) {
+    state.role_permission = [];
+  },
+  ASSIGN_USER_AUTH: function ASSIGN_USER_AUTH(state, payload) {
+    state.authenticated = payload;
+  }
+};
+var actions = {
+  getUserLists: function getUserLists(_ref) {
+    var commit = _ref.commit;
+    return new Promise(function (resolve, reject) {
+      _api_js__WEBPACK_IMPORTED_MODULE_0__["default"].get("/user-lists").then(function (response) {
+        commit('ASSIGN_USER', response.data.data);
+        resolve(response.data);
+      });
+    });
+  },
+  setRoleUser: function setRoleUser(_ref2, payload) {
+    var commit = _ref2.commit;
+    return new Promise(function (resolve, reject) {
+      commit('CLEAR_ERRORS', '', {
+        root: true
+      });
+      _api_js__WEBPACK_IMPORTED_MODULE_0__["default"].post("/set-role-user", payload).then(function (response) {
+        resolve(response.data);
+      })["catch"](function (error) {
+        if (error.response.status == 422) {
+          commit('SET_ERRORS', error.response.data.errors, {
+            root: true
+          });
+        }
+      });
+    });
+  },
+  getRoles: function getRoles(_ref3) {
+    var commit = _ref3.commit;
+    return new Promise(function (resolve, reject) {
+      _api_js__WEBPACK_IMPORTED_MODULE_0__["default"].get("/roles").then(function (response) {
+        commit('ASSIGN_ROLES', response.data.data);
+        resolve(response.data);
+      });
+    });
+  },
+  getAllPermission: function getAllPermission(_ref4) {
+    var commit = _ref4.commit;
+    return new Promise(function (resolve, reject) {
+      _api_js__WEBPACK_IMPORTED_MODULE_0__["default"].get("/permissions").then(function (response) {
+        commit('ASSIGN_PERMISSION', response.data.data);
+        resolve(response.data);
+      });
+    });
+  },
+  getRolePermission: function getRolePermission(_ref5, payload) {
+    var commit = _ref5.commit;
+    return new Promise(function (resolve, reject) {
+      commit('CLEAR_ERRORS', '', {
+        root: true
+      });
+      _api_js__WEBPACK_IMPORTED_MODULE_0__["default"].post("/role-permission", {
+        role_id: payload
+      }).then(function (response) {
+        commit('ASSIGN_ROLE_PERMISSION', response.data.data);
+        resolve(response.data);
+      });
+    });
+  },
+  setRolePermission: function setRolePermission(_ref6, payload) {
+    var commit = _ref6.commit;
+    return new Promise(function (resolve, reject) {
+      commit('CLEAR_ERRORS', '', {
+        root: true
+      });
+      _api_js__WEBPACK_IMPORTED_MODULE_0__["default"].post("/set-role-permission", payload).then(function (response) {
+        resolve(response.data);
+      })["catch"](function (error) {
+        if (error.response.status == 422) {
+          commit('SET_ERRORS', error.response.data.errors, {
+            root: true
+          });
+        }
+      });
+    });
+  },
+  getUserLogin: function getUserLogin(_ref7) {
+    var commit = _ref7.commit;
+    return new Promise(function (resolve, reject) {
+      _api_js__WEBPACK_IMPORTED_MODULE_0__["default"].get("user-authenticated").then(function (response) {
+        commit('ASSIGN_USER_AUTH', response.data.data);
+        resolve(response.data);
       });
     });
   }

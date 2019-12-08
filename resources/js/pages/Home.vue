@@ -24,12 +24,12 @@
 							<div class="col-sm-6 col-md-4" v-if="status == 'unconnect'">
 				        		<h5 class="text-danger">OFFLINE</h5>
 								<b-alert show squared variant="danger">CBTsync tidak terkoneksi ke server pusat</b-alert>
-								<b-alert show squared variant="secondary">SERVER-ID&nbsp;&nbsp;<span class="badge badge-primary py-2 rounded-0">{{ identify.kode_server}}</span></b-alert>
+								<b-alert show squared variant="secondary">SERVER-ID&nbsp;&nbsp;<span class="badge badge-danger py-2 rounded-0">{{ identify.kode_server}}</span></b-alert>
 							</div>
 							<div class="col-sm-6 col-md-4" v-if="status.status == 0">
 				        		<h5 class="text-danger">OFFLINE</h5>
 								<b-alert show squared variant="danger">Server Non-Aktif pada server pusat</b-alert>
-								<b-alert show squared variant="secondary">SERVER-ID&nbsp;&nbsp;<span class="badge badge-primary py-2 rounded-0">{{ identify.kode_server}}</span></b-alert>
+								<b-alert show squared variant="secondary">SERVER-ID&nbsp;&nbsp;<span class="badge badge-danger py-2 rounded-0">{{ identify.kode_server}}</span></b-alert>
 							</div>
 				        </div>
 				    </div>

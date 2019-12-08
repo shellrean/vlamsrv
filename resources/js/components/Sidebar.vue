@@ -35,6 +35,11 @@
           </router-link>
         </li>
         <li class="c-sidebar-nav-item">
+          <router-link class="c-sidebar-nav-link" :to="{ name: 'hapus' }">
+            <font-awesome-icon icon="cog" class="c-sidebar-nav-icon" /> Backup & Hapus
+          </router-link>
+        </li>
+        <li class="c-sidebar-nav-item">
           <a class="c-sidebar-nav-link" href="#" @click="logout">
             <font-awesome-icon icon="sign-out-alt" class="c-sidebar-nav-icon" /> Logout
           </a>

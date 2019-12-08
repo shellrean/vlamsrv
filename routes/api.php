@@ -28,6 +28,7 @@ Route::group(['middleware' => 'auth.api', 'namespace' => 'Api\v2','prefix' => 'v
     Route::get('pusat/identify', 'PusatController@identify');
     Route::get('pusat/connect', 'PusatController@connect');
     Route::get('pusat/upload-hasil', 'PusatController@uploadHasil');
+    Route::post('pusat/hapus-data', 'PusatController@hapusData');
 
     Route::get('ujian/get-peserta', 'UjianController@pesertaAll');
     Route::post('peserta/reset', 'UjianController@resetPeserta');

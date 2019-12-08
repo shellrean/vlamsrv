@@ -25,23 +25,32 @@
             			</div>
             			<div class="form-group">
             				<label>Data 3</label>
-            				<b-progress :value="sinkron.banksoal" variant="info" show-progress class="mt-2"></b-progress>
+            				<b-progress :value="identify.banksoal ? 100 : banksoal.progress" variant="info" show-progress class="mt-2"></b-progress>
+            				<small v-show="identify.banksoal ? 0 : banksoal.step == 1">Step 1 of 2- Download data dari pusat</small>
+            				<small v-show="identify.banksoal ? 0 : banksoal.step == 2">Step 2 of 2- Memasukkan adata ke database</small>
+            				<small v-show="identify.banksoal ? 1 : banksoal.step == 3">Complete</small>
             			</div>
             			<div class="form-group">
             				<label>Data 4</label>
-            				<b-progress :value="sinkron.soal" variant="info" show-progress  class="mt-2"></b-progress>
+            				<b-progress :value="identify.soal ? 100 : soal.progress" variant="info" show-progress  class="mt-2"></b-progress>
+            				<small v-show="identify.soal ? 0 : soal.step == 1">Step 1 of 2- Download data dari pusat</small>
+            				<small v-show="identify.soal ? 0 : soal.step == 2">Step 2 of 2- Memasukkan adata ke database</small>
+            				<small v-show="identify.soal ? 1 : soal.step == 3">Complete</small>
             			</div>
             			<div class="form-group">
             				<label>Data 5</label>
-            				<b-progress :value="sinkron.pilihan" variant="info" show-progress  class="mt-2"></b-progress>
+            				<b-progress :value="identify.pilihan_soal ? 100 : jawaban.progress" variant="info" show-progress  class="mt-2"></b-progress>
+            				<small v-show="identify.pilihan_soal ? 0 : jawaban.step == 1">Step 1 of 2- Download data dari pusat</small>
+            				<small v-show="identify.pilihan_soal ? 0 : jawaban.step == 2">Step 2 of 2- Memasukkan adata ke database</small>
+            				<small v-show="identify.pilihan_soal ? 1 : jawaban.step == 3">Complete</small>
             			</div>
             			<div class="form-group">
             				<label>Data 6</label>
-            				<b-progress :value="sinkron.gambar" variant="info" show-progress  class="mt-2"></b-progress>
+            				<b-progress :value="identify.gambar ? 100 : gambar.progress" variant="info" show-progress  class="mt-2"></b-progress>
+            				<small v-show="identify.gambar ? 0 : gambar.step == 1">Step 1 of 2- Download data dari pusat</small>
+            				<small v-show="identify.gambar ? 0 : gambar.step == 2">Step 2 of 2- Memasukkan adata ke database</small>
+            				<small v-show="identify.gambar ? 1 : gambar.step == 3">Complete</small>
             			</div>
-            			<!-- <b-button variant="primary" size="sm" :disabled="sync" @click="sinkronData">
-            			<b-spinner small type="grow" v-show="isLoading"></b-spinner>
-            			Sinkron</b-button> -->
             		</div>
             		<div class="card-footer"></div>
             	</div>
@@ -69,33 +78,27 @@
 		    		</tr>
 		    		<tr>
 		    			<td><b>Data 3</b></td>
-		    			<td>85</td>
+		    			<td v-text="center.banksoal"></td>
 		    			<td>-</td>
-		    			<td>0</td>
+		    			<td>{{ count ? count.banksoal : 0 }}</td>
 		    		</tr>
 		    		<tr>
 		    			<td><b>Data 4</b></td>
-		    			<td>85</td>
+		    			<td v-text="center.soal"></td>
 		    			<td>-</td>
-		    			<td>0</td>
+		    			<td>{{ count ? count.soal : 0 }}</td>
 		    		</tr>
 		    		<tr>
 		    			<td><b>Data 5</b></td>
-		    			<td>85</td>
+		    			<td v-text="center.jawaban_soal"></td>
 		    			<td>-</td>
-		    			<td>0</td>
+		    			<td>{{ count ? count.jawaban_soal : 0 }}</td>
 		    		</tr>
 		    		<tr>
 		    			<td><b>Data 6</b></td>
-		    			<td>85</td>
+		    			<td v-text="center.gambar"></td>
 		    			<td>-</td>
-		    			<td>0</td>
-		    		</tr>
-		    		<tr>
-		    			<td><b>Data 7</b></td>
-		    			<td>85</td>
-		    			<td>-</td>
-		    			<td>0</td>
+		    			<td>...</td>
 		    		</tr>
 		    	</table>
 		    </template>
@@ -124,6 +127,10 @@ export default {
 			center : state => state.center.data,
 			peserta: state => state.peserta,
 			matpel: state => state.matpel,
+			banksoal: state => state.banksoal,
+			soal: state => state.soal,
+			jawaban: state => state.jawaban,
+			gambar: state => state.gambar,
 			count: state => state.countData.data,
 			identify: state => state.identify.data
 		})
@@ -159,6 +166,18 @@ export default {
 			}
 			if(this.identify.matpel == 0) {
 				this.cbtSync('matpel')
+			}
+			if(this.identify.banksoal == 0) {
+				this.cbtSync('banksoal')
+			}
+			if(this.identify.soal == 0) {
+				this.cbtSync('soal')
+			}
+			if(this.identify.pilihan_soal == 0) {
+				this.cbtSync('jawaban_soal')
+			}
+			if(this.identify.gambar == 0) {
+				this.cbtSync('file')
 			}
 		},
 		sinkronData() {
@@ -240,8 +259,6 @@ export default {
 		            type: 'success',
 		            text: 'Data gambar berhasil didownload.'
 		        })
-
-
 			})
 			this.sync = true
 		}

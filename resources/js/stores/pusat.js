@@ -17,7 +17,28 @@ const state = () => ({
 		step: 1,
 		status: 0
 	},
-	countData: ''
+	banksoal: {
+		progress: 0,
+		step: 1,
+		status: 0
+	},
+	soal: {
+		progress: 0,
+		step: 1,
+		status: 0
+	},
+	jawaban: {
+		progress: 0,
+		step: 1,
+		status: 0
+	},
+	gambar: {
+		progress: 0,
+		step: 1,
+		status: 0
+	},
+	countData: '',
+	hapus: 0
 })
 
 const mutations = {
@@ -48,11 +69,38 @@ const mutations = {
 	UPLOAD_PROGRESS_BAR_MATPEL(state, payload) {
 		state.matpel.progress = payload
 	},
+	UPLOAD_PROGRESS_BAR_BANKSOAL(state, payload) {
+		state.banksoal.progress = payload
+	},
+	UPLOAD_PROGRESS_BAR_SOAL(state, payload) {
+		state.soal.progress = payload
+	},
+	UPLOAD_PROGRESS_BAR_JAWABAN(state, payload) {
+		state.jawaban.progress = payload
+	},
+	UPLOAD_PROGRESS_BAR_GAMBAR(state, payload) {
+		state.gambar.progress = payload
+	},
 	STEP_UPLOAD_BAR_PESERTA(state, payload) {
 		state.peserta.step = payload
 	},
 	STEP_UPLOAD_BAR_MATPEL(state, payload) {
 		state.matpel.step = payload
+	},
+	STEP_UPLOAD_BAR_BANKSOAL(state, payload) {
+		state.banksoal.step = payload
+	},
+	STEP_UPLOAD_BAR_SOAL(state, payload) {
+		state.soal.step = payload
+	},
+	STEP_UPLOAD_BAR_JAWABAN(state, payload) {
+		state.jawaban.step = payload
+	},
+	STEP_UPLOAD_BAR_GAMBAR(state, payload) {
+		state.gambar.step = payload
+	},
+	HAPUS_DATA_PROGRESS(state, payload) {
+		state.hapus = payload
 	}
 }
 
@@ -145,6 +193,18 @@ const actions = {
 				  	else if(payload == 'matpel') {
 				  		commit('UPLOAD_PROGRESS_BAR_MATPEL',parseInt( Math.round( ( progressEvent.loaded / progressEvent.total ) * 50 )))
 				  	}
+				  	else if(payload == 'banksoal') {
+				  		commit('UPLOAD_PROGRESS_BAR_BANKSOAL',parseInt( Math.round( ( progressEvent.loaded / progressEvent.total ) * 50 )))	
+				  	}
+				  	else if(payload == 'soal') {
+				  		commit('UPLOAD_PROGRESS_BAR_SOAL',parseInt( Math.round( ( progressEvent.loaded / progressEvent.total ) * 50 )))	
+				  	}
+				  	else if(payload == 'jawaban_soal') {
+				  		commit('UPLOAD_PROGRESS_BAR_JAWABAN',parseInt( Math.round( ( progressEvent.loaded / progressEvent.total ) * 50 )))	
+				  	}
+				  	else if(payload == 'file') {
+				  		commit('UPLOAD_PROGRESS_BAR_GAMBAR',parseInt( Math.round( ( progressEvent.loaded / progressEvent.total ) * 50 )))	
+				  	}
 				  }
 				}
 				$center.post('pusat/cbt-sync', {
@@ -158,6 +218,18 @@ const actions = {
 					else if(payload == 'matpel') {
 						commit('STEP_UPLOAD_BAR_MATPEL',2)
 					}
+					else if(payload == 'banksoal') {
+						commit('STEP_UPLOAD_BAR_BANKSOAL',2)
+					}
+					else if(payload == 'soal') {
+						commit('STEP_UPLOAD_BAR_SOAL',2)
+					}
+					else if(payload == 'jawaban_soal') {
+						commit('STEP_UPLOAD_BAR_JAWABAN',2)
+					}
+					else if(payload == 'file') {
+						commit('STEP_UPLOAD_BAR_GAMBAR',2)
+					}
 					let config = {
 					  onUploadProgress: progressEvent => {
 					    if(payload == 'peserta') {
@@ -165,6 +237,18 @@ const actions = {
 					  	}
 					  	else if(payload == 'matpel') {
 					  		commit('UPLOAD_PROGRESS_BAR_MATPEL',parseInt( Math.round( ( progressEvent.loaded / progressEvent.total ) * 100 )))
+					  	}
+					  	else if(payload == 'banksoal') {
+					  		commit('UPLOAD_PROGRESS_BAR_BANKSOAL',parseInt( Math.round( ( progressEvent.loaded / progressEvent.total ) * 100 )))
+					  	}
+					  	else if(payload == 'soal') {
+					  		commit('UPLOAD_PROGRESS_BAR_SOAL',parseInt( Math.round( ( progressEvent.loaded / progressEvent.total ) * 100 )))
+					  	}
+					  	else if(payload == 'jawaban_soal') {
+					  		commit('UPLOAD_PROGRESS_BAR_JAWABAN',parseInt( Math.round( ( progressEvent.loaded / progressEvent.total ) * 100 )))
+					  	}
+					  	else if(payload == 'file') {
+					  		commit('UPLOAD_PROGRESS_BAR_GAMBAR',parseInt( Math.round( ( progressEvent.loaded / progressEvent.total ) * 100 )))
 					  	}
 					  }
 					}
@@ -176,12 +260,37 @@ const actions = {
 						else if(payload == 'matpel') {
 							commit('STEP_UPLOAD_BAR_MATPEL',3)
 						}
+						else if(payload == 'banksoal') {
+							commit('STEP_UPLOAD_BAR_BANKSOAL',3)
+						}
+						else if(payload == 'soal') {
+							commit('STEP_UPLOAD_BAR_SOAL',3)
+						}
+						else if(payload == 'jawaban_soal') {
+							commit('STEP_UPLOAD_BAR_JAWABAN',3)
+						}
+						else if(payload == 'file') {
+							commit('STEP_UPLOAD_BAR_GAMBAR',3)
+						}
 					})
 				})			
 			})
 		})
-	},
 
+	},
+	hapusDataLocal({ commit }, payload) {
+		return new Promise((resolve, reject) => {
+			let config = {
+				onUploadProgress: progressEvent => {
+					commit('HAPUS_DATA_PROGRESS',parseInt( Math.round( ( progressEvent.loaded / progressEvent.total ) * 100 )))
+				}
+			}
+			$axios.post('/pusat/hapus-data',payload,config)
+			.then((response) => {
+				resolve(response.data)
+			})
+		})		
+	},
 	checkDataLocal({ dispatch, state, commit}, payload) {
 		return new Promise((resolve, reject) => {
 			$axios.get('/pusat/check-data')

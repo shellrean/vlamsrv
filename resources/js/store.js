@@ -6,6 +6,7 @@ import pusat from './stores/pusat.js'
 import banksoal from './stores/banksoal.js'
 import ujian from './stores/ujian.js'
 import peserta from './stores/peserta.js'
+import user from './stores/user.js'
 
 Vue.use(Vuex)
 
@@ -14,7 +15,8 @@ const store = new Vuex.Store({
 		auth,
 		pusat,
 		ujian,
-		peserta
+		peserta,
+		user
 	},
 	state: {
 		token: localStorage.getItem('token'),

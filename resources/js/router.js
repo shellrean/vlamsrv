@@ -7,6 +7,7 @@ import Login from './pages/Login.vue'
 import Home from './pages/Home.vue'
 
 import Sinkron from './pages/sinkron/Sinkron.vue'
+import DataHapus from './pages/sinkron/Hapus.vue'
 
 import PesertaIndex from './pages/peserta/Index.vue'
 import PesertaData from './pages/peserta/Peserta.vue'
@@ -76,6 +77,12 @@ const router = new Router({
 					meta: { title: 'Status peserta'}
 				}
 			]
+		},
+		{
+			path: '/data/hapus',
+			component: DataHapus,
+			name: 'hapus',
+			meta: { requiresAuth: true, title: 'Hapus data lokal' },
 		}
 	]
 })
