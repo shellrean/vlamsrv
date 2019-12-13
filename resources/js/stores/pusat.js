@@ -37,6 +37,11 @@ const state = () => ({
 		step: 1,
 		status: 0
 	},
+	jadwal: {
+		progress: 0,
+		step: 1,
+		status: 0
+	},
 	countData: '',
 	hapus: 0
 })
@@ -81,6 +86,9 @@ const mutations = {
 	UPLOAD_PROGRESS_BAR_GAMBAR(state, payload) {
 		state.gambar.progress = payload
 	},
+	UPLOAD_PROGRESS_BAR_JADWAL(state, payload) {
+		state.jadwal.progress = payload
+	},
 	STEP_UPLOAD_BAR_PESERTA(state, payload) {
 		state.peserta.step = payload
 	},
@@ -98,6 +106,9 @@ const mutations = {
 	},
 	STEP_UPLOAD_BAR_GAMBAR(state, payload) {
 		state.gambar.step = payload
+	},
+	STEP_UPLOAD_BAR_JADWAL(state, payload) {
+		state.jadwal.step = payload
 	},
 	HAPUS_DATA_PROGRESS(state, payload) {
 		state.hapus = payload
@@ -205,6 +216,9 @@ const actions = {
 				  	else if(payload == 'file') {
 				  		commit('UPLOAD_PROGRESS_BAR_GAMBAR',parseInt( Math.round( ( progressEvent.loaded / progressEvent.total ) * 50 )))	
 				  	}
+				  	else if(payload == 'jadwal') {
+				  		commit('UPLOAD_PROGRESS_BAR_JADWAL',parseInt( Math.round( ( progressEvent.loaded / progressEvent.total ) * 50 )))	
+				  	}
 				  }
 				}
 				$center.post('pusat/cbt-sync', {
@@ -230,6 +244,9 @@ const actions = {
 					else if(payload == 'file') {
 						commit('STEP_UPLOAD_BAR_GAMBAR',2)
 					}
+					else if(payload == 'jadwal') {
+						commit('STEP_UPLOAD_BAR_JADWAL',2)
+					}
 					let config = {
 					  onUploadProgress: progressEvent => {
 					    if(payload == 'peserta') {
@@ -249,6 +266,9 @@ const actions = {
 					  	}
 					  	else if(payload == 'file') {
 					  		commit('UPLOAD_PROGRESS_BAR_GAMBAR',parseInt( Math.round( ( progressEvent.loaded / progressEvent.total ) * 100 )))
+					  	}
+					  	else if(payload == 'jadwal') {
+					  		commit('UPLOAD_PROGRESS_BAR_JADWAL',parseInt( Math.round( ( progressEvent.loaded / progressEvent.total ) * 100 )))
 					  	}
 					  }
 					}
@@ -272,6 +292,9 @@ const actions = {
 						else if(payload == 'file') {
 							commit('STEP_UPLOAD_BAR_GAMBAR',3)
 						}
+						else if(payload == 'jadwal') {
+							commit('STEP_UPLOAD_BAR_JADWAL',3)
+						}
 					})
 				})			
 			})
@@ -287,6 +310,7 @@ const actions = {
 			}
 			$axios.post('/pusat/hapus-data',payload,config)
 			.then((response) => {
+				commit('HAPUS_DATA_PROGRESS',100);
 				resolve(response.data)
 			})
 		})		

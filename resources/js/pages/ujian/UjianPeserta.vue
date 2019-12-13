@@ -27,6 +27,9 @@
 					</b-table>
 				</div>
 				<div class="card-footer">
+					<small><font-awesome-icon icon="hourglass" />&nbsp; Belum terupload </small> <br>
+					<small><font-awesome-icon icon="clipboard-check" class="text-success" />&nbsp; Sudah terupload </small> <br>
+					<small><font-awesome-icon icon="info-circle" class="text-info" />&nbsp; Hanya peserta yang berstatus selesai yang akan diupload </small> <br>
 				</div>
 			</div>
 		</div>

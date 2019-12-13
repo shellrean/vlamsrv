@@ -10,32 +10,32 @@
         </li>
         <li class="c-sidebar-nav-title">Menu utama</li>
         <li class="c-sidebar-nav-item">
-          <router-link class="c-sidebar-nav-link" :to="{ name: 'download' }">
+          <router-link class="c-sidebar-nav-link" :class="[currentPage.includes('download') ? activeClass : '']" :to="{ name: 'download' }">
             <font-awesome-icon icon="cloud-download-alt" class="c-sidebar-nav-icon" /> Status download
           </router-link>
         </li>
         <li class="c-sidebar-nav-item">
-          <router-link class="c-sidebar-nav-link" :to="{ name: 'peserta.data' }">
+          <router-link class="c-sidebar-nav-link" :class="[currentPage.includes('peserta.data') ? activeClass : '']" :to="{ name: 'peserta.data' }">
             <font-awesome-icon icon="users" class="c-sidebar-nav-icon" /> Daftar peserta
           </router-link>
         </li>
         <li class="c-sidebar-nav-item">
-          <router-link class="c-sidebar-nav-link" :to="{ name: 'ujian.status' }">
+          <router-link class="c-sidebar-nav-link" :class="[currentPage.includes('ujian.status') ? activeClass : '']" :to="{ name: 'ujian.status' }">
             <font-awesome-icon icon="clipboard-list" class="c-sidebar-nav-icon" /> Status ujian
           </router-link>
         </li>
         <li class="c-sidebar-nav-item">
-          <router-link class="c-sidebar-nav-link" :to="{ name: 'ujian.peserta' }">
+          <router-link class="c-sidebar-nav-link" :class="[currentPage.includes('ujian.peserta') ? activeClass : '']" :to="{ name: 'ujian.peserta' }">
             <font-awesome-icon icon="user" class="c-sidebar-nav-icon" /> Status peserta
           </router-link>
         </li>
         <li class="c-sidebar-nav-item">
-          <router-link class="c-sidebar-nav-link" :to="{ name: 'peserta.reset' }">
+          <router-link class="c-sidebar-nav-link" :class="[currentPage.includes('peserta.reset') ? activeClass : '']" :to="{ name: 'peserta.reset' }">
             <font-awesome-icon icon="sync" class="c-sidebar-nav-icon" />  Reset login peserta
           </router-link>
         </li>
         <li class="c-sidebar-nav-item">
-          <router-link class="c-sidebar-nav-link" :to="{ name: 'hapus' }">
+          <router-link class="c-sidebar-nav-link" :class="[currentPage.includes('hapus') ? activeClass : '']" :to="{ name: 'hapus' }">
             <font-awesome-icon icon="cog" class="c-sidebar-nav-icon" /> Backup & Hapus
           </router-link>
         </li>
@@ -51,6 +51,11 @@
 <script>
 import { mapState, mapActions } from 'vuex'
 export default {
+    data() {
+      return {
+        activeClass: 'c-active'
+      }
+    },
     methods: {  
       ...mapActions('auth',['loggedOut']),
       logout() { 
@@ -62,6 +67,11 @@ export default {
             this.$store.state.token = localStorage.getItem('token')
             this.$router.push('/login')
         })
+      }
+    },
+    computed: {
+      currentPage() {
+        return this.$route.name
       }
     }
 }

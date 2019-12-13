@@ -59,6 +59,10 @@ class PusatController extends Controller
               $server->gambar = 1;
               $server->save();
               break;
+            case 'jadwals':
+              $server->jadwal = 1;
+              $server->save();
+              break;
             default:
           }
         }
@@ -268,13 +272,15 @@ class PusatController extends Controller
         $banksoal = Banksoal::all()->count();
         $soal = Soal::all()->count();
         $jawaban_soals = JawabanSoal::all()->count();
+        $jadwal = Jadwal::all()->count();
 
         $data = [
           'peserta' => $peserta,
           'matpel'  => $matpel,
           'banksoal' => $banksoal,
           'soal'    => $soal,
-          'jawaban_soal'  => $jawaban_soals
+          'jawaban_soal'  => $jawaban_soals,
+          'jadwal'  => $jadwal,
         ];
 
         return response()->json(['data' => $data]);
@@ -301,6 +307,7 @@ class PusatController extends Controller
       $server->soal = 0;
       $server->pilihan_soal = 0;
       $server->gambar = 0;
+      $server->jadwal = 0;
       $server->save();
 
       return response()->json(['status' => 'OK']);

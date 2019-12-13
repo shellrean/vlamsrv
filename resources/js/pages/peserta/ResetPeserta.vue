@@ -41,7 +41,7 @@ import { mapActions, mapState } from 'vuex'
 export default {
 	name: 'DataPeserat',
 	created() {
-		this.getPesertas()
+		this.getPesertasLogin()
 	},
 	data() {
 		return {
@@ -68,7 +68,7 @@ export default {
 		}
 	},
 	methods: {
-		...mapActions('peserta', ['getPesertas','removePeserta','resetLoginPeserta']),
+		...mapActions('peserta', ['getPesertasLogin','removePeserta','resetLoginPeserta']),
 		resetPeserta(id) {
 			this.$swal({
 				title: 'Reset peserta',
@@ -87,10 +87,10 @@ export default {
 	},
 	watch: {
 		page() {
-			this.getPesertas()
+			this.getPesertasLogin()
 		},
 		search() {
-			this.getPesertas(this.search)
+			this.getPesertasLogin(this.search)
 		},
 		pesertas() {
 			this.isBusy = false

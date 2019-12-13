@@ -3,7 +3,7 @@ import store from './store.js'
 import router from './router.js'
 
 const $axios = axios.create({
-	baseURL: 'http://localhost:8000/api/',
+	baseURL: process.env.MIX_SERVER_CENTER+'/api/',
 	headers: {
 		'Content-Type' : 'application/json'
 	}

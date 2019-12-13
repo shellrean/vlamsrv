@@ -21,16 +21,13 @@
 					<div class="form-group">
 						<div class="row">
 							<div class="col-2">
-								<label>Sesi</label>
+								<label>Kelompok</label>
 							</div>
 							<div class="col-6">
-								<select class="form-control form-control-sm" v-model="aktif.kelompok">
+								<select class="form-control form-control-sm rounded-0" v-model="aktif.kelompok">
 									<option value="1">1</option>
 									<option value="2">2</option>
 								</select>
-							</div>
-							<div class="col-3">
-								<b-button variant="dark" size="sm" squared @click="ubahKelompok">Atur sesi</b-button>
 							</div>
 						</div>
 					</div>
@@ -40,13 +37,10 @@
 								<label>Daftar ujian</label>
 							</div>
 							<div class="col-6">
-								<select class="form-control form-control-sm" v-model="aktif.jadwal">
+								<select class="form-control form-control-sm rounded-0" v-model="aktif.jadwal">
 									<option>Pilih</option>
 									<option v-for="ujian in ujians.data" v-text="ujian.banksoal.kode_banksoal" :value="ujian.id"></option>
 								</select>
-							</div>
-							<div class="col-3">
-								<b-button variant="dark" size="sm" squared @click="ubahTes">Pilih ujian</b-button>
 							</div>
 						</div>
 					</div>
@@ -56,13 +50,16 @@
 								<label>Token</label>
 							</div>
 							<div class="col-6">
-								<input type="text" readonly name="" class="form-control form-control-sm" :value="aktif.token+'-Interval 15 menit'">
+								<input type="text" readonly name="" class="form-control form-control-sm rounded-0" :value="aktif.token+' | 15 Menit | '+( fulled.status_token != 1 ? '(Belum release)' : '(Release)' )">
 								<input type="hidden" :value="aktif.token">
 							</div>
 							<div class="col-3">
-								<b-button variant="dark" size="sm" squared @click="ubahToken">Rilis token </b-button>
+								<b-button variant="dark" size="sm" squared @click="ubahToken" v-show="fulled.status_token != 1">Rilis token </b-button>
 							</div>
 						</div>
+					</div>
+					<div class="form-group">
+						<b-button variant="dark" size="sm" squared @click="postStatus"> Simpan semua</b-button>
 					</div>
 				</div>
 				<div class="card-footer">
@@ -102,7 +99,26 @@ export default {
 		})
 	},
 	methods: {
-		...mapActions('ujian', ['getUjians','addUjian','setStatus','changeToken','getUjianAktif','pilihKelompok','pilihTest','rilistToken','changeToken']),
+		...mapActions('ujian', ['getUjians','addUjian','setStatus','changeToken','getUjianAktif','pilihKelompok','pilihTest','rilistToken','changeToken','simpanStatus']),
+		postStatus() {
+			this.simpanStatus()
+			.then(() => {
+				this.$notify({
+		            group: 'foo',
+		            title: 'Sukses',
+		            type: 'success',
+		            text: 'Ujian aktif disimpan.'
+		        })
+			})
+			.catch(() => {
+				this.$notify({
+		            group: 'foo',
+		            title: 'Error',
+		            type: 'error',
+		            text: 'Masih ada peserta yang berstatus online.'
+		        })
+			})
+		},
 		ubahKelompok() {
 			this.pilihKelompok()
 			.then(() => {

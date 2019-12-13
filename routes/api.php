@@ -20,6 +20,7 @@ Route::post('/v2/login', 'Auth\LoginController@login');
 Route::group(['middleware' => 'auth.api', 'namespace' => 'Api\v2','prefix' => 'v2'], function() {
     Route::get('logout', 'AuthController@logout');
 	Route::get('peserta', 'PesertaController@index');
+    Route::get('peserta-login', 'PesertaController@pesertaLogin');
 
     Route::get('ujian', 'UjianController@index');
     Route::post('ujian/change-token', 'UjianController@changeToken');
@@ -37,6 +38,7 @@ Route::group(['middleware' => 'auth.api', 'namespace' => 'Api\v2','prefix' => 'v
     Route::post('/ujian/kelompok', 'UjianController@kelompok');
     Route::post('/ujian/ubah-test', 'UjianController@ubahTest');
     Route::post('/ujian/rilis-token', 'UjianController@rilisToken');
+    Route::post('/ujian/simpan-status', 'UjianController@simpanStatus');
 });
 
 Route::post('/v2/pusat/sinkron', 'API\v2\PusatController@sinkron');

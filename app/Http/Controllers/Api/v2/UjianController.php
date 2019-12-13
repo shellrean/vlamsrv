@@ -98,6 +98,18 @@ class UjianController extends Controller
     public function ujianAktif()
     {
         $ujian = UjianAktif::with(['jadwal'])->first();
+        
+        if($ujian) {
+            $to = \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', now());
+            $from = $ujian['updated_at']->format('Y-m-d H:i:s');
+            $differ = $to->diffInSeconds($from);
+
+            if($differ > 900) {
+                $ujian->token = strtoupper(Str::random(6));
+                $ujian->status_token = 0;
+                $ujian->save();
+            }  
+        }
 
         return response()->json(['data' => $ujian]);
     }
@@ -174,6 +186,34 @@ class UjianController extends Controller
 
         UjianAktif::create([
             'token'  => $request->token,
+        ]);
+
+        return response()->json(['status' => 'OK']);
+    }
+
+    /**
+     *
+     * @param \Illuminate\Http\Response
+     */
+    public function simpanStatus(Request $request)
+    {
+        $ujian = UjianAktif::first();
+        $siswa = SiswaUjian::where(['status_ujian' => 3])->first();
+        if($siswa) {
+            return response()->json(['status' => 'ERR']);
+        }
+        if($ujian) {
+            $ujian->ujian_id = $request->jadwal;
+            $ujian->kelompok = $request->kelompok;
+            $ujian->save();
+
+            return response()->json(['status' => "OK"]);
+        }
+
+        UjianAktif::create([
+            'kelompok'  => $request->kelompok,
+            'ujian_id'    => $request->jadwal,
+            'token'     => strtoupper(Str::random(6))
         ]);
 
         return response()->json(['status' => 'OK']);

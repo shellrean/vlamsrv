@@ -25,4 +25,21 @@ class PesertaController extends Controller
         $peserta = $peserta->paginate(30);
         return new AppCollection($peserta);
     }
+
+    /**
+     * Display peserta with token not equal with ''
+     * 
+     * @return \Illuminate\Http\Response
+     */
+    public function pesertaLogin()
+    {
+        $peserta = Peserta::orderBy('no_ujian');
+        $peserta->where('api_token','!=','');
+        if (request()->q != '') {
+            $peserta = $peserta->where('nama', 'LIKE', '%'.request()->q.'%');
+        }
+
+        $peserta = $peserta->paginate(30);
+        return new AppCollection($peserta);
+    }
 }

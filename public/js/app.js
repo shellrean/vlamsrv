@@ -18237,6 +18237,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      activeClass: 'c-active'
+    };
+  },
   methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])('auth', ['loggedOut']), {
     logout: function logout() {
       var _this = this;
@@ -18252,7 +18257,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         _this.$router.push('/login');
       });
     }
-  })
+  }),
+  computed: {
+    currentPage: function currentPage() {
+      return this.$route.name;
+    }
+  }
 });
 
 /***/ }),
@@ -18695,7 +18705,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'DataPeserat',
   created: function created() {
-    this.getPesertas();
+    this.getPesertasLogin();
   },
   data: function data() {
     return {
@@ -18729,7 +18739,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
     }
   }),
-  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])('peserta', ['getPesertas', 'removePeserta', 'resetLoginPeserta']), {
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])('peserta', ['getPesertasLogin', 'removePeserta', 'resetLoginPeserta']), {
     resetPeserta: function resetPeserta(id) {
       var _this = this;
 
@@ -18752,10 +18762,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   }),
   watch: {
     page: function page() {
-      this.getPesertas();
+      this.getPesertasLogin();
     },
     search: function search() {
-      this.getPesertas(this.search);
+      this.getPesertasLogin(this.search);
     },
     pesertas: function pesertas() {
       this.isBusy = false;
@@ -18967,6 +18977,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'Sinkron',
@@ -18996,6 +19019,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     gambar: function gambar(state) {
       return state.gambar;
+    },
+    jadwal: function jadwal(state) {
+      return state.jadwal;
     },
     count: function count(state) {
       return state.countData.data;
@@ -19051,6 +19077,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       if (this.identify.gambar == 0) {
         this.cbtSync('file');
+      }
+
+      if (this.identify.jadwal == 0) {
+        this.cbtSync('jadwal');
       }
     },
     sinkronData: function sinkronData() {
@@ -19180,6 +19210,9 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+//
+//
+//
 //
 //
 //
@@ -19362,9 +19395,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
 
 
 
@@ -19396,19 +19426,38 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       return state.aktif;
     }
   })),
-  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapActions"])('ujian', ['getUjians', 'addUjian', 'setStatus', 'changeToken', 'getUjianAktif', 'pilihKelompok', 'pilihTest', 'rilistToken', 'changeToken']), {
-    ubahKelompok: function ubahKelompok() {
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapActions"])('ujian', ['getUjians', 'addUjian', 'setStatus', 'changeToken', 'getUjianAktif', 'pilihKelompok', 'pilihTest', 'rilistToken', 'changeToken', 'simpanStatus']), {
+    postStatus: function postStatus() {
       var _this = this;
 
-      this.pilihKelompok().then(function () {
+      this.simpanStatus().then(function () {
         _this.$notify({
+          group: 'foo',
+          title: 'Sukses',
+          type: 'success',
+          text: 'Ujian aktif disimpan.'
+        });
+      })["catch"](function () {
+        _this.$notify({
+          group: 'foo',
+          title: 'Error',
+          type: 'error',
+          text: 'Masih ada peserta yang berstatus online.'
+        });
+      });
+    },
+    ubahKelompok: function ubahKelompok() {
+      var _this2 = this;
+
+      this.pilihKelompok().then(function () {
+        _this2.$notify({
           group: 'foo',
           title: 'Sukses',
           type: 'success',
           text: 'Sesi disimpan.'
         });
       })["catch"](function () {
-        _this.$notify({
+        _this2.$notify({
           group: 'foo',
           title: 'Error',
           type: 'error',
@@ -19417,17 +19466,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       });
     },
     ubahTes: function ubahTes() {
-      var _this2 = this;
+      var _this3 = this;
 
       this.pilihTest().then(function () {
-        _this2.$notify({
+        _this3.$notify({
           group: 'foo',
           title: 'Sukses',
           type: 'success',
           text: 'Ujian disimpan.'
         });
       })["catch"](function () {
-        _this2.$notify({
+        _this3.$notify({
           group: 'foo',
           title: 'Error',
           type: 'error',
@@ -19436,10 +19485,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       });
     },
     ubahToken: function ubahToken() {
-      var _this3 = this;
+      var _this4 = this;
 
       this.rilistToken().then(function () {
-        _this3.$notify({
+        _this4.$notify({
           group: 'foo',
           title: 'Sukses',
           type: 'success',
@@ -19465,10 +19514,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }
   },
   mounted: function mounted() {
-    var _this4 = this;
+    var _this5 = this;
 
     setInterval(function () {
-      _this4.timeout++;
+      _this5.timeout++;
     }, 15 * 60000);
   }
 });
@@ -57426,6 +57475,9 @@ var render = function() {
               "router-link",
               {
                 staticClass: "c-sidebar-nav-link",
+                class: [
+                  _vm.currentPage.includes("download") ? _vm.activeClass : ""
+                ],
                 attrs: { to: { name: "download" } }
               },
               [
@@ -57449,6 +57501,11 @@ var render = function() {
               "router-link",
               {
                 staticClass: "c-sidebar-nav-link",
+                class: [
+                  _vm.currentPage.includes("peserta.data")
+                    ? _vm.activeClass
+                    : ""
+                ],
                 attrs: { to: { name: "peserta.data" } }
               },
               [
@@ -57472,6 +57529,11 @@ var render = function() {
               "router-link",
               {
                 staticClass: "c-sidebar-nav-link",
+                class: [
+                  _vm.currentPage.includes("ujian.status")
+                    ? _vm.activeClass
+                    : ""
+                ],
                 attrs: { to: { name: "ujian.status" } }
               },
               [
@@ -57495,6 +57557,11 @@ var render = function() {
               "router-link",
               {
                 staticClass: "c-sidebar-nav-link",
+                class: [
+                  _vm.currentPage.includes("ujian.peserta")
+                    ? _vm.activeClass
+                    : ""
+                ],
                 attrs: { to: { name: "ujian.peserta" } }
               },
               [
@@ -57518,6 +57585,11 @@ var render = function() {
               "router-link",
               {
                 staticClass: "c-sidebar-nav-link",
+                class: [
+                  _vm.currentPage.includes("peserta.reset")
+                    ? _vm.activeClass
+                    : ""
+                ],
                 attrs: { to: { name: "peserta.reset" } }
               },
               [
@@ -57541,6 +57613,9 @@ var render = function() {
               "router-link",
               {
                 staticClass: "c-sidebar-nav-link",
+                class: [
+                  _vm.currentPage.includes("hapus") ? _vm.activeClass : ""
+                ],
                 attrs: { to: { name: "hapus" } }
               },
               [
@@ -57816,7 +57891,7 @@ var render = function() {
                                   "span",
                                   {
                                     staticClass:
-                                      "badge badge-primary py-2 rounded-0"
+                                      "badge badge-danger py-2 rounded-0"
                                   },
                                   [_vm._v(_vm._s(_vm.identify.kode_server))]
                                 )
@@ -57863,7 +57938,7 @@ var render = function() {
                                   "span",
                                   {
                                     staticClass:
-                                      "badge badge-primary py-2 rounded-0"
+                                      "badge badge-danger py-2 rounded-0"
                                   },
                                   [_vm._v(_vm._s(_vm.identify.kode_server))]
                                 )
@@ -58668,7 +58743,8 @@ var render = function() {
                   attrs: {
                     value: _vm.hapus,
                     variant: "info",
-                    "show-progress": ""
+                    "show-progress": "",
+                    animated: ""
                   }
                 })
               ],
@@ -58754,6 +58830,7 @@ var render = function() {
                               ? 100
                               : _vm.peserta.progress,
                             variant: "info",
+                            animated: "",
                             "show-progress": ""
                           }
                         }),
@@ -58828,6 +58905,7 @@ var render = function() {
                               ? 100
                               : _vm.matpel.progress,
                             variant: "info",
+                            animated: "",
                             "show-progress": ""
                           }
                         }),
@@ -58902,6 +58980,7 @@ var render = function() {
                               ? 100
                               : _vm.banksoal.progress,
                             variant: "info",
+                            animated: "",
                             "show-progress": ""
                           }
                         }),
@@ -58974,6 +59053,7 @@ var render = function() {
                           attrs: {
                             value: _vm.identify.soal ? 100 : _vm.soal.progress,
                             variant: "info",
+                            animated: "",
                             "show-progress": ""
                           }
                         }),
@@ -59045,6 +59125,7 @@ var render = function() {
                               ? 100
                               : _vm.jawaban.progress,
                             variant: "info",
+                            animated: "",
                             "show-progress": ""
                           }
                         }),
@@ -59119,6 +59200,7 @@ var render = function() {
                               ? 100
                               : _vm.gambar.progress,
                             variant: "info",
+                            animated: "",
                             "show-progress": ""
                           }
                         }),
@@ -59171,6 +59253,81 @@ var render = function() {
                                   : _vm.gambar.step == 3,
                                 expression:
                                   "identify.gambar ? 1 : gambar.step == 3"
+                              }
+                            ]
+                          },
+                          [_vm._v("Complete")]
+                        )
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "form-group" },
+                      [
+                        _c("label", [_vm._v("Data 7")]),
+                        _vm._v(" "),
+                        _c("b-progress", {
+                          staticClass: "mt-2",
+                          attrs: {
+                            value: _vm.identify.jadwal
+                              ? 100
+                              : _vm.jadwal.progress,
+                            variant: "info",
+                            animated: "",
+                            "show-progress": ""
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c(
+                          "small",
+                          {
+                            directives: [
+                              {
+                                name: "show",
+                                rawName: "v-show",
+                                value: _vm.identify.jadwal
+                                  ? 0
+                                  : _vm.jadwal.step == 1,
+                                expression:
+                                  "identify.jadwal ? 0 : jadwal.step == 1"
+                              }
+                            ]
+                          },
+                          [_vm._v("Step 1 of 2- Download data dari pusat")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "small",
+                          {
+                            directives: [
+                              {
+                                name: "show",
+                                rawName: "v-show",
+                                value: _vm.identify.jadwal
+                                  ? 0
+                                  : _vm.jadwal.step == 2,
+                                expression:
+                                  "identify.jadwal ? 0 : jadwal.step == 2"
+                              }
+                            ]
+                          },
+                          [_vm._v("Step 2 of 2- Memasukkan adata ke database")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "small",
+                          {
+                            directives: [
+                              {
+                                name: "show",
+                                rawName: "v-show",
+                                value: _vm.identify.jadwal
+                                  ? 1
+                                  : _vm.jadwal.step == 3,
+                                expression:
+                                  "identify.jadwal ? 1 : jadwal.step == 3"
                               }
                             ]
                           },
@@ -59287,6 +59444,20 @@ var render = function() {
                         _c("td", [_vm._v("-")]),
                         _vm._v(" "),
                         _c("td", [_vm._v("...")])
+                      ]),
+                      _vm._v(" "),
+                      _c("tr", [
+                        _c("td", [_c("b", [_vm._v("Data 7")])]),
+                        _vm._v(" "),
+                        _c("td", {
+                          domProps: { textContent: _vm._s(_vm.center.jadwal) }
+                        }),
+                        _vm._v(" "),
+                        _c("td", [_vm._v("-")]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _vm._v(_vm._s(_vm.count ? _vm.count.jadwal : 0))
+                        ])
                       ])
                     ])
                   : _vm._e()
@@ -59497,7 +59668,48 @@ var render = function() {
           1
         ),
         _vm._v(" "),
-        _c("div", { staticClass: "card-footer" })
+        _c("div", { staticClass: "card-footer" }, [
+          _c(
+            "small",
+            [
+              _c("font-awesome-icon", { attrs: { icon: "hourglass" } }),
+              _vm._v("  Belum terupload ")
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c("br"),
+          _vm._v(" "),
+          _c(
+            "small",
+            [
+              _c("font-awesome-icon", {
+                staticClass: "text-success",
+                attrs: { icon: "clipboard-check" }
+              }),
+              _vm._v("  Sudah terupload ")
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c("br"),
+          _vm._v(" "),
+          _c(
+            "small",
+            [
+              _c("font-awesome-icon", {
+                staticClass: "text-info",
+                attrs: { icon: "info-circle" }
+              }),
+              _vm._v(
+                "  Hanya peserta yang berstatus selesai yang akan diupload "
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c("br")
+        ])
       ])
     ])
   ])
@@ -59580,7 +59792,7 @@ var render = function() {
                         expression: "aktif.kelompok"
                       }
                     ],
-                    staticClass: "form-control form-control-sm",
+                    staticClass: "form-control form-control-sm rounded-0",
                     on: {
                       change: function($event) {
                         var $$selectedVal = Array.prototype.filter
@@ -59607,23 +59819,7 @@ var render = function() {
                     _c("option", { attrs: { value: "2" } }, [_vm._v("2")])
                   ]
                 )
-              ]),
-              _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "col-3" },
-                [
-                  _c(
-                    "b-button",
-                    {
-                      attrs: { variant: "dark", size: "sm", squared: "" },
-                      on: { click: _vm.ubahKelompok }
-                    },
-                    [_vm._v("Atur sesi")]
-                  )
-                ],
-                1
-              )
+              ])
             ])
           ]),
           _vm._v(" "),
@@ -59643,7 +59839,7 @@ var render = function() {
                         expression: "aktif.jadwal"
                       }
                     ],
-                    staticClass: "form-control form-control-sm",
+                    staticClass: "form-control form-control-sm rounded-0",
                     on: {
                       change: function($event) {
                         var $$selectedVal = Array.prototype.filter
@@ -59678,23 +59874,7 @@ var render = function() {
                   ],
                   2
                 )
-              ]),
-              _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "col-3" },
-                [
-                  _c(
-                    "b-button",
-                    {
-                      attrs: { variant: "dark", size: "sm", squared: "" },
-                      on: { click: _vm.ubahTes }
-                    },
-                    [_vm._v("Pilih ujian")]
-                  )
-                ],
-                1
-              )
+              ])
             ])
           ]),
           _vm._v(" "),
@@ -59704,9 +59884,16 @@ var render = function() {
               _vm._v(" "),
               _c("div", { staticClass: "col-6" }, [
                 _c("input", {
-                  staticClass: "form-control form-control-sm",
+                  staticClass: "form-control form-control-sm rounded-0",
                   attrs: { type: "text", readonly: "", name: "" },
-                  domProps: { value: _vm.aktif.token + "-Interval 15 menit" }
+                  domProps: {
+                    value:
+                      _vm.aktif.token +
+                      " | 15 Menit | " +
+                      (_vm.fulled.status_token != 1
+                        ? "(Belum release)"
+                        : "(Release)")
+                  }
                 }),
                 _vm._v(" "),
                 _c("input", {
@@ -59722,6 +59909,14 @@ var render = function() {
                   _c(
                     "b-button",
                     {
+                      directives: [
+                        {
+                          name: "show",
+                          rawName: "v-show",
+                          value: _vm.fulled.status_token != 1,
+                          expression: "fulled.status_token != 1"
+                        }
+                      ],
                       attrs: { variant: "dark", size: "sm", squared: "" },
                       on: { click: _vm.ubahToken }
                     },
@@ -59731,7 +59926,23 @@ var render = function() {
                 1
               )
             ])
-          ])
+          ]),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "form-group" },
+            [
+              _c(
+                "b-button",
+                {
+                  attrs: { variant: "dark", size: "sm", squared: "" },
+                  on: { click: _vm.postStatus }
+                },
+                [_vm._v(" Simpan semua")]
+              )
+            ],
+            1
+          )
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "card-footer" })
@@ -59752,7 +59963,9 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-2" }, [_c("label", [_vm._v("Sesi")])])
+    return _c("div", { staticClass: "col-2" }, [
+      _c("label", [_vm._v("Kelompok")])
+    ])
   },
   function() {
     var _vm = this
@@ -77346,7 +77559,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var $axios = axios__WEBPACK_IMPORTED_MODULE_0___default.a.create({
-  baseURL: 'http://localhost:8000/api/',
+  baseURL: "http://localhost:8000" + '/api/',
   headers: {
     'Content-Type': 'application/json'
   }
@@ -77566,15 +77779,14 @@ __webpack_require__.r(__webpack_exports__);
 /*!*********************************************!*\
   !*** ./resources/js/components/Sidebar.vue ***!
   \*********************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Sidebar_vue_vue_type_template_id_81fbb27e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Sidebar.vue?vue&type=template&id=81fbb27e& */ "./resources/js/components/Sidebar.vue?vue&type=template&id=81fbb27e&");
 /* harmony import */ var _Sidebar_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Sidebar.vue?vue&type=script&lang=js& */ "./resources/js/components/Sidebar.vue?vue&type=script&lang=js&");
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _Sidebar_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _Sidebar_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var _Sidebar_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Sidebar.vue?vue&type=style&index=0&lang=css& */ "./resources/js/components/Sidebar.vue?vue&type=style&index=0&lang=css&");
+/* empty/unused harmony star reexport *//* harmony import */ var _Sidebar_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Sidebar.vue?vue&type=style&index=0&lang=css& */ "./resources/js/components/Sidebar.vue?vue&type=style&index=0&lang=css&");
 /* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -77606,7 +77818,7 @@ component.options.__file = "resources/js/components/Sidebar.vue"
 /*!**********************************************************************!*\
   !*** ./resources/js/components/Sidebar.vue?vue&type=script&lang=js& ***!
   \**********************************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -78017,15 +78229,14 @@ __webpack_require__.r(__webpack_exports__);
 /*!**********************************************!*\
   !*** ./resources/js/pages/sinkron/Hapus.vue ***!
   \**********************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Hapus_vue_vue_type_template_id_fea0186a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Hapus.vue?vue&type=template&id=fea0186a& */ "./resources/js/pages/sinkron/Hapus.vue?vue&type=template&id=fea0186a&");
 /* harmony import */ var _Hapus_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Hapus.vue?vue&type=script&lang=js& */ "./resources/js/pages/sinkron/Hapus.vue?vue&type=script&lang=js&");
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _Hapus_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _Hapus_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -78055,7 +78266,7 @@ component.options.__file = "resources/js/pages/sinkron/Hapus.vue"
 /*!***********************************************************************!*\
   !*** ./resources/js/pages/sinkron/Hapus.vue?vue&type=script&lang=js& ***!
   \***********************************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -78294,15 +78505,14 @@ __webpack_require__.r(__webpack_exports__);
 /*!***************************************************!*\
   !*** ./resources/js/pages/ujian/UjianStatus2.vue ***!
   \***************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _UjianStatus2_vue_vue_type_template_id_b4519bd4___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./UjianStatus2.vue?vue&type=template&id=b4519bd4& */ "./resources/js/pages/ujian/UjianStatus2.vue?vue&type=template&id=b4519bd4&");
 /* harmony import */ var _UjianStatus2_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./UjianStatus2.vue?vue&type=script&lang=js& */ "./resources/js/pages/ujian/UjianStatus2.vue?vue&type=script&lang=js&");
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _UjianStatus2_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _UjianStatus2_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -78332,7 +78542,7 @@ component.options.__file = "resources/js/pages/ujian/UjianStatus2.vue"
 /*!****************************************************************************!*\
   !*** ./resources/js/pages/ujian/UjianStatus2.vue?vue&type=script&lang=js& ***!
   \****************************************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -78794,10 +79004,21 @@ var actions = {
       });
     });
   },
-  submitPeserta: function submitPeserta(_ref2) {
-    var dispatch = _ref2.dispatch,
-        commit = _ref2.commit,
+  getPesertasLogin: function getPesertasLogin(_ref2, payload) {
+    var commit = _ref2.commit,
         state = _ref2.state;
+    var search = typeof payload != 'undefined' ? payload : '';
+    return new Promise(function (resolve, reject) {
+      _api_js__WEBPACK_IMPORTED_MODULE_0__["default"].get("/peserta-login?page=".concat(state.page, "&q=").concat(search)).then(function (response) {
+        commit('ASSIGN_DATA', response.data);
+        resolve(response.data);
+      });
+    });
+  },
+  submitPeserta: function submitPeserta(_ref3) {
+    var dispatch = _ref3.dispatch,
+        commit = _ref3.commit,
+        state = _ref3.state;
     return new Promise(function (resolve, reject) {
       _api_js__WEBPACK_IMPORTED_MODULE_0__["default"].post("/peserta", state.peserta).then(function (response) {
         dispatch('getPesertas').then(function () {
@@ -78815,8 +79036,8 @@ var actions = {
       });
     });
   },
-  removePeserta: function removePeserta(_ref3, payload) {
-    var dispatch = _ref3.dispatch;
+  removePeserta: function removePeserta(_ref4, payload) {
+    var dispatch = _ref4.dispatch;
     return new Promise(function (resolve, reject) {
       _api_js__WEBPACK_IMPORTED_MODULE_0__["default"]["delete"]("/peserta/".concat(payload)).then(function (response) {
         dispatch('getPesertas').then(function () {
@@ -78825,11 +79046,11 @@ var actions = {
       });
     });
   },
-  resetLoginPeserta: function resetLoginPeserta(_ref4, payload) {
-    var dispatch = _ref4.dispatch;
+  resetLoginPeserta: function resetLoginPeserta(_ref5, payload) {
+    var dispatch = _ref5.dispatch;
     return new Promise(function (resolve, reject) {
       _api_js__WEBPACK_IMPORTED_MODULE_0__["default"].post("/peserta/reset", payload).then(function (response) {
-        dispatch('getPesertas').then(function () {
+        dispatch('getPesertasLogin').then(function () {
           return resolve();
         });
       });
@@ -78896,6 +79117,11 @@ var state = function state() {
       step: 1,
       status: 0
     },
+    jadwal: {
+      progress: 0,
+      step: 1,
+      status: 0
+    },
     countData: '',
     hapus: 0
   };
@@ -78941,6 +79167,9 @@ var mutations = {
   UPLOAD_PROGRESS_BAR_GAMBAR: function UPLOAD_PROGRESS_BAR_GAMBAR(state, payload) {
     state.gambar.progress = payload;
   },
+  UPLOAD_PROGRESS_BAR_JADWAL: function UPLOAD_PROGRESS_BAR_JADWAL(state, payload) {
+    state.jadwal.progress = payload;
+  },
   STEP_UPLOAD_BAR_PESERTA: function STEP_UPLOAD_BAR_PESERTA(state, payload) {
     state.peserta.step = payload;
   },
@@ -78958,6 +79187,9 @@ var mutations = {
   },
   STEP_UPLOAD_BAR_GAMBAR: function STEP_UPLOAD_BAR_GAMBAR(state, payload) {
     state.gambar.step = payload;
+  },
+  STEP_UPLOAD_BAR_JADWAL: function STEP_UPLOAD_BAR_JADWAL(state, payload) {
+    state.jadwal.step = payload;
   },
   HAPUS_DATA_PROGRESS: function HAPUS_DATA_PROGRESS(state, payload) {
     state.hapus = payload;
@@ -79061,6 +79293,8 @@ var actions = {
               commit('UPLOAD_PROGRESS_BAR_JAWABAN', parseInt(Math.round(progressEvent.loaded / progressEvent.total * 50)));
             } else if (payload == 'file') {
               commit('UPLOAD_PROGRESS_BAR_GAMBAR', parseInt(Math.round(progressEvent.loaded / progressEvent.total * 50)));
+            } else if (payload == 'jadwal') {
+              commit('UPLOAD_PROGRESS_BAR_JADWAL', parseInt(Math.round(progressEvent.loaded / progressEvent.total * 50)));
             }
           }
         };
@@ -79080,6 +79314,8 @@ var actions = {
             commit('STEP_UPLOAD_BAR_JAWABAN', 2);
           } else if (payload == 'file') {
             commit('STEP_UPLOAD_BAR_GAMBAR', 2);
+          } else if (payload == 'jadwal') {
+            commit('STEP_UPLOAD_BAR_JADWAL', 2);
           }
 
           var config = {
@@ -79096,6 +79332,8 @@ var actions = {
                 commit('UPLOAD_PROGRESS_BAR_JAWABAN', parseInt(Math.round(progressEvent.loaded / progressEvent.total * 100)));
               } else if (payload == 'file') {
                 commit('UPLOAD_PROGRESS_BAR_GAMBAR', parseInt(Math.round(progressEvent.loaded / progressEvent.total * 100)));
+              } else if (payload == 'jadwal') {
+                commit('UPLOAD_PROGRESS_BAR_JADWAL', parseInt(Math.round(progressEvent.loaded / progressEvent.total * 100)));
               }
             }
           };
@@ -79112,6 +79350,8 @@ var actions = {
               commit('STEP_UPLOAD_BAR_JAWABAN', 3);
             } else if (payload == 'file') {
               commit('STEP_UPLOAD_BAR_GAMBAR', 3);
+            } else if (payload == 'jadwal') {
+              commit('STEP_UPLOAD_BAR_JADWAL', 3);
             }
           });
         });
@@ -79127,6 +79367,7 @@ var actions = {
         }
       };
       _api_js__WEBPACK_IMPORTED_MODULE_0__["default"].post('/pusat/hapus-data', payload, config).then(function (response) {
+        commit('HAPUS_DATA_PROGRESS', 100);
         resolve(response.data);
       });
     });
@@ -79248,7 +79489,9 @@ var actions = {
     return new Promise(function (resolve, reject) {
       _api_js__WEBPACK_IMPORTED_MODULE_0__["default"].post("/ujian/set-status", payload).then(function (response) {
         resolve(response.data);
-      })["catch"](function (error) {});
+      })["catch"](function (error) {
+        reject(error);
+      });
     });
   },
   changeToken: function changeToken(_ref5, payload) {
@@ -79328,9 +79571,29 @@ var actions = {
       });
     });
   },
-  rilistToken: function rilistToken(_ref11, payload) {
-    var dispatch = _ref11.dispatch,
-        state = _ref11.state;
+  simpanStatus: function simpanStatus(_ref11, payload) {
+    var state = _ref11.state,
+        dispatch = _ref11.dispatch;
+    return new Promise(function (resolve, reject) {
+      var data = {
+        jadwal: state.ujianAktif.jadwal,
+        kelompok: state.ujianAktif.kelompok
+      };
+      _api_js__WEBPACK_IMPORTED_MODULE_0__["default"].post("/ujian/simpan-status", data).then(function (response) {
+        if (response.data.status == 'OK') {
+          dispatch('getUjianAktif').then(function () {
+            return resolve();
+          });
+        } else {
+          dispatch('getUjianAktif');
+          reject(response.data);
+        }
+      });
+    });
+  },
+  rilistToken: function rilistToken(_ref12, payload) {
+    var dispatch = _ref12.dispatch,
+        state = _ref12.state;
     return new Promise(function (resolve, reject) {
       _api_js__WEBPACK_IMPORTED_MODULE_0__["default"].post("/ujian/rilis-token", {
         token: state.ujianAktif.token
@@ -79341,9 +79604,9 @@ var actions = {
       });
     });
   },
-  uploadNilai: function uploadNilai(_ref12, payload) {
-    var dispatch = _ref12.dispatch,
-        state = _ref12.state;
+  uploadNilai: function uploadNilai(_ref13, payload) {
+    var dispatch = _ref13.dispatch,
+        state = _ref13.state;
     return new Promise(function (resolve, reject) {
       _api_js__WEBPACK_IMPORTED_MODULE_0__["default"].get("/pusat/upload-hasil").then(function (response) {
         dispatch('getAllPeserta').then(function () {

@@ -44,6 +44,16 @@ const actions = {
 			})
 		})
 	},
+	getPesertasLogin({ commit, state }, payload) {
+		let search = typeof payload != 'undefined' ? payload : ''
+		return new Promise(( resolve, reject ) => {
+			$axios.get(`/peserta-login?page=${state.page}&q=${search}`)
+			.then((response) => {
+				commit('ASSIGN_DATA', response.data)
+				resolve(response.data)
+			})
+		})
+	},
 	submitPeserta({ dispatch, commit, state }) {
 		return new Promise((resolve, reject) => {
 			$axios.post(`/peserta`, state.peserta)
@@ -72,7 +82,7 @@ const actions = {
 		return new Promise((resolve, reject) => {
 			$axios.post(`/peserta/reset`,payload)
 			.then((response) => {
-				dispatch('getPesertas').then(() => resolve())
+				dispatch('getPesertasLogin').then(() => resolve())
 			})
 		})
 	}

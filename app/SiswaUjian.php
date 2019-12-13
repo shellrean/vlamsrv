@@ -15,7 +15,7 @@ class SiswaUjian extends Model
     public function getStatusAttribute()
     {
     	if($this->status_ujian == '0') {
-    		$res = 'Belum mulia';
+    		$res = 'Belum mulai';
     	}
     	elseif($this->status_ujian == '3') {
     		$res = 'Sedang mengerjakan';

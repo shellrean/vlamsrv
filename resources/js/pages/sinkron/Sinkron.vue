@@ -11,45 +11,52 @@
             		<div class="card-body" v-if="identify">
             			<div class="form-group">
             				<label>Data 1</label>
-            				<b-progress :value="identify.peserta ? 100 : peserta.progress" variant="info" show-progress class="mt-2"></b-progress>
+            				<b-progress :value="identify.peserta ? 100 : peserta.progress" variant="info" animated show-progress class="mt-2"></b-progress>
             				<small v-show="identify.peserta ? 0 : peserta.step == 1">Step 1 of 2- Download data dari pusat</small>
             				<small v-show="identify.peserta ? 0 : peserta.step == 2">Step 2 of 2- Memasukkan adata ke database</small>
             				<small v-show="identify.peserta ? 1 : peserta.step == 3">Complete</small>
             			</div>
             			<div class="form-group">
             				<label>Data 2</label>
-            				<b-progress :value="identify.matpel ? 100 : matpel.progress" variant="info" show-progress class="mt-2"></b-progress>
+            				<b-progress :value="identify.matpel ? 100 : matpel.progress" variant="info" animated show-progress class="mt-2"></b-progress>
             				<small v-show="identify.matpel ? 0 : matpel.step == 1">Step 1 of 2- Download data dari pusat</small>
             				<small v-show="identify.matpel ? 0 : matpel.step == 2">Step 2 of 2- Memasukkan adata ke database</small>
             				<small v-show="identify.matpel ? 1 : matpel.step == 3">Complete</small>
             			</div>
             			<div class="form-group">
             				<label>Data 3</label>
-            				<b-progress :value="identify.banksoal ? 100 : banksoal.progress" variant="info" show-progress class="mt-2"></b-progress>
+            				<b-progress :value="identify.banksoal ? 100 : banksoal.progress" variant="info" animated show-progress class="mt-2"></b-progress>
             				<small v-show="identify.banksoal ? 0 : banksoal.step == 1">Step 1 of 2- Download data dari pusat</small>
             				<small v-show="identify.banksoal ? 0 : banksoal.step == 2">Step 2 of 2- Memasukkan adata ke database</small>
             				<small v-show="identify.banksoal ? 1 : banksoal.step == 3">Complete</small>
             			</div>
             			<div class="form-group">
             				<label>Data 4</label>
-            				<b-progress :value="identify.soal ? 100 : soal.progress" variant="info" show-progress  class="mt-2"></b-progress>
+            				<b-progress :value="identify.soal ? 100 : soal.progress" variant="info" animated show-progress  class="mt-2"></b-progress>
             				<small v-show="identify.soal ? 0 : soal.step == 1">Step 1 of 2- Download data dari pusat</small>
             				<small v-show="identify.soal ? 0 : soal.step == 2">Step 2 of 2- Memasukkan adata ke database</small>
             				<small v-show="identify.soal ? 1 : soal.step == 3">Complete</small>
             			</div>
             			<div class="form-group">
             				<label>Data 5</label>
-            				<b-progress :value="identify.pilihan_soal ? 100 : jawaban.progress" variant="info" show-progress  class="mt-2"></b-progress>
+            				<b-progress :value="identify.pilihan_soal ? 100 : jawaban.progress" variant="info" animated show-progress  class="mt-2"></b-progress>
             				<small v-show="identify.pilihan_soal ? 0 : jawaban.step == 1">Step 1 of 2- Download data dari pusat</small>
             				<small v-show="identify.pilihan_soal ? 0 : jawaban.step == 2">Step 2 of 2- Memasukkan adata ke database</small>
             				<small v-show="identify.pilihan_soal ? 1 : jawaban.step == 3">Complete</small>
             			</div>
             			<div class="form-group">
             				<label>Data 6</label>
-            				<b-progress :value="identify.gambar ? 100 : gambar.progress" variant="info" show-progress  class="mt-2"></b-progress>
+            				<b-progress :value="identify.gambar ? 100 : gambar.progress" variant="info" animated show-progress  class="mt-2"></b-progress>
             				<small v-show="identify.gambar ? 0 : gambar.step == 1">Step 1 of 2- Download data dari pusat</small>
             				<small v-show="identify.gambar ? 0 : gambar.step == 2">Step 2 of 2- Memasukkan adata ke database</small>
             				<small v-show="identify.gambar ? 1 : gambar.step == 3">Complete</small>
+            			</div>
+            			<div class="form-group">
+            				<label>Data 7</label>
+            				<b-progress :value="identify.jadwal ? 100 : jadwal.progress" variant="info" animated show-progress  class="mt-2"></b-progress>
+            				<small v-show="identify.jadwal ? 0 : jadwal.step == 1">Step 1 of 2- Download data dari pusat</small>
+            				<small v-show="identify.jadwal ? 0 : jadwal.step == 2">Step 2 of 2- Memasukkan adata ke database</small>
+            				<small v-show="identify.jadwal ? 1 : jadwal.step == 3">Complete</small>
             			</div>
             		</div>
             		<div class="card-footer"></div>
@@ -100,6 +107,12 @@
 		    			<td>-</td>
 		    			<td>...</td>
 		    		</tr>
+		    		<tr>
+		    			<td><b>Data 7</b></td>
+		    			<td v-text="center.jadwal"></td>
+		    			<td>-</td>
+		    			<td>{{ count ? count.jadwal : 0 }}</td>
+		    		</tr>
 		    	</table>
 		    </template>
 
@@ -131,8 +144,9 @@ export default {
 			soal: state => state.soal,
 			jawaban: state => state.jawaban,
 			gambar: state => state.gambar,
+			jadwal: state => state.jadwal,
 			count: state => state.countData.data,
-			identify: state => state.identify.data
+			identify: state => state.identify.data,
 		})
 	},
 	data() {
@@ -178,6 +192,9 @@ export default {
 			}
 			if(this.identify.gambar == 0) {
 				this.cbtSync('file')
+			}
+			if(this.identify.jadwal == 0) {
+				this.cbtSync('jadwal')
 			}
 		},
 		sinkronData() {

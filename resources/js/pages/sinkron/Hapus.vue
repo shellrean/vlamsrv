@@ -9,7 +9,7 @@
             		</div>
                     <div class="card-body">
                         <b-button squared size="sm" variant="info" @click="hapusData">Hapus</b-button> <br>
-                        <b-progress :value="hapus" variant="info" show-progress class="mt-2"></b-progress>
+                        <b-progress :value="hapus" variant="info" show-progress animated class="mt-2"></b-progress>
                     </div>
             	</div>
             </div>

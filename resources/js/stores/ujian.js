@@ -81,7 +81,7 @@ const actions = {
 				resolve(response.data)
 			})
 			.catch((error) => {
-				
+				reject(error)
 			})
 		})
 	},
@@ -140,6 +140,24 @@ const actions = {
 	pilihTest({ dispatch, state }, payload) {
 		return new Promise((resolve, reject) => {
 			$axios.post(`/ujian/ubah-test`, { jadwal: state.ujianAktif.jadwal })
+			.then((response) => {
+				if(response.data.status == 'OK') {
+					dispatch('getUjianAktif').then(() => resolve())
+				}
+				else {
+					dispatch('getUjianAktif')
+					reject(response.data)
+				}
+			})
+		})
+	},
+	simpanStatus({ state, dispatch }, payload) {
+		return new Promise((resolve, reject) => {
+			const data = {
+				jadwal: state.ujianAktif.jadwal,
+				kelompok: state.ujianAktif.kelompok
+			}
+			$axios.post(`/ujian/simpan-status`, data)
 			.then((response) => {
 				if(response.data.status == 'OK') {
 					dispatch('getUjianAktif').then(() => resolve())
