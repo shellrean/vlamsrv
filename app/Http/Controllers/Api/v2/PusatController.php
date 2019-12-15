@@ -27,6 +27,11 @@ use DB;
 
 class PusatController extends Controller
 {
+    /**
+     * Get server lokal identify
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function sinkron(Request $request)
     {
      $server = IdentifyServer::first();
@@ -137,19 +142,19 @@ class PusatController extends Controller
     {
     	ob_start();  
 
-		system('ipconfig /all');  
+		  system('ipconfig /all');  
 		
-		$mycom=ob_get_contents();  
-		ob_clean();  
+		  $mycom=ob_get_contents();  
+		  ob_clean();  
 		 
-		$findme = "Physical";  
-		$pmac = strpos($mycom, $findme);  
+		  $findme = "Physical";  
+		  $pmac = strpos($mycom, $findme);  
 		
-		$mac=substr($mycom,($pmac+36),17);  
+		  $mac=substr($mycom,($pmac+36),17);  
 	  
-		$list = strtoupper(md5($mac));
+		  $list = strtoupper(md5($mac));
 
-		return response()->json(['data' => $list]);  
+		  return response()->json(['data' => $list]);  
     }
 
     /**
@@ -193,31 +198,30 @@ class PusatController extends Controller
 
   		$ch = curl_init();
 
-		curl_setopt($ch, CURLOPT_URL,"$hostname/api/pusat/register-server");
-		curl_setopt($ch, CURLOPT_POST, 1);
-		curl_setopt($ch, CURLOPT_POSTFIELDS,
-		            "server_name=$kode_server&serial_number=$serial_number");
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		  curl_setopt($ch, CURLOPT_URL,"$hostname/api/pusat/register-server");
+		  curl_setopt($ch, CURLOPT_POST, 1);
+		  curl_setopt($ch, CURLOPT_POSTFIELDS,"server_name=$kode_server&serial_number=$serial_number");
+		  curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
-		$server_output = curl_exec($ch);
-		$deco = json_decode( $server_output, true );
-		curl_close ($ch);
+		  $server_output = curl_exec($ch);
+		  $deco = json_decode( $server_output, true );
+		  curl_close ($ch);
 
-		if($deco['status'] == 'error') {
-			return response()->json(['status' => 'serial_number pada server sudah ada']);
-		}
+      if($deco['status'] == 'error') {
+        return response()->json(['status' => 'serial_number pada server sudah ada']);
+      }
 
   		IdentifyServer::create([
   			'serial_number'		=> $serial_number,
-  			'kode_server'		=> $kode_server,
-  			'isregister'		=> 1 
+  			'kode_server'		  => $kode_server,
+  			'isregister'		  => 1 
   		]);
 
   		User::create([
   			'name'				=> 'Administrator',
-  			'email'				=> 'admin@shellrean.com',
+  			'email'				=> 'admin@administrator.com',
   			'password'			=> bcrypt($data['server']['password'])
-  		]);	
+  		]);
 
     	return response()->json(['status' => 'register berhasil']);
     }
@@ -236,6 +240,10 @@ class PusatController extends Controller
           'status_ujian' => 1
         ])->with('hasil')->get();
 
+        $esay = JawabanPeserta::where([
+          'jadwal_id' => $ujian->ujian_id
+        ])->where('jawab_essy', '!=',null)->get();
+
         $identify = IdentifyServer::first();
 
         $ch = curl_init();
@@ -244,7 +252,7 @@ class PusatController extends Controller
         curl_setopt($ch, CURLOPT_URL,"$hostname/api/pusat/upload-hasil");
         curl_setopt($ch, CURLOPT_POST, 1);
         curl_setopt($ch, CURLOPT_POSTFIELDS,
-                    "server_name=$identify->kode_server&req=$siswa_ujian");
+                    "server_name=$identify->kode_server&req=$siswa_ujian&esay=$esay");
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
         $server_output = curl_exec($ch);
@@ -262,7 +270,7 @@ class PusatController extends Controller
           }
         }
 
-        return response()->json(['data' => $deco]);
+        return response()->json(['data' => $esay,'uj' => $siswa_ujian]);
     }
 
     public function checkData()

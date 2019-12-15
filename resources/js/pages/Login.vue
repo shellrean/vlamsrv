@@ -15,7 +15,7 @@
             <div class="input-group mb-3">
               <div class="input-group-prepend">
                 <span class="input-group-text rounded-0">
-                  Nomor seri
+                  <font-awesome-icon icon="passport" />
                 </span>
               </div>
               <input class="form-control" readonly v-model="serial.data">
@@ -23,10 +23,10 @@
             <div class="input-group mb-3">
               <div class="input-group-prepend">
                 <span class="input-group-text rounded-0">
-                  <font-awesome-icon icon="envelope" />
+                  <font-awesome-icon icon="server" />
                 </span>
               </div>
-              <input class="form-control" :class="{ 'is-invalid' : errors.email }" type="email" placeholder="Email" v-model="data.email" @keyup="clearError">
+              <input class="form-control" :class="{ 'is-invalid' : errors.email }" type="text" placeholder="ID Server" v-model="data.email" @keyup="clearError">
               <div class="invalid-feedback" v-if="errors.email">{{ errors.email[0] }}</div>
             </div>
             <div class="input-group mb-4">
@@ -43,13 +43,13 @@
               Login
             </b-button>
           </div>
-          <div v-else="install.status == 'installed'">
+          <div v-else>
             <div class="alert alert-danger rounded-0" v-if="errors.invalid">{{ errors.invalid }}</div>
             <p class="text-muted">Selamat datang di aplikasi Vlam-Sys. masukkan ID Server dan password</p>
             <div class="input-group mb-3">
               <div class="input-group-prepend">
                 <span class="input-group-text rounded-0">
-                  Nomor seri
+                  <font-awesome-icon icon="passport" />
                 </span>
               </div>
               <input class="form-control" readonly v-model="serial.data">
@@ -130,7 +130,12 @@ export default {
       this.SET_LOADING(true)
       this.registerServer({ server: this.server, serial: this.serial })
       .then(() => {
-
+        this.$notify({
+		        group: 'foo',
+		        title: 'Sukses',
+		        type: 'success',
+		        text: 'Registrasi server berhasil.'
+		    })
       })
     },
     clearError() {

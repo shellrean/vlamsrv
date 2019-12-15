@@ -18493,11 +18493,20 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       });
     },
     postSubmit: function postSubmit() {
+      var _this2 = this;
+
       this.SET_LOADING(true);
       this.registerServer({
         server: this.server,
         serial: this.serial
-      }).then(function () {});
+      }).then(function () {
+        _this2.$notify({
+          group: 'foo',
+          title: 'Sukses',
+          type: 'success',
+          text: 'Registrasi server berhasil.'
+        });
+      });
     },
     clearError: function clearError() {
       this.CLEAR_ERRORS();
@@ -58019,7 +58028,18 @@ var render = function() {
                       ]),
                       _vm._v(" "),
                       _c("div", { staticClass: "input-group mb-3" }, [
-                        _vm._m(2),
+                        _c("div", { staticClass: "input-group-prepend" }, [
+                          _c(
+                            "span",
+                            { staticClass: "input-group-text rounded-0" },
+                            [
+                              _c("font-awesome-icon", {
+                                attrs: { icon: "passport" }
+                              })
+                            ],
+                            1
+                          )
+                        ]),
                         _vm._v(" "),
                         _c("input", {
                           directives: [
@@ -58051,7 +58071,7 @@ var render = function() {
                             { staticClass: "input-group-text rounded-0" },
                             [
                               _c("font-awesome-icon", {
-                                attrs: { icon: "envelope" }
+                                attrs: { icon: "server" }
                               })
                             ],
                             1
@@ -58069,7 +58089,7 @@ var render = function() {
                           ],
                           staticClass: "form-control",
                           class: { "is-invalid": _vm.errors.email },
-                          attrs: { type: "email", placeholder: "Email" },
+                          attrs: { type: "text", placeholder: "ID Server" },
                           domProps: { value: _vm.data.email },
                           on: {
                             keyup: _vm.clearError,
@@ -58194,7 +58214,18 @@ var render = function() {
                       ]),
                       _vm._v(" "),
                       _c("div", { staticClass: "input-group mb-3" }, [
-                        _vm._m(3),
+                        _c("div", { staticClass: "input-group-prepend" }, [
+                          _c(
+                            "span",
+                            { staticClass: "input-group-text rounded-0" },
+                            [
+                              _c("font-awesome-icon", {
+                                attrs: { icon: "passport" }
+                              })
+                            ],
+                            1
+                          )
+                        ]),
                         _vm._v(" "),
                         _c("input", {
                           directives: [
@@ -58379,26 +58410,6 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", [_c("h4", [_vm._v("Vlam-Srv Login")])])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "input-group-prepend" }, [
-      _c("span", { staticClass: "input-group-text rounded-0" }, [
-        _vm._v("\n                Nomor seri\n              ")
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "input-group-prepend" }, [
-      _c("span", { staticClass: "input-group-text rounded-0" }, [
-        _vm._v("\n                Nomor seri\n              ")
-      ])
-    ])
   }
 ]
 render._withStripped = true
@@ -77420,8 +77431,14 @@ $axios.interceptors.response.use(function (response) {
   return response;
 }, function (error) {
   if (error.response.status == 401) {
-    _router_js__WEBPACK_IMPORTED_MODULE_2__["default"].push({
-      name: 'login'
+    new Promise(function (resolve, reject) {
+      localStorage.removeItem('token');
+      resolve();
+    }).then(function () {
+      _store_js__WEBPACK_IMPORTED_MODULE_1__["default"].state.token = localStorage.getItem('token');
+      _router_js__WEBPACK_IMPORTED_MODULE_2__["default"].push({
+        name: 'login'
+      });
     });
   }
 
@@ -77533,7 +77550,8 @@ _fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_1__["library"].add({
   faHourglass: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__["faHourglass"],
   faCheckDouble: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__["faCheckDouble"],
   faClipboardCheck: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__["faClipboardCheck"],
-  faCog: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__["faCog"]
+  faCog: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__["faCog"],
+  faPassport: _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_2__["faPassport"]
 });
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('font-awesome-icon', _fortawesome_vue_fontawesome__WEBPACK_IMPORTED_MODULE_3__["FontAwesomeIcon"]);
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -79249,6 +79267,9 @@ var actions = {
     var commit = _ref6.commit;
     return new Promise(function (resolve, reject) {
       _api_js__WEBPACK_IMPORTED_MODULE_0__["default"].post("/pusat/register-server", payload).then(function (response) {
+        commit('SET_LOADING', false, {
+          root: true
+        });
         resolve(response.data);
       });
     });

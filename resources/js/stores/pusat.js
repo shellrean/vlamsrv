@@ -169,6 +169,7 @@ const actions = {
 		return new Promise((resolve, reject) => {
 			$axios.post(`/pusat/register-server`, payload)
 			.then((response) => {
+				commit('SET_LOADING',false, { root: true })
 				resolve(response.data)
 			})
 		})

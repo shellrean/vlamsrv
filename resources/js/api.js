@@ -19,12 +19,18 @@ $axios.interceptors.request.use (
 )
 
 $axios.interceptors.response.use((response) => {
-  return response
-}, (error) => {
-  if (error.response.status == 401) {
-   router.push({ name: 'login' })
-  }
-  return Promise.reject(error);
-})
+	return response
+  }, (error) => {
+	if (error.response.status == 401) {
+	  new Promise((resolve, reject) => {
+		  localStorage.removeItem('token')
+		  resolve()
+	  }).then(() => {
+		  store.state.token = localStorage.getItem('token')
+		  router.push({ name: 'login' })
+	  })
+	}
+	return Promise.reject(error);
+  })
 
 export default $axios
