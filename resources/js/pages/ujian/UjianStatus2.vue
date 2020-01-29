@@ -39,7 +39,7 @@
 							<div class="col-6">
 								<select class="form-control form-control-sm rounded-0" v-model="aktif.jadwal">
 									<option>Pilih</option>
-									<option v-for="ujian in ujians.data" v-text="ujian.banksoal.kode_banksoal" :value="ujian.id"></option>
+									<option v-for="ujian in ujians.data" :value="ujian.id">{{ ( ujian.banksoal_id != '0' ? ujian.banksoal.kode_banksoal : 'Produktif' ) }}</option>
 								</select>
 							</div>
 						</div>

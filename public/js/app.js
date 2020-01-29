@@ -59875,12 +59875,15 @@ var render = function() {
                     _c("option", [_vm._v("Pilih")]),
                     _vm._v(" "),
                     _vm._l(_vm.ujians.data, function(ujian) {
-                      return _c("option", {
-                        domProps: {
-                          value: ujian.id,
-                          textContent: _vm._s(ujian.banksoal.kode_banksoal)
-                        }
-                      })
+                      return _c("option", { domProps: { value: ujian.id } }, [
+                        _vm._v(
+                          _vm._s(
+                            ujian.banksoal_id != "0"
+                              ? ujian.banksoal.kode_banksoal
+                              : "Produktif"
+                          )
+                        )
+                      ])
                     })
                   ],
                   2
@@ -77577,7 +77580,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var $axios = axios__WEBPACK_IMPORTED_MODULE_0___default.a.create({
-  baseURL: "http://localhost:8000" + '/api/',
+  baseURL: "http://localhost:8003" + '/api/',
   headers: {
     'Content-Type': 'application/json'
   }
@@ -79801,8 +79804,8 @@ var actions = {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\data.center.laravel\vlamsrv\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! D:\data.center.laravel\vlamsrv\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! E:\data.center.laravel\vlamsrv\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! E:\data.center.laravel\vlamsrv\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

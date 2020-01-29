@@ -184,7 +184,8 @@ class PusatController extends Controller
      */
     public function registerServer(Request $request)
     {
-    	$hostname = env("SERVER_CENTER");
+      $hostname = env("SERVER_CENTER");
+    
     	$data = $request->all();
 
     	$identify = IdentifyServer::first();
