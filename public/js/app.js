@@ -58812,14 +58812,22 @@ var render = function() {
                 "div",
                 { staticClass: "card-header" },
                 [
-                  _c(
-                    "b-button",
-                    {
-                      attrs: { size: "sm", squared: "", variant: "light" },
-                      on: { click: _vm.syncData }
-                    },
-                    [_vm._v("Mulai sync")]
-                  ),
+                  !_vm.identify.peserta ||
+                  _vm.identify.matpel ||
+                  _vm.identify.banksoal ||
+                  !_vm.identify.soal ||
+                  !_vm.identify.pilihan_soal ||
+                  !_vm.identify.gambar ||
+                  !_vm.identify.jadwal
+                    ? _c(
+                        "b-button",
+                        {
+                          attrs: { size: "sm", squared: "", variant: "light" },
+                          on: { click: _vm.syncData }
+                        },
+                        [_vm._v("Mulai sync")]
+                      )
+                    : _vm._e(),
                   _vm._v(" "),
                   _c(
                     "b-button",

@@ -5,7 +5,7 @@
             <div class="fade-in">
             	<div class="card">
             		<div class="card-header">
-            			<b-button size="sm" squared variant="light" @click="syncData">Mulai sync</b-button> 
+            			<b-button size="sm" squared variant="light" @click="syncData" v-if="!identify.peserta || identify.matpel || identify.banksoal || !identify.soal || !identify.pilihan_soal || !identify.gambar || !identify.jadwal">Mulai sync</b-button>
             			<b-button size="sm" squared variant="primary" @click="$bvModal.show('modal-selesai')">Refresh status</b-button>
             		</div>
             		<div class="card-body" v-if="identify">
