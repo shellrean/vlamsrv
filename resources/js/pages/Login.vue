@@ -26,7 +26,7 @@
                   <font-awesome-icon icon="server" />
                 </span>
               </div>
-              <input class="form-control" :class="{ 'is-invalid' : errors.username }" type="text" placeholder="ID Server" v-model="data.username" @keyup="clearError">
+              <input class="form-control" :class="{ 'is-invalid' : errors.username }" type="text" placeholder="ID Server" v-model="data.username" @keyup="clearError" readonly="">
               <div class="invalid-feedback" v-if="errors.username">{{ errors.username[0] }}</div>
             </div>
             <div class="input-group mb-4">
@@ -88,7 +88,7 @@ export default {
   data() {
     return {
       data: {
-        email: '',
+        username: '',
         password: ''
       },
       server: {
@@ -148,6 +148,9 @@ export default {
   watch: {
     serial() {
       this.getStatusInstal(this.serial)
+    },
+    install() {
+      this.data.username = this.install.username
     }
   }
 }

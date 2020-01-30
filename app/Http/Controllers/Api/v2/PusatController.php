@@ -101,36 +101,36 @@ class PusatController extends Controller
      */
     public function connect()
     {
-    	$hostname = env("SERVER_CENTER");
+    	$hostname = "http://45.251.72.66";
 
     	$server = IdentifyServer::first();
     	$ch = curl_init();
 
-		curl_setopt($ch, CURLOPT_URL,"$hostname/api/pusat/connect");
-		curl_setopt($ch, CURLOPT_POST, 1);
-		curl_setopt($ch, CURLOPT_POSTFIELDS,
-		            "server_name=$server->kode_server&serial_number=$server->serial_number");
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+  		curl_setopt($ch, CURLOPT_URL,"$hostname/api/pusat/connect");
+  		curl_setopt($ch, CURLOPT_POST, 1);
+  		curl_setopt($ch, CURLOPT_POSTFIELDS,
+  		            "server_name=$server->kode_server&serial_number=$server->serial_number");
+  		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
-		$server_output = curl_exec($ch);
+  		$server_output = curl_exec($ch);
 
-		if(!$server_output) {
-			return response()->json(['data' => 'unconnect']);
-		}
-		
-		$deco = json_decode( $server_output, true );
+  		if(!$server_output) {
+  			return response()->json(['data' => 'unconnect']);
+  		}
+  		
+  		$deco = json_decode( $server_output, true );
 
-		if($deco['data'] == 'unregistered') {
-			return response()->json(['data' => 'unregistered']);
-		}
+  		if($deco['data'] == 'unregistered') {
+  			return response()->json(['data' => 'unregistered']);
+  		}
 
-        if($deco['data'] == 'block') {
-            return response()->json(['data' => 'block']);
-        }
+          if($deco['data'] == 'block') {
+              return response()->json(['data' => 'block']);
+          }
 
-		curl_close ($ch);
+  		curl_close ($ch);
 
-		return response()->json($deco);
+  		return response()->json($deco);
     }
 
     /**
@@ -170,7 +170,7 @@ class PusatController extends Controller
     		if($dentify->serial_number != $request->data) {
     			return response()->json(['status' => 'uninstalled']);
     		}
-    		return response()->json(['status' => 'installed']);
+    		return response()->json(['status' => 'installed', 'username' => $dentify->kode_server]);
     	}
 
     	return response()->json(['status' => 'uninstalled']);
@@ -184,7 +184,7 @@ class PusatController extends Controller
      */
     public function registerServer(Request $request)
     {
-      $hostname = env("SERVER_CENTER");
+      $hostname = "http://45.251.72.66";
     
     	$data = $request->all();
 
@@ -228,6 +228,8 @@ class PusatController extends Controller
   			'email'				=> 'admin@administrator.com',
   			'password'			=> bcrypt($deco['password'])
   		]);
+
+      // return response()->json(['status' => $deco['password'], 'type' => 'success']);
 
     	return response()->json(['status' => 'Register berhasil, refresh browser dan login kembali', 'type' => 'success']);
     }
