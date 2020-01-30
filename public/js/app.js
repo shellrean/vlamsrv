@@ -77584,7 +77584,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var $axios = axios__WEBPACK_IMPORTED_MODULE_0___default.a.create({
-  baseURL: "http://localhost:8003" + '/api/',
+  baseURL: "http://45.251.72.66" + '/api/',
   headers: {
     'Content-Type': 'application/json'
   }
