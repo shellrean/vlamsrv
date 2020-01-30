@@ -26,8 +26,8 @@
                   <font-awesome-icon icon="server" />
                 </span>
               </div>
-              <input class="form-control" :class="{ 'is-invalid' : errors.email }" type="text" placeholder="ID Server" v-model="data.email" @keyup="clearError">
-              <div class="invalid-feedback" v-if="errors.email">{{ errors.email[0] }}</div>
+              <input class="form-control" :class="{ 'is-invalid' : errors.username }" type="text" placeholder="ID Server" v-model="data.username" @keyup="clearError">
+              <div class="invalid-feedback" v-if="errors.username">{{ errors.username[0] }}</div>
             </div>
             <div class="input-group mb-4">
               <div class="input-group-prepend rounded-0">
@@ -60,7 +60,7 @@
                   <font-awesome-icon icon="server" />
                 </span>
               </div>
-              <input class="form-control" :class="{ 'is-invalid' : errors.id_server }" type="email" placeholder="ID Server" v-model="server.id_server" @keyup="clearError">
+              <input class="form-control" :class="{ 'is-invalid' : errors.id_server }" type="text" placeholder="ID Server" v-model="server.id_server" @keyup="clearError">
               <div class="invalid-feedback" v-if="errors.id_server">{{ errors.id_server[0] }}</div>
             </div>
             <div class="input-group mb-4">
@@ -129,12 +129,12 @@ export default {
     postSubmit() {
       this.SET_LOADING(true)
       this.registerServer({ server: this.server, serial: this.serial })
-      .then(() => {
+      .then((res) => {
         this.$notify({
 		        group: 'foo',
-		        title: 'Sukses',
-		        type: 'success',
-		        text: 'Registrasi server berhasil.'
+		        title: res.type,
+		        type: res.type,
+		        text: res.status
 		    })
       })
     },

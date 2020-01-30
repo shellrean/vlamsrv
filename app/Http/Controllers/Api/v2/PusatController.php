@@ -191,17 +191,18 @@ class PusatController extends Controller
     	$identify = IdentifyServer::first();
   	
   		if($identify) {
-  			return response()->json(['status' => 'lock']);
+  			return response()->json(['status' => 'This device has been locked', 'type' => 'danger']);
   		}
 
   		$kode_server  = $data['server']['id_server'];
-  		$serial_number = $data['serial']['data'];
+      $serial_number = $data['serial']['data'];
+      $password = $data['server']['password'];
 
   		$ch = curl_init();
 
 		  curl_setopt($ch, CURLOPT_URL,"$hostname/api/pusat/register-server");
 		  curl_setopt($ch, CURLOPT_POST, 1);
-		  curl_setopt($ch, CURLOPT_POSTFIELDS,"server_name=$kode_server&serial_number=$serial_number");
+		  curl_setopt($ch, CURLOPT_POSTFIELDS,"server_name=$kode_server&serial_number=$serial_number&password=$password");
 		  curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
 		  $server_output = curl_exec($ch);
@@ -209,22 +210,26 @@ class PusatController extends Controller
 		  curl_close ($ch);
 
       if($deco['status'] == 'error') {
-        return response()->json(['status' => 'serial_number pada server sudah ada']);
+        return response()->json(['status' => 'Akses ditolak, servername telah teregister pdata server pusat','type' => 'error']);
+      }
+      else if($deco['status'] == 'notfound') {
+        return response()->json(['status' => 'Name server tidak ditemukan pada server pusat', 'type' => 'error']);
       }
 
   		IdentifyServer::create([
   			'serial_number'		=> $serial_number,
   			'kode_server'		  => $kode_server,
-  			'isregister'		  => 1 
+  			'isregister'		  => 1
   		]);
 
   		User::create([
-  			'name'				=> 'Administrator',
+        'name'				=> 'Administrator',
+        'username'  => $kode_server,
   			'email'				=> 'admin@administrator.com',
-  			'password'			=> bcrypt($data['server']['password'])
+  			'password'			=> bcrypt($deco['password'])
   		]);
 
-    	return response()->json(['status' => 'register berhasil']);
+    	return response()->json(['status' => 'Register berhasil, refresh browser dan login kembali', 'type' => 'success']);
     }
 
     /**

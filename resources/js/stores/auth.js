@@ -22,7 +22,7 @@ const actions = {
 					commit('SET_LOADING', false, { root: true })
 				}
 				else {
-					commit('SET_ERRORS', { invalid: 'Email/Password salah'}, { root: true })
+					commit('SET_ERRORS', { invalid: 'Server Name/Password salah'}, { root: true })
 					commit('SET_LOADING', false, { root: true })
 				}
 				resolve(response.data)

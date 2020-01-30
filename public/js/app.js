@@ -18499,12 +18499,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.registerServer({
         server: this.server,
         serial: this.serial
-      }).then(function () {
+      }).then(function (res) {
         _this2.$notify({
           group: 'foo',
-          title: 'Sukses',
-          type: 'success',
-          text: 'Registrasi server berhasil.'
+          title: res.type,
+          type: res.type,
+          text: res.status
         });
       });
     },
@@ -58083,28 +58083,32 @@ var render = function() {
                             {
                               name: "model",
                               rawName: "v-model",
-                              value: _vm.data.email,
-                              expression: "data.email"
+                              value: _vm.data.username,
+                              expression: "data.username"
                             }
                           ],
                           staticClass: "form-control",
-                          class: { "is-invalid": _vm.errors.email },
+                          class: { "is-invalid": _vm.errors.username },
                           attrs: { type: "text", placeholder: "ID Server" },
-                          domProps: { value: _vm.data.email },
+                          domProps: { value: _vm.data.username },
                           on: {
                             keyup: _vm.clearError,
                             input: function($event) {
                               if ($event.target.composing) {
                                 return
                               }
-                              _vm.$set(_vm.data, "email", $event.target.value)
+                              _vm.$set(
+                                _vm.data,
+                                "username",
+                                $event.target.value
+                              )
                             }
                           }
                         }),
                         _vm._v(" "),
-                        _vm.errors.email
+                        _vm.errors.username
                           ? _c("div", { staticClass: "invalid-feedback" }, [
-                              _vm._v(_vm._s(_vm.errors.email[0]))
+                              _vm._v(_vm._s(_vm.errors.username[0]))
                             ])
                           : _vm._e()
                       ]),
@@ -58275,7 +58279,7 @@ var render = function() {
                           ],
                           staticClass: "form-control",
                           class: { "is-invalid": _vm.errors.id_server },
-                          attrs: { type: "email", placeholder: "ID Server" },
+                          attrs: { type: "text", placeholder: "ID Server" },
                           domProps: { value: _vm.server.id_server },
                           on: {
                             keyup: _vm.clearError,
@@ -78831,7 +78835,7 @@ var actions = {
           });
         } else {
           commit('SET_ERRORS', {
-            invalid: 'Email/Password salah'
+            invalid: 'Server Name/Password salah'
           }, {
             root: true
           });
