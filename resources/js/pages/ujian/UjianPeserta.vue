@@ -23,6 +23,7 @@
                         <template v-slot:cell(status)="row">
                             {{ row.item.status }}
 							<b-button variant="danger" size="sm" @click="forceClose(row.item.peserta_id)"squared v-show="row.item.status_ujian != 1 && row.item.status_ujian != 2">Force close</b-button>
+							<b-button variant="outline-danger" size="sm" @click="resetPeserta(row.item.peserta_id)"squared v-show="row.item.status_ujian != 1 && row.item.status_ujian != 2">Reset peserta</b-button>
                         </template>
                         <template v-slot:cell(sisa)="row">
                         	{{ Math.floor(row.item.sisa_waktu/60)+' Menit' }}
@@ -70,7 +71,18 @@ export default {
 		})
 	},
 	methods: {
-		...mapActions('ujian', ['getAllPeserta','uploadNilai','selesaiUjianPeserta']),
+		...mapActions('ujian', ['getAllPeserta','uploadNilai','selesaiUjianPeserta','resetUjianPeserta']),
+		resetPeserta(id) {
+			this.resetUjianPeserta({ peserta_id: id })
+			.then(() => {
+				this.$notify({
+					group: 'foo',
+		            title: 'Sukses',
+		            type: 'success',
+		            text: 'Peserta berhasil direset.'
+				})
+			})
+		},
 		refreshTable() {
 			this.getAllPeserta()
 		},

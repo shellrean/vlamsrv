@@ -268,4 +268,25 @@ class UjianController extends Controller
         return response()->json(['status' => 'finished']);
     }
 
+    public function resetUjianPeserta(Request $request)
+    {
+        $aktif = UjianAktif::first()->ujian_id;
+
+        SiswaUjian::where([
+            'peserta_id'        => $request->peserta_id,
+            'jadwal_id'         => $aktif
+        ])->delete();
+
+        JawabanPeserta::where([
+            'peserta_id'        => $request->peserta_id,
+            'jadwal_id'         => $aktif
+        ])->delete();
+        
+        $peserta = Peserta::find($request->peserta_id);
+        $peserta->api_token = '';
+        $peserta->save();
+        
+        return response()->json([]);
+    }
+
 }

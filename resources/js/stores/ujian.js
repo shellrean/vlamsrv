@@ -195,7 +195,7 @@ const actions = {
 		return new Promise(( resolve, reject) => {
 			$axios.post(`/ujian/selesai`, payload)
 			.then((response) => {
-				resolve(response.daa)
+				resolve(response)
 				dispatch('getAllPeserta').then(() => resolve())
 			})
 			.catch((err) => {
@@ -203,6 +203,18 @@ const actions = {
 			})
 		})
 	},
+	resetUjianPeserta({dispatch}, payload) {
+		return new Promise((resolve, reject) => {
+			$axios.post(`/ujian/reset`, payload)
+			.then((response) => {
+				resolve(response)
+				dispatch('getAllPeserta').then(() => resolve())
+			})
+			.catch((err) => {
+				reject(err)
+			})
+		})
+	}
 }
 
 export default {

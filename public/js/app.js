@@ -19374,6 +19374,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
 
 
@@ -19411,22 +19412,36 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       return state.pesertas;
     }
   })),
-  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapActions"])('ujian', ['getAllPeserta', 'uploadNilai', 'selesaiUjianPeserta']), {
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapActions"])('ujian', ['getAllPeserta', 'uploadNilai', 'selesaiUjianPeserta', 'resetUjianPeserta']), {
+    resetPeserta: function resetPeserta(id) {
+      var _this = this;
+
+      this.resetUjianPeserta({
+        peserta_id: id
+      }).then(function () {
+        _this.$notify({
+          group: 'foo',
+          title: 'Sukses',
+          type: 'success',
+          text: 'Peserta berhasil direset.'
+        });
+      });
+    },
     refreshTable: function refreshTable() {
       this.getAllPeserta();
     },
     uploadHasil: function uploadHasil() {
-      var _this = this;
+      var _this2 = this;
 
       this.uploadNilai().then(function () {
-        _this.$notify({
+        _this2.$notify({
           group: 'foo',
           title: 'Sukses',
           type: 'success',
           text: 'Hasil ujian berhasil diupload.'
         });
       })["catch"](function (err) {
-        _this.$notify({
+        _this2.$notify({
           group: 'foo',
           title: 'Error',
           type: 'error',
@@ -19435,19 +19450,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       });
     },
     forceClose: function forceClose(id) {
-      var _this2 = this;
+      var _this3 = this;
 
       this.selesaiUjianPeserta({
         peserta_id: id
       }).then(function () {
-        _this2.$notify({
+        _this3.$notify({
           group: 'foo',
           title: 'Sukses',
           type: 'success',
           text: 'Force close berhasil.'
         });
       })["catch"](function () {
-        _this2.$notify({
+        _this3.$notify({
           group: 'foo',
           title: 'Error',
           type: 'error',
@@ -59899,6 +59914,34 @@ var render = function() {
                             }
                           },
                           [_vm._v("Force close")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "b-button",
+                          {
+                            directives: [
+                              {
+                                name: "show",
+                                rawName: "v-show",
+                                value:
+                                  row.item.status_ujian != 1 &&
+                                  row.item.status_ujian != 2,
+                                expression:
+                                  "row.item.status_ujian != 1 && row.item.status_ujian != 2"
+                              }
+                            ],
+                            attrs: {
+                              variant: "outline-danger",
+                              size: "sm",
+                              squared: ""
+                            },
+                            on: {
+                              click: function($event) {
+                                return _vm.resetPeserta(row.item.peserta_id)
+                              }
+                            }
+                          },
+                          [_vm._v("Reset peserta")]
                         )
                       ]
                     }
@@ -79946,7 +79989,20 @@ var actions = {
     var commit = _ref14.commit;
     return new Promise(function (resolve, reject) {
       _api_js__WEBPACK_IMPORTED_MODULE_0__["default"].post("/ujian/selesai", payload).then(function (response) {
-        resolve(response.daa);
+        resolve(response);
+        dispatch('getAllPeserta').then(function () {
+          return resolve();
+        });
+      })["catch"](function (err) {
+        reject(err);
+      });
+    });
+  },
+  resetUjianPeserta: function resetUjianPeserta(_ref15, payload) {
+    var dispatch = _ref15.dispatch;
+    return new Promise(function (resolve, reject) {
+      _api_js__WEBPACK_IMPORTED_MODULE_0__["default"].post("/ujian/reset", payload).then(function (response) {
+        resolve(response);
         dispatch('getAllPeserta').then(function () {
           return resolve();
         });
