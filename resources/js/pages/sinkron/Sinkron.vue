@@ -1,5 +1,7 @@
 <template>
 	<div class="c-body">
+	<loading :active.sync="isSync" 
+        :is-full-page="true"></loading>
         <main class="c-main">
           <div class="container-fluid">
             <div class="fade-in">
@@ -125,6 +127,8 @@
     </div>
 </template>
 <script>
+import Loading from 'vue-loading-overlay';
+import 'vue-loading-overlay/dist/vue-loading.css';
 import { mapActions, mapState, mapGetters } from 'vuex'
 
 export default {
@@ -133,6 +137,9 @@ export default {
 		this.connect()
 		this.countData()
 		this.getIdentify()
+	},
+	components: {
+		Loading
 	},
 	computed: {
 		...mapGetters(['isAuth','isLoading']),
@@ -160,7 +167,9 @@ export default {
         	pilihan: 0,
         	gambar: 0,
         	sync: false
-        }
+        },
+		isSync: false,
+		syinter: 0
       }
     },
 	methods: {
@@ -175,26 +184,126 @@ export default {
 			this.testConnection()
 		},
 		syncData() {
+			this.isSync = true
 			if(this.identify.peserta == 0) {
 				this.cbtSync('peserta')
+				.then(() => {
+					this.syinter +=1;
+					this.checkSyinter()
+				})
+				.catch(() => {
+					this.$notify({
+						group: 'foo',
+						title: 'Error',
+						type: 'error',
+						text: 'Error saat sinkron peserta.'
+					})
+				})
 			}
 			if(this.identify.matpel == 0) {
 				this.cbtSync('matpel')
+				.then(() => {
+					this.syinter+=1;
+					this.checkSyinter()
+				})
+				.catch(() => {
+					this.$notify({
+						group: 'foo',
+						title: 'Error',
+						type: 'error',
+						text: 'Error saat sinkron matpel.'
+					})
+				})
 			}
 			if(this.identify.banksoal == 0) {
 				this.cbtSync('banksoal')
+				.then(() => {
+					this.syinter+=1;
+					this.checkSyinter()
+				})
+				.catch(() => {
+					this.$notify({
+						group: 'foo',
+						title: 'Error',
+						type: 'error',
+						text: 'Error saat sinkron banksoal.'
+					})
+				})
 			}
 			if(this.identify.soal == 0) {
 				this.cbtSync('soal')
+				.then(() => {
+					this.syinter+=1;
+					this.checkSyinter()
+				})
+				.catch(() => {
+					this.$notify({
+						group: 'foo',
+						title: 'Error',
+						type: 'error',
+						text: 'Error saat sinkron soal.'
+					})
+				})
 			}
 			if(this.identify.pilihan_soal == 0) {
 				this.cbtSync('jawaban_soal')
+				.then(() => {
+					this.syinter+=1;
+					this.checkSyinter()
+				})
+				.catch(() => {
+					this.$notify({
+						group: 'foo',
+						title: 'Error',
+						type: 'error',
+						text: 'Error saat sinkron jawaban soal.'
+					})
+				})
 			}
 			if(this.identify.gambar == 0) {
 				this.cbtSync('file')
+				.then(() => {
+					this.syinter+=1;
+					this.checkSyinter()
+				})
+				.catch(() => {
+					this.$notify({
+						group: 'foo',
+						title: 'Error',
+						type: 'error',
+						text: 'Error saat sinkron file.'
+					})
+				})
 			}
 			if(this.identify.jadwal == 0) {
 				this.cbtSync('jadwal')
+				.then(() => {
+					this.syinter+=1;
+					this.checkSyinter()
+				})
+				.catch(() => {
+					this.$notify({
+						group: 'foo',
+						title: 'Error',
+						type: 'error',
+						text: 'Error saat sinkron jadwal.'
+					})
+				})
+			}
+			
+		},
+		checkSyinter() {
+			if(this.syinter == 7) {
+				this.isSync = false;
+				this.$notify({
+		            group: 'foo',
+		            title: 'Sukses',
+		            type: 'success',
+		            text: 'Proses sync sukses.'
+		        })
+				this.connect()
+				this.countData()
+				this.getIdentify()
 			}
 		},
 		sinkronData() {

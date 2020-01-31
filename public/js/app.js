@@ -18869,7 +18869,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var vue_loading_overlay__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-loading-overlay */ "./node_modules/vue-loading-overlay/dist/vue-loading.min.js");
+/* harmony import */ var vue_loading_overlay__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_loading_overlay__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vue_loading_overlay_dist_vue_loading_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-loading-overlay/dist/vue-loading.css */ "./node_modules/vue-loading-overlay/dist/vue-loading.css");
+/* harmony import */ var vue_loading_overlay_dist_vue_loading_css__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue_loading_overlay_dist_vue_loading_css__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -19002,6 +19006,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'Sinkron',
@@ -19010,7 +19018,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     this.countData();
     this.getIdentify();
   },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(['isAuth', 'isLoading']), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])('pusat', {
+  components: {
+    Loading: vue_loading_overlay__WEBPACK_IMPORTED_MODULE_0___default.a
+  },
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapGetters"])(['isAuth', 'isLoading']), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapState"])('pusat', {
     center: function center(state) {
       return state.center.data;
     },
@@ -19053,10 +19064,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         pilihan: 0,
         gambar: 0,
         sync: false
-      }
+      },
+      isSync: false,
+      syinter: 0
     };
   },
-  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])('pusat', ['getSinkronServer', 'testConnection', 'cbtSync', 'checkDataLocal', 'getServerIdentify']), {
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapActions"])('pusat', ['getSinkronServer', 'testConnection', 'cbtSync', 'checkDataLocal', 'getServerIdentify']), {
     getIdentify: function getIdentify() {
       this.getServerIdentify();
     },
@@ -19067,43 +19080,138 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.testConnection();
     },
     syncData: function syncData() {
+      var _this = this;
+
+      this.isSync = true;
+
       if (this.identify.peserta == 0) {
-        this.cbtSync('peserta');
+        this.cbtSync('peserta').then(function () {
+          _this.syinter += 1;
+
+          _this.checkSyinter();
+        })["catch"](function () {
+          _this.$notify({
+            group: 'foo',
+            title: 'Error',
+            type: 'error',
+            text: 'Error saat sinkron peserta.'
+          });
+        });
       }
 
       if (this.identify.matpel == 0) {
-        this.cbtSync('matpel');
+        this.cbtSync('matpel').then(function () {
+          _this.syinter += 1;
+
+          _this.checkSyinter();
+        })["catch"](function () {
+          _this.$notify({
+            group: 'foo',
+            title: 'Error',
+            type: 'error',
+            text: 'Error saat sinkron matpel.'
+          });
+        });
       }
 
       if (this.identify.banksoal == 0) {
-        this.cbtSync('banksoal');
+        this.cbtSync('banksoal').then(function () {
+          _this.syinter += 1;
+
+          _this.checkSyinter();
+        })["catch"](function () {
+          _this.$notify({
+            group: 'foo',
+            title: 'Error',
+            type: 'error',
+            text: 'Error saat sinkron banksoal.'
+          });
+        });
       }
 
       if (this.identify.soal == 0) {
-        this.cbtSync('soal');
+        this.cbtSync('soal').then(function () {
+          _this.syinter += 1;
+
+          _this.checkSyinter();
+        })["catch"](function () {
+          _this.$notify({
+            group: 'foo',
+            title: 'Error',
+            type: 'error',
+            text: 'Error saat sinkron soal.'
+          });
+        });
       }
 
       if (this.identify.pilihan_soal == 0) {
-        this.cbtSync('jawaban_soal');
+        this.cbtSync('jawaban_soal').then(function () {
+          _this.syinter += 1;
+
+          _this.checkSyinter();
+        })["catch"](function () {
+          _this.$notify({
+            group: 'foo',
+            title: 'Error',
+            type: 'error',
+            text: 'Error saat sinkron jawaban soal.'
+          });
+        });
       }
 
       if (this.identify.gambar == 0) {
-        this.cbtSync('file');
+        this.cbtSync('file').then(function () {
+          _this.syinter += 1;
+
+          _this.checkSyinter();
+        })["catch"](function () {
+          _this.$notify({
+            group: 'foo',
+            title: 'Error',
+            type: 'error',
+            text: 'Error saat sinkron file.'
+          });
+        });
       }
 
       if (this.identify.jadwal == 0) {
-        this.cbtSync('jadwal');
+        this.cbtSync('jadwal').then(function () {
+          _this.syinter += 1;
+
+          _this.checkSyinter();
+        })["catch"](function () {
+          _this.$notify({
+            group: 'foo',
+            title: 'Error',
+            type: 'error',
+            text: 'Error saat sinkron jadwal.'
+          });
+        });
+      }
+    },
+    checkSyinter: function checkSyinter() {
+      if (this.syinter == 7) {
+        this.isSync = false;
+        this.$notify({
+          group: 'foo',
+          title: 'Sukses',
+          type: 'success',
+          text: 'Proses sync sukses.'
+        });
+        this.connect();
+        this.countData();
+        this.getIdentify();
       }
     },
     sinkronData: function sinkronData() {
-      var _this = this;
+      var _this2 = this;
 
       this.getSinkronServer({
         req: 'peserta'
       }).then(function () {
-        _this.sinkron.peserta = 100;
+        _this2.sinkron.peserta = 100;
       }).then(function () {
-        _this.$notify({
+        _this2.$notify({
           group: 'foo',
           title: 'Sukses',
           type: 'success',
@@ -19113,9 +19221,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.getSinkronServer({
         req: 'matpel'
       }).then(function () {
-        _this.sinkron.matpel = 100;
+        _this2.sinkron.matpel = 100;
       }).then(function () {
-        _this.$notify({
+        _this2.$notify({
           group: 'foo',
           title: 'Sukses',
           type: 'success',
@@ -19125,9 +19233,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.getSinkronServer({
         req: 'banksoal'
       }).then(function () {
-        _this.sinkron.banksoal = 100;
+        _this2.sinkron.banksoal = 100;
       }).then(function () {
-        _this.$notify({
+        _this2.$notify({
           group: 'foo',
           title: 'Sukses',
           type: 'success',
@@ -19137,9 +19245,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.getSinkronServer({
         req: 'soal'
       }).then(function () {
-        _this.sinkron.soal = 100;
+        _this2.sinkron.soal = 100;
       }).then(function () {
-        _this.$notify({
+        _this2.$notify({
           group: 'foo',
           title: 'Sukses',
           type: 'success',
@@ -19149,9 +19257,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.getSinkronServer({
         req: 'jawaban_soal'
       }).then(function () {
-        _this.sinkron.pilihan = 100;
+        _this2.sinkron.pilihan = 100;
       }).then(function () {
-        _this.$notify({
+        _this2.$notify({
           group: 'foo',
           title: 'Sukses',
           type: 'success',
@@ -19164,9 +19272,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.getSinkronServer({
         req: 'file'
       }).then(function () {
-        _this.sinkron.gambar = 100;
+        _this2.sinkron.gambar = 100;
       }).then(function () {
-        _this.$notify({
+        _this2.$notify({
           group: 'foo',
           title: 'Sukses',
           type: 'success',
@@ -58863,6 +58971,15 @@ var render = function() {
     "div",
     { staticClass: "c-body" },
     [
+      _c("loading", {
+        attrs: { active: _vm.isSync, "is-full-page": true },
+        on: {
+          "update:active": function($event) {
+            _vm.isSync = $event
+          }
+        }
+      }),
+      _vm._v(" "),
       _c("main", { staticClass: "c-main" }, [
         _c("div", { staticClass: "container-fluid" }, [
           _c("div", { staticClass: "fade-in" }, [
@@ -79547,6 +79664,10 @@ var actions = {
             } else if (payload == 'jadwal') {
               commit('STEP_UPLOAD_BAR_JADWAL', 3);
             }
+
+            resolve();
+          })["catch"](function (err) {
+            reject();
           });
         });
       });

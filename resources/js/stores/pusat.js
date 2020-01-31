@@ -296,6 +296,10 @@ const actions = {
 						else if(payload == 'jadwal') {
 							commit('STEP_UPLOAD_BAR_JADWAL',3)
 						}
+						resolve()
+					})
+					.catch((err) => {
+						reject();
 					})
 				})			
 			})
