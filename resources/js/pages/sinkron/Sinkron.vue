@@ -36,28 +36,28 @@
             				<label>Data 4</label>
             				<b-progress :value="identify.soal ? 100 : soal.progress" variant="info" animated show-progress  class="mt-2"></b-progress>
             				<small v-show="identify.soal ? 0 : soal.step == 1">Step 1 of 2- Download data dari pusat</small>
-            				<small v-show="identify.soal ? 0 : soal.step == 2">Step 2 of 2- Memasukkan adata ke database</small>
+            				<small v-show="identify.soal ? 0 : soal.step == 2">Step 2 of 2- Memasukkan data ke database</small>
             				<small v-show="identify.soal ? 1 : soal.step == 3">Complete</small>
             			</div>
             			<div class="form-group">
             				<label>Data 5</label>
             				<b-progress :value="identify.pilihan_soal ? 100 : jawaban.progress" variant="info" animated show-progress  class="mt-2"></b-progress>
             				<small v-show="identify.pilihan_soal ? 0 : jawaban.step == 1">Step 1 of 2- Download data dari pusat</small>
-            				<small v-show="identify.pilihan_soal ? 0 : jawaban.step == 2">Step 2 of 2- Memasukkan adata ke database</small>
+            				<small v-show="identify.pilihan_soal ? 0 : jawaban.step == 2">Step 2 of 2- Memasukkan data ke database</small>
             				<small v-show="identify.pilihan_soal ? 1 : jawaban.step == 3">Complete</small>
             			</div>
             			<div class="form-group">
             				<label>Data 6</label>
             				<b-progress :value="identify.gambar ? 100 : gambar.progress" variant="info" animated show-progress  class="mt-2"></b-progress>
             				<small v-show="identify.gambar ? 0 : gambar.step == 1">Step 1 of 2- Download data dari pusat</small>
-            				<small v-show="identify.gambar ? 0 : gambar.step == 2">Step 2 of 2- Memasukkan adata ke database</small>
+            				<small v-show="identify.gambar ? 0 : gambar.step == 2">Step 2 of 2- Download file memasukkan data ke directory</small>
             				<small v-show="identify.gambar ? 1 : gambar.step == 3">Complete</small>
             			</div>
             			<div class="form-group">
             				<label>Data 7</label>
             				<b-progress :value="identify.jadwal ? 100 : jadwal.progress" variant="info" animated show-progress  class="mt-2"></b-progress>
             				<small v-show="identify.jadwal ? 0 : jadwal.step == 1">Step 1 of 2- Download data dari pusat</small>
-            				<small v-show="identify.jadwal ? 0 : jadwal.step == 2">Step 2 of 2- Memasukkan adata ke database</small>
+            				<small v-show="identify.jadwal ? 0 : jadwal.step == 2">Step 2 of 2- Memasukkan data ke database</small>
             				<small v-show="identify.jadwal ? 1 : jadwal.step == 3">Complete</small>
             			</div>
             		</div>
@@ -192,6 +192,7 @@ export default {
 					this.checkSyinter()
 				})
 				.catch(() => {
+					this.syinter+=1;
 					this.$notify({
 						group: 'foo',
 						title: 'Error',
@@ -207,6 +208,7 @@ export default {
 					this.checkSyinter()
 				})
 				.catch(() => {
+					this.syinter+=1;
 					this.$notify({
 						group: 'foo',
 						title: 'Error',
@@ -222,6 +224,7 @@ export default {
 					this.checkSyinter()
 				})
 				.catch(() => {
+					this.syinter+=1;
 					this.$notify({
 						group: 'foo',
 						title: 'Error',
@@ -237,6 +240,7 @@ export default {
 					this.checkSyinter()
 				})
 				.catch(() => {
+					this.syinter+=1;
 					this.$notify({
 						group: 'foo',
 						title: 'Error',
@@ -252,6 +256,7 @@ export default {
 					this.checkSyinter()
 				})
 				.catch(() => {
+					this.syinter+=1;
 					this.$notify({
 						group: 'foo',
 						title: 'Error',
@@ -267,6 +272,7 @@ export default {
 					this.checkSyinter()
 				})
 				.catch(() => {
+					this.syinter+=1;
 					this.$notify({
 						group: 'foo',
 						title: 'Error',

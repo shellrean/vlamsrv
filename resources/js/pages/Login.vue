@@ -136,6 +136,7 @@ export default {
 		        type: res.type,
 		        text: res.status
 		    })
+        this.getStatusInstal(this.serial)
       })
     },
     clearError() {

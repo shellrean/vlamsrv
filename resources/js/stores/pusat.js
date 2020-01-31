@@ -301,7 +301,13 @@ const actions = {
 					.catch((err) => {
 						reject();
 					})
+				})
+				.catch((err) => {
+					reject();
 				})			
+			})
+			.catch((err) => {
+				reject();
 			})
 		})
 

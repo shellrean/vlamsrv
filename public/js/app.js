@@ -18506,6 +18506,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           type: res.type,
           text: res.status
         });
+
+        _this2.getStatusInstal(_this2.serial);
       });
     },
     clearError: function clearError() {
@@ -19090,6 +19092,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
           _this.checkSyinter();
         })["catch"](function () {
+          _this.syinter += 1;
+
           _this.$notify({
             group: 'foo',
             title: 'Error',
@@ -19105,6 +19109,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
           _this.checkSyinter();
         })["catch"](function () {
+          _this.syinter += 1;
+
           _this.$notify({
             group: 'foo',
             title: 'Error',
@@ -19120,6 +19126,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
           _this.checkSyinter();
         })["catch"](function () {
+          _this.syinter += 1;
+
           _this.$notify({
             group: 'foo',
             title: 'Error',
@@ -19135,6 +19143,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
           _this.checkSyinter();
         })["catch"](function () {
+          _this.syinter += 1;
+
           _this.$notify({
             group: 'foo',
             title: 'Error',
@@ -19150,6 +19160,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
           _this.checkSyinter();
         })["catch"](function () {
+          _this.syinter += 1;
+
           _this.$notify({
             group: 'foo',
             title: 'Error',
@@ -19165,6 +19177,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
           _this.checkSyinter();
         })["catch"](function () {
+          _this.syinter += 1;
+
           _this.$notify({
             group: 'foo',
             title: 'Error',
@@ -59320,7 +59334,7 @@ var render = function() {
                               }
                             ]
                           },
-                          [_vm._v("Step 2 of 2- Memasukkan adata ke database")]
+                          [_vm._v("Step 2 of 2- Memasukkan data ke database")]
                         ),
                         _vm._v(" "),
                         _c(
@@ -59394,7 +59408,7 @@ var render = function() {
                               }
                             ]
                           },
-                          [_vm._v("Step 2 of 2- Memasukkan adata ke database")]
+                          [_vm._v("Step 2 of 2- Memasukkan data ke database")]
                         ),
                         _vm._v(" "),
                         _c(
@@ -59469,7 +59483,11 @@ var render = function() {
                               }
                             ]
                           },
-                          [_vm._v("Step 2 of 2- Memasukkan adata ke database")]
+                          [
+                            _vm._v(
+                              "Step 2 of 2- Download file memasukkan data ke directory"
+                            )
+                          ]
                         ),
                         _vm._v(" "),
                         _c(
@@ -59544,7 +59562,7 @@ var render = function() {
                               }
                             ]
                           },
-                          [_vm._v("Step 2 of 2- Memasukkan adata ke database")]
+                          [_vm._v("Step 2 of 2- Memasukkan data ke database")]
                         ),
                         _vm._v(" "),
                         _c(
@@ -79712,7 +79730,11 @@ var actions = {
           })["catch"](function (err) {
             reject();
           });
+        })["catch"](function (err) {
+          reject();
         });
+      })["catch"](function (err) {
+        reject();
       });
     });
   },
