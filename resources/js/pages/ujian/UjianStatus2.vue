@@ -71,7 +71,7 @@
 <script>
 import vSelect from 'vue-select'
 import 'vue-select/dist/vue-select.css';
-import { mapActions, mapState, mapMutations } from 'vuex'
+import { mapActions, mapState, mapMutations, mapGetters } from 'vuex'
 
 export default {
 	name: 'UjianStatus',
@@ -91,6 +91,7 @@ export default {
 		this.getUjians()
 	},
 	computed: {
+		...mapGetters(['isLoading']),
 		...mapState(['error']),
 		...mapState('ujian', {
 			aktif: state => state.ujianAktif,

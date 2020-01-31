@@ -242,13 +242,19 @@ class PusatController extends Controller
     public function uploadHasil()
     {
         $ujian = UjianAktif::first();
-        $siswa_ujian = SiswaUjian::where([
+        $siswa_ujians = SiswaUjian::where([
           'jadwal_id' => $ujian->ujian_id, 
           'uploaded' => 0,
           'status_ujian' => 1
-        ])->with('hasil')->get();
+        ])->with('hasil');
+
+        $listed = $siswa_ujians->pluck('peserta_id');
         
-        $datas = JawabanPeserta::where('jadwal_id', $ujian->ujian_id)->get();
+        $siswa_ujian = $siswa_ujians->get();
+        
+        $datas = JawabanPeserta::where('jadwal_id', $ujian->ujian_id)
+        ->whereIn('peserta_id', $listed)->get();
+
         $esay = JawabanPeserta::where([
           'jadwal_id' => $ujian->ujian_id
         ])->where('jawab_essy', '!=',null)->get();
@@ -261,13 +267,17 @@ class PusatController extends Controller
         curl_setopt($ch, CURLOPT_URL,"$hostname/api/pusat/upload-hasil");
         curl_setopt($ch, CURLOPT_POST, 1);
         curl_setopt($ch, CURLOPT_POSTFIELDS,
-                    "server_name=$identify->kode_server&req=$siswa_ujian&esay=$esay&data=$datas");
+                    "server_name=$identify->kode_server&req=$siswa_ujian&esay=$esay&datad=$datas");
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
         $server_output = curl_exec($ch);
         $deco = json_decode( $server_output, true );
 
         curl_close ($ch);
+        
+        if(!$deco) {
+          return response()->json(['status' => 'error'],500);
+        }
 
         $deco = $deco['data'];
 
@@ -279,7 +289,8 @@ class PusatController extends Controller
           }
         }
 
-        return response()->json(['data' => $esay,'uj' => $siswa_ujian]);
+
+        return response()->json(['data' => $deco,'uj' => $siswa_ujian]);
     }
 
     public function checkData()

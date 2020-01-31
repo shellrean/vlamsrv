@@ -39,6 +39,7 @@ Route::group(['middleware' => 'auth.api', 'namespace' => 'Api\v2','prefix' => 'v
     Route::post('/ujian/ubah-test', 'UjianController@ubahTest');
     Route::post('/ujian/rilis-token', 'UjianController@rilisToken');
     Route::post('/ujian/simpan-status', 'UjianController@simpanStatus');
+    Route::post('/ujian/selesai', 'UjianController@forceClose');
 });
 
 Route::post('/v2/pusat/sinkron', 'API\v2\PusatController@sinkron');

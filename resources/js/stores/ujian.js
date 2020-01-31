@@ -177,14 +177,32 @@ const actions = {
 			})
 		})
 	},
-	uploadNilai({ dispatch, state }, payload) {
+	uploadNilai({ dispatch, state, commit }, payload) {
+		commit('SET_LOADING',true, { root: true })
 		return new Promise((resolve, reject) => {
 			$axios.get(`/pusat/upload-hasil`)
 			.then((response) => {
+				commit('SET_LOADING',false, { root: true })
 				dispatch('getAllPeserta').then(() => resolve())
 			})
+			.catch((err) => {
+				commit('SET_LOADING',false, { root: true })
+				reject(err)
+			})
 		})
-	}
+	},
+	selesaiUjianPeserta({commit}, payload) {
+		return new Promise(( resolve, reject) => {
+			$axios.post(`/ujian/selesai`, payload)
+			.then((response) => {
+				resolve(response.daa)
+				dispatch('getAllPeserta').then(() => resolve())
+			})
+			.catch((err) => {
+				reject(err)
+			})
+		})
+	},
 }
 
 export default {

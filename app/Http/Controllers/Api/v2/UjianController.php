@@ -10,6 +10,8 @@ use App\SiswaUjian;
 use Carbon\Carbon;
 use App\Peserta;
 use App\UjianAktif;
+use App\JawabanPeserta;
+use App\HasilUjian;
 
 use App\Http\Resources\AppCollection;
 use Illuminate\Support\Facades\Validator;
@@ -217,6 +219,53 @@ class UjianController extends Controller
         ]);
 
         return response()->json(['status' => 'OK']);
+    }
+
+    /**
+     *  
+     */
+    public function forceClose(Request $request)
+    {
+        $aktif = UjianAktif::first();
+
+        $ujian = SiswaUjian::where([
+            'jadwal_id'     => $aktif->ujian_id, 
+            'peserta_id'    => $request->peserta_id
+        ])->first();
+
+        $ujian->status_ujian = 1;
+        $ujian->save();
+
+        $salah = JawabanPeserta::where([
+            'iscorrect'     => 0,
+            'jadwal_id'     => $aktif->ujian_id, 
+            'peserta_id'    => $request->peserta_id,
+            'jawab_essy'    => null
+        ])->get()->count();
+
+        $benar = JawabanPeserta::where([
+            'iscorrect'     => 1,
+            'jadwal_id'     => $aktif->ujian_id, 
+            'peserta_id'    => $request->peserta_id
+        ])->get()->count();
+        
+        $jml = JawabanPeserta::where([
+            'jadwal_id'     => $aktif->ujian_id, 
+            'peserta_id'    => $request->peserta_id
+        ])->get()->count();
+
+        $hasil = ($benar/$jml)*100;
+
+        HasilUjian::create([
+            'peserta_id'      => $request->peserta_id,
+            'jadwal_id'       => $aktif->ujian_id,
+            'jumlah_salah'    => $salah,
+            'jumlah_benar'    => $benar,
+            'tidak_diisi'     => 0,
+            'hasil'           => $hasil,
+        ]);
+
+        return response()->json(['status' => 'finished']);
     }
 
 }

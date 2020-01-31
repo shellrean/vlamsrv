@@ -1,5 +1,7 @@
 <template>
 	<div class="row">
+		<loading :active.sync="isLoading" 
+        :is-full-page="true"></loading>
 		<div class="col-lg-12">
 			<div class="card">
 				<div class="card-header">
@@ -20,6 +22,7 @@
                         </template>
                         <template v-slot:cell(status)="row">
                             {{ row.item.status }}
+							<b-button variant="danger" size="sm" @click="forceClose(row.item.peserta_id)"squared v-show="row.item.status_ujian != 1 && row.item.status_ujian != 2">Force close</b-button>
                         </template>
                         <template v-slot:cell(sisa)="row">
                         	{{ Math.floor(row.item.sisa_waktu/60)+' Menit' }}
@@ -36,12 +39,17 @@
 	</div>
 </template>
 <script>
-import { mapActions, mapState } from 'vuex'
+import Loading from 'vue-loading-overlay';
+import 'vue-loading-overlay/dist/vue-loading.css';
+import { mapActions, mapState, mapGetters } from 'vuex'
 
 export default {
 	name: 'PesertaUjian',
 	created() {
 		this.getAllPeserta()
+	},
+	components: {
+		Loading
 	},
 	data() {
 		return {
@@ -56,12 +64,13 @@ export default {
 		}
 	},
 	computed: {
+		...mapGetters(['isLoading']),
 		...mapState('ujian', {
 			pesertas: state => state.pesertas
 		})
 	},
 	methods: {
-		...mapActions('ujian', ['getAllPeserta','uploadNilai']),
+		...mapActions('ujian', ['getAllPeserta','uploadNilai','selesaiUjianPeserta']),
 		refreshTable() {
 			this.getAllPeserta()
 		},
@@ -73,6 +82,35 @@ export default {
 		            title: 'Sukses',
 		            type: 'success',
 		            text: 'Hasil ujian berhasil diupload.'
+		        })
+			})
+			.catch((err) => {
+				this.$notify({
+		            group: 'foo',
+		            title: 'Error',
+		            type: 'error',
+		            text: 'Gagal mengupload hasil ujian (Error: L.1).'
+		        })
+			})
+		},
+		forceClose(id) {
+			this.selesaiUjianPeserta({
+				peserta_id : id
+			})
+			.then(() => {
+				this.$notify({
+		            group: 'foo',
+		            title: 'Sukses',
+		            type: 'success',
+		            text: 'Force close berhasil.'
+		        })
+			})
+			.catch(() => {
+				this.$notify({
+		            group: 'foo',
+		            title: 'Error',
+		            type: 'error',
+		            text: 'Terjadi kesalahan (Error: F.1).'
 		        })
 			})
 		}
