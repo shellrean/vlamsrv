@@ -73,6 +73,8 @@ class PusatController extends Controller
           }
         }
         else {
+		  DB::table('files')->delete();
+          DB::table('files')->insert($request->all()['files']);
           foreach($request->all()['files'] as $file) {
             $exists = Storage::disk('ftp')->get($file['dirname']."/".$file['filename']);
             Storage::disk('public')->put($file['dirname']."/".$file['filename'], $exists);
