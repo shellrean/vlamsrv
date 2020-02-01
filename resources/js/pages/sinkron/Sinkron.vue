@@ -107,7 +107,7 @@
 		    			<td><b>Data 6</b></td>
 		    			<td v-text="center.gambar"></td>
 		    			<td>-</td>
-		    			<td>...</td>
+		    			<td>{{ count ? count.gambar : 0 }}</td>
 		    		</tr>
 		    		<tr>
 		    			<td><b>Data 7</b></td>

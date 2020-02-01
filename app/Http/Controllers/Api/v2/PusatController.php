@@ -18,6 +18,7 @@ use App\UjianAktif;
 use App\SiswaUjian;
 use App\JawabanPeserta;
 use App\HasilUjian;
+use App\File as Filnder;
 
 use Storage;
 use Response;
@@ -227,11 +228,9 @@ class PusatController extends Controller
         'username'  => $kode_server,
   			'email'				=> 'admin@administrator.com',
   			'password'			=> bcrypt($deco['password'])
-  		]);
-
-      // return response()->json(['status' => $deco['password'], 'type' => 'success']);
-
-    	return response()->json(['status' => 'Register berhasil, refresh browser dan login kembali', 'type' => 'success']);
+      ]);
+      
+    	return response()->json(['status' => 'Register berhasil, login kembali', 'type' => 'success']);
     }
 
     /**
@@ -295,12 +294,13 @@ class PusatController extends Controller
 
     public function checkData()
     {
-        $peserta = Peserta::all()->count();
-        $matpel = Matpel::all()->count();
-        $banksoal = Banksoal::all()->count();
-        $soal = Soal::all()->count();
-        $jawaban_soals = JawabanSoal::all()->count();
-        $jadwal = Jadwal::all()->count();
+        $peserta = Peserta::count();
+        $matpel = Matpel::count();
+        $banksoal = Banksoal::count();
+        $soal = Soal::count();
+        $jawaban_soals = JawabanSoal::count();
+        $jadwal = Jadwal::count();
+        $gambar = Filnder::count();
 
         $data = [
           'peserta' => $peserta,
@@ -309,6 +309,7 @@ class PusatController extends Controller
           'soal'    => $soal,
           'jawaban_soal'  => $jawaban_soals,
           'jadwal'  => $jadwal,
+          'gambar'  => $gambar
         ];
 
         return response()->json(['data' => $data]);
@@ -337,6 +338,8 @@ class PusatController extends Controller
       $server->gambar = 0;
       $server->jadwal = 0;
       $server->save();
+
+      Storage::deleteDirectory('public');
 
       return response()->json(['status' => 'OK']);
     }
