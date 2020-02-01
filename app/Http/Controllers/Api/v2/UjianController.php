@@ -289,4 +289,10 @@ class UjianController extends Controller
         return response()->json([]);
     }
 
+    public function getAllSesi()
+    {
+        $sesi = Peserta::groupBy('sesi')->select('sesi')->get();
+        return response()->json(['data' => $sesi]);
+    }
+
 }

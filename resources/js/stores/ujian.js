@@ -11,12 +11,16 @@ const state = () => ({
 		token: '',
 		status_token: ''
 	},
-	aktif: ''
+	aktif: '',
+	sesis: ''
 })
 
 const mutations = {
 	ASSIGN_DATA(state, payload) {
 		state.ujians = payload
+	},
+	ASSIGN_SESI_DATA(state, payload ){
+		state.sesis = payload
 	},
 	SET_PAGE(state, payload) {
 		state.ujians = payload
@@ -48,6 +52,15 @@ const actions = {
 			$axios.get(`/ujian?page=${state.page}&q=${search}`)
 			.then((response) => {
 				commit('ASSIGN_DATA', response.data)
+				resolve(response.data)
+			})
+		})
+	},
+	getSesi({ commit, state }, payload ){
+		return new Promise((resolve, reject) => {
+			$axios.get(`/ujian/sesi`)
+			.then((response) => {
+				commit('ASSIGN_SESI_DATA', response.data)
 				resolve(response.data)
 			})
 		})

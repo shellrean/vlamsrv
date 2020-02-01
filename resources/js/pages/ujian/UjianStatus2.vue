@@ -25,8 +25,7 @@
 							</div>
 							<div class="col-6">
 								<select class="form-control form-control-sm rounded-0" v-model="aktif.kelompok">
-									<option value="1">1</option>
-									<option value="2">2</option>
+									<option v-for="sesi in sesis.data" :value="sesi.sesi">{{ sesi.sesi }}</option>
 								</select>
 							</div>
 						</div>
@@ -89,6 +88,7 @@ export default {
 	created() {
 		this.getUjianAktif()
 		this.getUjians()
+		this.getSesi()
 	},
 	computed: {
 		...mapGetters(['isLoading']),
@@ -96,11 +96,12 @@ export default {
 		...mapState('ujian', {
 			aktif: state => state.ujianAktif,
 			ujians: state => state.ujians,
-			fulled: state => state.aktif
+			fulled: state => state.aktif,
+			sesis: state => state.sesis
 		})
 	},
 	methods: {
-		...mapActions('ujian', ['getUjians','addUjian','setStatus','changeToken','getUjianAktif','pilihKelompok','pilihTest','rilistToken','changeToken','simpanStatus']),
+		...mapActions('ujian', ['getUjians','getSesi','addUjian','setStatus','changeToken','getUjianAktif','pilihKelompok','pilihTest','rilistToken','changeToken','simpanStatus']),
 		postStatus() {
 			this.simpanStatus()
 			.then(() => {
