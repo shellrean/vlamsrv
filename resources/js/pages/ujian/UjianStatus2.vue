@@ -6,6 +6,13 @@
 					Status ujian
 				</div>
 				<div class="card-body">
+					<div class="row">
+                        <div class="col-sm-5">
+                            <h4 id="traffic" class="card-title mb-0">Status ujian</h4>
+                            <div class="small text-muted">Atur sesi dan banksoal aktif dan rilis token agar token dapat digunakan</div>
+                        </div>
+                    </div>
+                    <br>
 					<div class="form-group">
 						<div class="row">
 							<div class="col-2">
@@ -53,7 +60,7 @@
 								<input type="hidden" :value="aktif.token">
 							</div>
 							<div class="col-3">
-								<b-button variant="dark" size="sm" squared @click="ubahToken" v-show="fulled.status_token != 1">Rilis token </b-button>
+								<b-button variant="dark" size="sm" squared @click="ubahToken" v-show="fulled && fulled.status_token != 1">Rilis token </b-button>
 							</div>
 						</div>
 					</div>

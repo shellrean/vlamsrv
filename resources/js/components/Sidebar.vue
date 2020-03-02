@@ -4,44 +4,51 @@
       <ul class="c-sidebar-nav">
         <li class="c-sidebar-nav-item">
           <router-link class="c-sidebar-nav-link" to="/">
-            <font-awesome-icon icon="home" class="c-sidebar-nav-icon" />
+            <i class="c-sidebar-nav-icon cil-speedometer"></i>
             Beranda
           </router-link>
         </li>
         <li class="c-sidebar-nav-title">Menu utama</li>
         <li class="c-sidebar-nav-item">
           <router-link class="c-sidebar-nav-link" :class="[currentPage.includes('download') ? activeClass : '']" :to="{ name: 'download' }">
-            <font-awesome-icon icon="cloud-download-alt" class="c-sidebar-nav-icon" /> Status download
+            <i class="c-sidebar-nav-icon cil-cloud-download"></i>
+             Status download
           </router-link>
         </li>
         <li class="c-sidebar-nav-item">
           <router-link class="c-sidebar-nav-link" :class="[currentPage.includes('peserta.data') ? activeClass : '']" :to="{ name: 'peserta.data' }">
-            <font-awesome-icon icon="users" class="c-sidebar-nav-icon" /> Daftar peserta
+            <i class="c-sidebar-nav-icon cil-people"></i> 
+            Daftar peserta
           </router-link>
         </li>
         <li class="c-sidebar-nav-item">
           <router-link class="c-sidebar-nav-link" :class="[currentPage.includes('ujian.status') ? activeClass : '']" :to="{ name: 'ujian.status' }">
-            <font-awesome-icon icon="clipboard-list" class="c-sidebar-nav-icon" /> Status ujian
+            <i class="c-sidebar-nav-icon cil-clipboard"></i>
+            Status ujian
           </router-link>
         </li>
         <li class="c-sidebar-nav-item">
           <router-link class="c-sidebar-nav-link" :class="[currentPage.includes('ujian.peserta') ? activeClass : '']" :to="{ name: 'ujian.peserta' }">
-            <font-awesome-icon icon="user" class="c-sidebar-nav-icon" /> Status peserta
+            <i class="c-sidebar-nav-icon cil-task"></i>
+            Status peserta
           </router-link>
         </li>
         <li class="c-sidebar-nav-item">
           <router-link class="c-sidebar-nav-link" :class="[currentPage.includes('peserta.reset') ? activeClass : '']" :to="{ name: 'peserta.reset' }">
-            <font-awesome-icon icon="sync" class="c-sidebar-nav-icon" />  Reset login peserta
+            <i class="c-sidebar-nav-icon cil-sync"></i>
+            Reset login peserta
           </router-link>
         </li>
         <li class="c-sidebar-nav-item">
           <router-link class="c-sidebar-nav-link" :class="[currentPage.includes('hapus') ? activeClass : '']" :to="{ name: 'hapus' }">
-            <font-awesome-icon icon="cog" class="c-sidebar-nav-icon" /> Backup & Hapus
+            <i class="c-sidebar-nav-icon cil-trash"></i>
+            Hapus data lokal
           </router-link>
         </li>
         <li class="c-sidebar-nav-item">
           <a class="c-sidebar-nav-link" href="#" @click="logout">
-            <font-awesome-icon icon="sign-out-alt" class="c-sidebar-nav-icon" /> Logout
+            <i class="c-sidebar-nav-icon cil-account-logout"></i> 
+            Logout
           </a>
         </li>
       </ul>
@@ -78,6 +85,6 @@ export default {
 </script>
 <style>
 .c-sidebar-nav-icon {
-  margin-top: -2px;
+  margin-top: 0px;
 }
 </style>

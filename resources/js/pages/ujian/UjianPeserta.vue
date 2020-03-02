@@ -9,15 +9,21 @@
 					<b-button variant="info" squared size="sm" @click="uploadHasil">Upload hasil</b-button>
 				</div>
 				<div class="card-body">
+					<div class="row">
+                        <div class="col-sm-5">
+                            <h4 id="traffic" class="card-title mb-0">Status ujian peserta</h4>
+                            <div class="small text-muted">Upload Reset dan force close ujian peserta</div>
+                        </div>
+                    </div>
+                    <br>
 					<b-table striped hover bordered :busy="isBusy" small :fields="fields" :items="pesertas.data" show-empty>
 						<template v-slot:cell(upload)="row">
                             <font-awesome-icon icon="hourglass" v-show="row.item.uploaded == 0" class="text-muted"/>
                             <font-awesome-icon icon="clipboard-check" v-show="!row.item.uploaded == 0" class="text-success" />
                         </template>
 						<template v-slot:table-busy>
-                            <div class="text-center text-primary my-2">
-                              <b-spinner class="align-middle"></b-spinner>
-                              <strong>Loading...</strong>
+                            <div class="text-center text-warning my-2">
+                              <img src="/img/loader.svg" width="50px" />
                             </div>
                         </template>
                         <template v-slot:cell(status)="row">
@@ -116,6 +122,7 @@ export default {
 		            type: 'success',
 		            text: 'Force close berhasil.'
 		        })
+		        this.refreshTable();
 			})
 			.catch(() => {
 				this.$notify({

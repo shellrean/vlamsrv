@@ -163,6 +163,9 @@ const actions = {
 				commit('STATUS_ASSIGN', response.data)
 				resolve(response.data)
 			})
+			.catch((err) => {
+				reject(err)
+			})
 		})
 	},
 	registerServer({ commit }, payload) {

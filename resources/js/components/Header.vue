@@ -4,15 +4,12 @@
       <span class="c-header-toggler-icon"></span>
     </button>
     <a class="c-header-brand d-sm-none" href="#">
-      <img class="c-header-brand" src="/img/brand/coreui-base.svg" width="97" height="46" alt="CoreUI Logo">
     </a>
     <button class="c-header-toggler c-class-toggler ml-3 d-md-down-none" type="button" data-target="#sidebar" data-class="c-sidebar-lg-show" responsive="true">
       <span class="c-header-toggler-icon"></span>
     </button>
         <ul class="c-header-nav d-md-down-none">
-          <li class="c-header-nav-item px-3"><a class="c-header-nav-link" href="#">Dashboard</a></li>
-          <li class="c-header-nav-item px-3"><a class="c-header-nav-link" href="#">Users</a></li>
-          <li class="c-header-nav-item px-3"><a class="c-header-nav-link" href="#">Settings</a></li>
+          <li class="c-header-nav-item px-3"><span class="c-header-nav-link">Server lokal sekolah</span></li>
         </ul>
         <ul class="c-header-nav ml-auto mr-4">
           <li class="c-header-nav-item dropdown"><a class="c-header-nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">

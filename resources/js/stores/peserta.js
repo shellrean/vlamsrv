@@ -7,7 +7,8 @@ const state = () => ({
 		nama: '',
 		password: ''
 	},
-	page: 1
+	page: 1,
+	from: ''
 })
 
 const mutations = {
@@ -23,6 +24,9 @@ const mutations = {
 			nama: payload.nama,
 			password: payload.password
 		}
+	},
+	SET_FROM(state, payload) {
+		state.from = payload
 	},
 	CLEAR_FORM(state) {
 		state.peserta = {
@@ -40,7 +44,11 @@ const actions = {
 			$axios.get(`/peserta?page=${state.page}&q=${search}`)
 			.then((response) => {
 				commit('ASSIGN_DATA', response.data)
+				commit('SET_FROM', response.data.meta.from)
 				resolve(response.data)
+			})
+			.catch((err) => {
+				reject(err)
 			})
 		})
 	},
@@ -74,7 +82,12 @@ const actions = {
 		return new Promise((resolve, reject) => {
 			$axios.delete(`/peserta/${payload}`)
 			.then((response) => {
-				dispatch('getPesertas').then(() => resolve())
+				dispatch('getPesertas')
+				.then(() => resolve())
+				.reject(() => reject())
+			})
+			.catch((err) => {
+				reject(err)
 			})
 		})
 	},
@@ -83,6 +96,9 @@ const actions = {
 			$axios.post(`/peserta/reset`,payload)
 			.then((response) => {
 				dispatch('getPesertasLogin').then(() => resolve())
+			})
+			.catch((err) => {
+				reject(err)
 			})
 		})
 	}

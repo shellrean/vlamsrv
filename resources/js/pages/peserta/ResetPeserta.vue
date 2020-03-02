@@ -9,6 +9,13 @@
                     </div>
 				</div>
 				<div class="card-body">
+					<div class="row">
+                        <div class="col-sm-5">
+                            <h4 id="traffic" class="card-title mb-0">Reset login peserta</h4>
+                            <div class="small text-muted">Reset login peserta agar peserta dapat login kembali</div>
+                        </div>
+                    </div>
+                    <br>
 					<b-table striped hover bordered small :fields="fields" :items="pesertas.data" :busy="isBusy" show-empty>
 						<template v-slot:cell(reset)="row">
 							<b-button size="sm" variant="danger" squared @click="resetPeserta(row.item.id)"><font-awesome-icon icon="sync" /></b-button>
@@ -21,6 +28,7 @@
                         <div class="col-md-6">
                             <div class="float-right">
                                 <b-pagination
+                                	size="sm"
                                     v-model="page"
                                     :total-rows="pesertas.meta.total"
                                     :per-page="pesertas.meta.per_page"
@@ -30,6 +38,8 @@
                             </div>
                         </div>
                     </div>
+				</div>
+				<div class="card-footer">
 				</div>
 			</div>
 		</div>

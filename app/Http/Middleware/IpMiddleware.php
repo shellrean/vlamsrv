@@ -15,9 +15,9 @@ class IpMiddleware
      */
     public function handle($request, Closure $next)
     {
-        if ($request->ip() != "192.168.0.199") {
-            abort('403');
-        }
+        // if ($request->ip() != "192.168.0.199") {
+        //     abort('403');
+        // }
 
         return $next($request);
     }
