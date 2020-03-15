@@ -6,7 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Matpel extends Model
 {
-    protected $fillable = [
-    	'kode_mapel','nama'
+    protected $guarded = [];
+
+    protected $casts = [
+    	'jurusan_id' => 'array'
     ];
 }

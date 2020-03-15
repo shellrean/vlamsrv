@@ -26,12 +26,12 @@ class UjianController extends Controller
      */
     public function index()
     {
-        $ujian = Jadwal::with(['banksoal','banksoal.matpel']);
+        $ujian = Jadwal::orderBy('id');
         if (request()->q != '') {
             $ujian = $ujian->where('token', 'LIKE', '%'. request()->q.'%');
         }
 
-        $ujian = $ujian->paginate(10);
+        $ujian = $ujian->get()->makeVisible('banksoal');
         return new AppCollection($ujian);
     }
 
@@ -215,7 +215,8 @@ class UjianController extends Controller
         UjianAktif::create([
             'kelompok'  => $request->kelompok,
             'ujian_id'    => $request->jadwal,
-            'token'     => strtoupper(Str::random(6))
+            'token'     => strtoupper(Str::random(6)),
+            'status_token' => 0
         ]);
 
         return response()->json(['status' => 'OK']);

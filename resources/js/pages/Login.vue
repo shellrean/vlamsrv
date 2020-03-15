@@ -11,7 +11,7 @@
           </div>
           <div v-if="install.status == 'installed'">
             <div class="alert alert-danger rounded-0" v-if="errors.invalid">{{ errors.invalid }}</div>
-            <p class="text-muted">Selamat datang di aplikasi Vlam-Sys. Silahkan masukkan username dan password</p>
+            <p class="text-muted">Selamat datang di aplikasi Vlam-Srv. Silahkan masukkan username dan password</p>
             <div class="input-group mb-3">
               <div class="input-group-prepend">
                 <span class="input-group-text rounded-0">
@@ -45,7 +45,7 @@
           </div>
           <div v-else>
             <div class="alert alert-danger rounded-0" v-if="errors.invalid">{{ errors.invalid }}</div>
-            <p class="text-muted">Selamat datang di aplikasi Vlam-Sys. masukkan ID Server dan password</p>
+            <p class="text-muted">Selamat datang di aplikasi Vlam-Srv. masukkan ID Server dan password</p>
             <div class="input-group mb-3">
               <div class="input-group-prepend">
                 <span class="input-group-text rounded-0">

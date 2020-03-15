@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class SiswaUjian extends Model
 {
+    protected $guarded = [];
 	protected $appends = ['status'];
 
     public function peserta() {

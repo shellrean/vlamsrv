@@ -18880,7 +18880,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         type: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
+        cancelButtonColor: '#dcdcdc',
         confirmButtonText: 'Iya, Lanjutkan!'
       }).then(function (result) {
         if (result.value) {
@@ -58219,7 +58219,7 @@ var render = function() {
                       _vm._v(" "),
                       _c("p", { staticClass: "text-muted" }, [
                         _vm._v(
-                          "Selamat datang di aplikasi Vlam-Sys. Silahkan masukkan username dan password"
+                          "Selamat datang di aplikasi Vlam-Srv. Silahkan masukkan username dan password"
                         )
                       ]),
                       _vm._v(" "),
@@ -58413,7 +58413,7 @@ var render = function() {
                       _vm._v(" "),
                       _c("p", { staticClass: "text-muted" }, [
                         _vm._v(
-                          "Selamat datang di aplikasi Vlam-Sys. masukkan ID Server dan password"
+                          "Selamat datang di aplikasi Vlam-Srv. masukkan ID Server dan password"
                         )
                       ]),
                       _vm._v(" "),
@@ -60285,15 +60285,21 @@ var render = function() {
                     _c("option", [_vm._v("Pilih")]),
                     _vm._v(" "),
                     _vm._l(_vm.ujians.data, function(ujian) {
-                      return _c("option", { domProps: { value: ujian.id } }, [
-                        _vm._v(
-                          _vm._s(
-                            ujian.banksoal_id != "0"
-                              ? ujian.banksoal.kode_banksoal
-                              : "Produktif"
-                          )
-                        )
-                      ])
+                      return _c(
+                        "option",
+                        { domProps: { value: ujian.id } },
+                        [
+                          _vm._l(ujian.banksoal, function(banksol, index) {
+                            return [
+                              _vm._v(
+                                _vm._s(" [ " + banksol.kode_banksoal + " ] ") +
+                                  " "
+                              )
+                            ]
+                          })
+                        ],
+                        2
+                      )
                     })
                   ],
                   2
@@ -60312,9 +60318,9 @@ var render = function() {
                   attrs: { type: "text", readonly: "", name: "" },
                   domProps: {
                     value:
-                      _vm.aktif.token +
+                      (_vm.aktif.status_token == 1 ? _vm.aktif.token : "-") +
                       " | 15 Menit | " +
-                      (_vm.fulled.status_token != 1
+                      (_vm.aktif.status_token == 0
                         ? "(Belum release)"
                         : "(Release)")
                   }
@@ -60337,8 +60343,8 @@ var render = function() {
                         {
                           name: "show",
                           rawName: "v-show",
-                          value: _vm.fulled && _vm.fulled.status_token != 1,
-                          expression: "fulled && fulled.status_token != 1"
+                          value: _vm.aktif.status_token == 0,
+                          expression: "aktif.status_token == 0"
                         }
                       ],
                       attrs: { variant: "dark", size: "sm", squared: "" },
@@ -78049,7 +78055,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var $axios = axios__WEBPACK_IMPORTED_MODULE_0___default.a.create({
-  baseURL: "http://45.251.72.66" + '/api/',
+  baseURL: "http://localhost:8000" + '/api/',
   headers: {
     'Content-Type': 'application/json'
   }
@@ -79786,92 +79792,92 @@ var actions = {
         state = _ref8.state,
         commit = _ref8.commit;
     return new Promise(function (resolve, reject) {
-      dispatch('getServerIdentify').then(function (res) {
+      var config = {
+        onUploadProgress: function onUploadProgress(progressEvent) {
+          if (payload == 'peserta') {
+            commit('UPLOAD_PROGRESS_BAR_PESERTA', parseInt(Math.round(progressEvent.loaded / progressEvent.total * 50)));
+          } else if (payload == 'matpel') {
+            commit('UPLOAD_PROGRESS_BAR_MATPEL', parseInt(Math.round(progressEvent.loaded / progressEvent.total * 50)));
+          } else if (payload == 'banksoal') {
+            commit('UPLOAD_PROGRESS_BAR_BANKSOAL', parseInt(Math.round(progressEvent.loaded / progressEvent.total * 50)));
+          } else if (payload == 'soal') {
+            commit('UPLOAD_PROGRESS_BAR_SOAL', parseInt(Math.round(progressEvent.loaded / progressEvent.total * 50)));
+          } else if (payload == 'jawaban_soal') {
+            commit('UPLOAD_PROGRESS_BAR_JAWABAN', parseInt(Math.round(progressEvent.loaded / progressEvent.total * 50)));
+          } else if (payload == 'file') {
+            commit('UPLOAD_PROGRESS_BAR_GAMBAR', parseInt(Math.round(progressEvent.loaded / progressEvent.total * 50)));
+          } else if (payload == 'jadwal') {
+            commit('UPLOAD_PROGRESS_BAR_JADWAL', parseInt(Math.round(progressEvent.loaded / progressEvent.total * 50)));
+          }
+        }
+      };
+      _center_js__WEBPACK_IMPORTED_MODULE_1__["default"].post('pusat/cbt-sync', {
+        'server_name': state.identify.kode_server,
+        'req': payload
+      }, config).then(function (response) {
+        if (payload == 'peserta') {
+          commit('STEP_UPLOAD_BAR_PESERTA', 2);
+        } else if (payload == 'matpel') {
+          commit('STEP_UPLOAD_BAR_MATPEL', 2);
+        } else if (payload == 'banksoal') {
+          commit('STEP_UPLOAD_BAR_BANKSOAL', 2);
+        } else if (payload == 'soal') {
+          commit('STEP_UPLOAD_BAR_SOAL', 2);
+        } else if (payload == 'jawaban_soal') {
+          commit('STEP_UPLOAD_BAR_JAWABAN', 2);
+        } else if (payload == 'file') {
+          commit('STEP_UPLOAD_BAR_GAMBAR', 2);
+        } else if (payload == 'jadwal') {
+          commit('STEP_UPLOAD_BAR_JADWAL', 2);
+        }
+
         var config = {
           onUploadProgress: function onUploadProgress(progressEvent) {
             if (payload == 'peserta') {
-              commit('UPLOAD_PROGRESS_BAR_PESERTA', parseInt(Math.round(progressEvent.loaded / progressEvent.total * 50)));
+              commit('UPLOAD_PROGRESS_BAR_PESERTA', parseInt(Math.round(progressEvent.loaded / progressEvent.total * 100)));
             } else if (payload == 'matpel') {
-              commit('UPLOAD_PROGRESS_BAR_MATPEL', parseInt(Math.round(progressEvent.loaded / progressEvent.total * 50)));
+              commit('UPLOAD_PROGRESS_BAR_MATPEL', parseInt(Math.round(progressEvent.loaded / progressEvent.total * 100)));
             } else if (payload == 'banksoal') {
-              commit('UPLOAD_PROGRESS_BAR_BANKSOAL', parseInt(Math.round(progressEvent.loaded / progressEvent.total * 50)));
+              commit('UPLOAD_PROGRESS_BAR_BANKSOAL', parseInt(Math.round(progressEvent.loaded / progressEvent.total * 100)));
             } else if (payload == 'soal') {
-              commit('UPLOAD_PROGRESS_BAR_SOAL', parseInt(Math.round(progressEvent.loaded / progressEvent.total * 50)));
+              commit('UPLOAD_PROGRESS_BAR_SOAL', parseInt(Math.round(progressEvent.loaded / progressEvent.total * 100)));
             } else if (payload == 'jawaban_soal') {
-              commit('UPLOAD_PROGRESS_BAR_JAWABAN', parseInt(Math.round(progressEvent.loaded / progressEvent.total * 50)));
+              commit('UPLOAD_PROGRESS_BAR_JAWABAN', parseInt(Math.round(progressEvent.loaded / progressEvent.total * 100)));
             } else if (payload == 'file') {
-              commit('UPLOAD_PROGRESS_BAR_GAMBAR', parseInt(Math.round(progressEvent.loaded / progressEvent.total * 50)));
+              commit('UPLOAD_PROGRESS_BAR_GAMBAR', parseInt(Math.round(progressEvent.loaded / progressEvent.total * 100)));
             } else if (payload == 'jadwal') {
-              commit('UPLOAD_PROGRESS_BAR_JADWAL', parseInt(Math.round(progressEvent.loaded / progressEvent.total * 50)));
+              commit('UPLOAD_PROGRESS_BAR_JADWAL', parseInt(Math.round(progressEvent.loaded / progressEvent.total * 100)));
             }
           }
         };
-        _center_js__WEBPACK_IMPORTED_MODULE_1__["default"].post('pusat/cbt-sync', {
-          'server_name': res.data.kode_server,
-          'req': payload
-        }, config).then(function (response) {
+        _api_js__WEBPACK_IMPORTED_MODULE_0__["default"].post('/pusat/sinkron', response.data, config).then(function (response) {
           if (payload == 'peserta') {
-            commit('STEP_UPLOAD_BAR_PESERTA', 2);
+            commit('STEP_UPLOAD_BAR_PESERTA', 3);
           } else if (payload == 'matpel') {
-            commit('STEP_UPLOAD_BAR_MATPEL', 2);
+            commit('STEP_UPLOAD_BAR_MATPEL', 3);
           } else if (payload == 'banksoal') {
-            commit('STEP_UPLOAD_BAR_BANKSOAL', 2);
+            commit('STEP_UPLOAD_BAR_BANKSOAL', 3);
           } else if (payload == 'soal') {
-            commit('STEP_UPLOAD_BAR_SOAL', 2);
+            commit('STEP_UPLOAD_BAR_SOAL', 3);
           } else if (payload == 'jawaban_soal') {
-            commit('STEP_UPLOAD_BAR_JAWABAN', 2);
+            commit('STEP_UPLOAD_BAR_JAWABAN', 3);
           } else if (payload == 'file') {
-            commit('STEP_UPLOAD_BAR_GAMBAR', 2);
+            commit('STEP_UPLOAD_BAR_GAMBAR', 3);
           } else if (payload == 'jadwal') {
-            commit('STEP_UPLOAD_BAR_JADWAL', 2);
+            commit('STEP_UPLOAD_BAR_JADWAL', 3);
           }
 
-          var config = {
-            onUploadProgress: function onUploadProgress(progressEvent) {
-              if (payload == 'peserta') {
-                commit('UPLOAD_PROGRESS_BAR_PESERTA', parseInt(Math.round(progressEvent.loaded / progressEvent.total * 100)));
-              } else if (payload == 'matpel') {
-                commit('UPLOAD_PROGRESS_BAR_MATPEL', parseInt(Math.round(progressEvent.loaded / progressEvent.total * 100)));
-              } else if (payload == 'banksoal') {
-                commit('UPLOAD_PROGRESS_BAR_BANKSOAL', parseInt(Math.round(progressEvent.loaded / progressEvent.total * 100)));
-              } else if (payload == 'soal') {
-                commit('UPLOAD_PROGRESS_BAR_SOAL', parseInt(Math.round(progressEvent.loaded / progressEvent.total * 100)));
-              } else if (payload == 'jawaban_soal') {
-                commit('UPLOAD_PROGRESS_BAR_JAWABAN', parseInt(Math.round(progressEvent.loaded / progressEvent.total * 100)));
-              } else if (payload == 'file') {
-                commit('UPLOAD_PROGRESS_BAR_GAMBAR', parseInt(Math.round(progressEvent.loaded / progressEvent.total * 100)));
-              } else if (payload == 'jadwal') {
-                commit('UPLOAD_PROGRESS_BAR_JADWAL', parseInt(Math.round(progressEvent.loaded / progressEvent.total * 100)));
-              }
-            }
-          };
-          _api_js__WEBPACK_IMPORTED_MODULE_0__["default"].post('/pusat/sinkron', response.data, config).then(function (response) {
-            if (payload == 'peserta') {
-              commit('STEP_UPLOAD_BAR_PESERTA', 3);
-            } else if (payload == 'matpel') {
-              commit('STEP_UPLOAD_BAR_MATPEL', 3);
-            } else if (payload == 'banksoal') {
-              commit('STEP_UPLOAD_BAR_BANKSOAL', 3);
-            } else if (payload == 'soal') {
-              commit('STEP_UPLOAD_BAR_SOAL', 3);
-            } else if (payload == 'jawaban_soal') {
-              commit('STEP_UPLOAD_BAR_JAWABAN', 3);
-            } else if (payload == 'file') {
-              commit('STEP_UPLOAD_BAR_GAMBAR', 3);
-            } else if (payload == 'jadwal') {
-              commit('STEP_UPLOAD_BAR_JADWAL', 3);
-            }
-
-            resolve();
-          })["catch"](function (err) {
-            reject();
-          });
+          resolve();
         })["catch"](function (err) {
           reject();
         });
-      })["catch"](function (err) {
-        reject();
-      });
+      }); // 	.catch((err) => {
+      // 		reject();
+      // 	})			
+      // })
+      // .catch((err) => {
+      // 	reject();
+      // })
     });
   },
   hapusDataLocal: function hapusDataLocal(_ref9, payload) {
@@ -79964,7 +79970,6 @@ var mutations = {
       token: payload.token,
       status_token: payload.status_token
     };
-    state.aktif = payload;
   }
 };
 var actions = {

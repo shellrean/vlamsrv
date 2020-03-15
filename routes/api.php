@@ -42,6 +42,8 @@ Route::group(['middleware' => 'auth.api', 'namespace' => 'Api\v2','prefix' => 'v
     Route::post('/ujian/selesai', 'UjianController@forceClose');
     Route::post('/ujian/reset', 'UjianController@resetUjianPeserta');
     Route::get('/ujian/sesi', 'UjianController@getAllSesi');
+
+    Route::get('/sinkron-teeer', 'PusatController@sinkron_syc');
 });
 
 Route::post('/v2/pusat/sinkron', 'API\v2\PusatController@sinkron');

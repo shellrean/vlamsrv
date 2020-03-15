@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class UjianAktif extends Model
 {
+	protected $guarded = [];
 	protected $table = 'ujian_aktif';
     protected $fillable = ['kelompok','ujian_id','token','status_token'];
 

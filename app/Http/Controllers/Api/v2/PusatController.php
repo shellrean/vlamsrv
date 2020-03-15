@@ -39,33 +39,39 @@ class PusatController extends Controller
 
         if(isset($request->table)) {   
           DB::table($request->table)->delete();
-          DB::table($request->table)->insert($request->data);
           switch ($request->table) {
             case 'pesertas':
+              Peserta::insert($request->data);
               $server->peserta = 1;
               $server->save();
               break;
             case 'matpels':
+              Matpel::insert($request->data);
               $server->matpel = 1;
               $server->save();
               break;
             case 'banksoals':
+              Banksoal::insert($request->data);
               $server->banksoal = 1;
               $server->save();
               break;
             case 'soals':
+              Soal::insert($request->data);
               $server->soal = 1;
               $server->save();
               break;
             case 'jawaban_soals':
+              JawabanSoal::insert($request->data);
               $server->pilihan_soal = 1;
               $server->save();
               break;
             case 'file':
+              Filder::insert($request->data);
               $server->gambar = 1;
               $server->save();
               break;
             case 'jadwals':
+              Jadwal::insert($request->data);
               $server->jadwal = 1;
               $server->save();
               break;
@@ -104,7 +110,7 @@ class PusatController extends Controller
      */
     public function connect()
     {
-    	$hostname = "http://45.251.72.66";
+    	$hostname = env('SERVER_CENTER');
 
     	$server = IdentifyServer::first();
     	$ch = curl_init();
@@ -187,7 +193,7 @@ class PusatController extends Controller
      */
     public function registerServer(Request $request)
     {
-      $hostname = "http://45.251.72.66";
+      $hostname = env('SERVER_CENTER');
     
     	$data = $request->all();
 
@@ -329,6 +335,7 @@ class PusatController extends Controller
       DB::table('jadwals')->delete();
       DB::table('hasil_ujians')->delete();
       DB::table('banksoals')->delete();
+      DB::table('files')->delete();
 
       $server = IdentifyServer::first();
       
@@ -344,5 +351,14 @@ class PusatController extends Controller
       Storage::deleteDirectory('public');
 
       return response()->json(['status' => 'OK']);
+    }
+
+    public function sinkron_syc()
+    {
+      for($i=0; $i < 10; $i++) {
+        echo $i;
+        echo str_repeat(' ',1024*64);
+        flush();
+      }
     }
 }

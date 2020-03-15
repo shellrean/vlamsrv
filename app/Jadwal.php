@@ -6,12 +6,29 @@ use Illuminate\Database\Eloquent\Model;
 
 class Jadwal extends Model
 {
-    protected $fillable = [
-    	'banksoal_id','lama','token','status_ujian','tanggal','mulai','berakhir', 'jadwal_id'
+    protected $guarded = [];
+
+    protected $appends = [
+        'banksoal'
+    ];
+
+    protected $hidden = [
+        'banksoal','created_at','updated_at'
+    ];
+
+    protected $casts = [
+        'ids' => 'array'
     ];
 
     public function banksoal() 
     {
     	return $this->hasOne('App\Banksoal','id','banksoal_id');
+    }
+
+    public function getBanksoalAttribute()
+    {
+        $ids = array_column($this->ids, 'id');
+        $banksoal = Banksoal::whereIn('id', $ids)->get();
+        return $banksoal;
     }
 }

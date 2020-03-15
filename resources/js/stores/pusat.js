@@ -198,8 +198,6 @@ const actions = {
 	},
 	cbtSync({ dispatch, state, commit }, payload) {
 		return new Promise((resolve, reject) => {
-			dispatch('getServerIdentify')
-			.then((res) => {
 				let config = {
 				  onUploadProgress: progressEvent => {
 				  	if(payload == 'peserta') {
@@ -226,7 +224,7 @@ const actions = {
 				  }
 				}
 				$center.post('pusat/cbt-sync', {
-					'server_name' : res.data.kode_server,
+					'server_name' : state.identify.kode_server,
 					'req'		: payload
 				},config)
 				.then((response) => {
@@ -305,13 +303,13 @@ const actions = {
 						reject();
 					})
 				})
-				.catch((err) => {
-					reject();
-				})			
-			})
-			.catch((err) => {
-				reject();
-			})
+			// 	.catch((err) => {
+			// 		reject();
+			// 	})			
+			// })
+			// .catch((err) => {
+			// 	reject();
+			// })
 		})
 
 	},

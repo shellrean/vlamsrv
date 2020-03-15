@@ -45,7 +45,7 @@
 							<div class="col-6">
 								<select class="form-control form-control-sm rounded-0" v-model="aktif.jadwal">
 									<option>Pilih</option>
-									<option v-for="ujian in ujians.data" :value="ujian.id">{{ ( ujian.banksoal_id != '0' ? ujian.banksoal.kode_banksoal : 'Produktif' ) }}</option>
+									<option v-for="ujian in ujians.data" :value="ujian.id"><template v-for="(banksol, index) in ujian.banksoal">{{ ' [ '+banksol.kode_banksoal+' ] ' }} </template></option>
 								</select>
 							</div>
 						</div>
@@ -56,11 +56,11 @@
 								<label>Token</label>
 							</div>
 							<div class="col-6">
-								<input type="text" readonly name="" class="form-control form-control-sm rounded-0" :value="aktif.token+' | 15 Menit | '+( fulled.status_token != 1 ? '(Belum release)' : '(Release)' )">
+								<input type="text" readonly name="" class="form-control form-control-sm rounded-0" :value="((aktif.status_token == 1) ? aktif.token : '-') +' | 15 Menit | '+( aktif.status_token == 0 ? '(Belum release)' : '(Release)' )">
 								<input type="hidden" :value="aktif.token">
 							</div>
 							<div class="col-3">
-								<b-button variant="dark" size="sm" squared @click="ubahToken" v-show="fulled && fulled.status_token != 1">Rilis token </b-button>
+								<b-button variant="dark" size="sm" squared @click="ubahToken" v-show="aktif.status_token == 0">Rilis token </b-button>
 							</div>
 						</div>
 					</div>

@@ -41,7 +41,6 @@ const mutations = {
 			token: payload.token,
 			status_token: payload.status_token
 		}
-		state.aktif = payload
 	}
 }
 
