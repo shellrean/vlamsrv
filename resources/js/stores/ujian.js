@@ -66,7 +66,7 @@ const actions = {
 	},
 	getAllPeserta({ commit, state}, payload) {
 		return new Promise((resolve, reject) => {
-			$axios.get(`/ujian/get-peserta`)
+			$axios.get(`/ujian/get-peserta/${payload}`)
 			.then((response) => {
 				commit('ASSIGN_DATA_PESERTA', response.data)
 				resolve(response.data)

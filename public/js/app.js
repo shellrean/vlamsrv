@@ -79998,7 +79998,7 @@ var actions = {
     var commit = _ref3.commit,
         state = _ref3.state;
     return new Promise(function (resolve, reject) {
-      _api_js__WEBPACK_IMPORTED_MODULE_0__["default"].get("/ujian/get-peserta").then(function (response) {
+      _api_js__WEBPACK_IMPORTED_MODULE_0__["default"].get("/ujian/get-peserta/".concat(payload)).then(function (response) {
         commit('ASSIGN_DATA_PESERTA', response.data);
         resolve(response.data);
       });

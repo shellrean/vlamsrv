@@ -73,7 +73,7 @@ class UjianController extends Controller
     public function pesertaAll()
     {
         $ujian = UjianAktif::first();
-        $siswa = SiswaUjian::with('peserta')->whereDate('created_at', Carbon::today())->get();
+        $siswa = SiswaUjian::with('peserta')->where(['jadwal_id' => $ujian->ujian_id])->get();
         return response()->json(['data' => $siswa]);
     }
 
