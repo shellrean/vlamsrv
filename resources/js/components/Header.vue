@@ -17,9 +17,6 @@
             </a>
             <div class="dropdown-menu dropdown-menu-right pt-0">
               <div class="dropdown-header bg-light py-2"><strong>Account</strong></div>
-              <a class="dropdown-item" href="#">
-                <font-awesome-icon icon="user-lock" /> &nbsp;Lock Account
-              </a>
               <a class="dropdown-item" href="#" @click="logout">
                 <font-awesome-icon icon="sign-out-alt" />&nbsp; Logout
               </a>

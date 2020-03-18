@@ -135,10 +135,15 @@ const actions = {
 	},
 	getServerConnect({ commit }, payload) {
 		return new Promise((resolve, reject) => {
+			commit('SET_LOADING', true, { root: true })
 			$axios.get(`/pusat/connect`)
 			.then((response) => {
 				commit('CONNECTIVITY', response.data) 
+				commit('SET_LOADING', false, { root: true })
 				resolve(response.data)
+			})
+			.catch((err) => {
+				commit('SET_LOADING', false, { root: true })
 			})
 		})
 	},
@@ -224,7 +229,7 @@ const actions = {
 				  }
 				}
 				$center.post('pusat/cbt-sync', {
-					'server_name' : state.identify.kode_server,
+					'server_name' : state.identify.data.kode_server,
 					'req'		: payload
 				},config)
 				.then((response) => {
@@ -315,6 +320,7 @@ const actions = {
 	},
 	hapusDataLocal({ commit }, payload) {
 		return new Promise((resolve, reject) => {
+			commit('SET_LOADING', true, { root: true })
 			let config = {
 				onUploadProgress: progressEvent => {
 					commit('HAPUS_DATA_PROGRESS',parseInt( Math.round( ( progressEvent.loaded / progressEvent.total ) * 100 )))
@@ -323,7 +329,12 @@ const actions = {
 			$axios.post('/pusat/hapus-data',payload,config)
 			.then((response) => {
 				commit('HAPUS_DATA_PROGRESS',100);
+				commit('SET_LOADING', false, { root: true })
 				resolve(response.data)
+			})
+			.catch((err) => {
+				commit('SET_LOADING', false, { root: true })
+				reject()
 			})
 		})		
 	},

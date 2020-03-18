@@ -18,9 +18,9 @@
                     <br>
 					<b-table id="table-transition-example" striped hover bordered small :fields="fields" :items="pesertas.data" :busy="isBusy" show-empty :tbody-transition-props="transProps">
 						<template v-slot:table-busy>
-                            <div class="text-center text-warning my-2">
-                              <img src="/img/loader.svg" width="50px" />
-                            </div>
+                            <div class="text-center text-dark my-2">
+							  <b-spinner small type="grow"></b-spinner> Loading ...
+			                </div>
                         </template>
 						<template v-slot:cell(no)="row">
 							{{ from+ row.index }}

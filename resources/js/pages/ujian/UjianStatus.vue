@@ -6,113 +6,180 @@
 					Status ujian
 				</div>
 				<div class="card-body">
-					<b-table striped hover bordered :busy="isBusy" small :fields="fields" :items="ujians.data" show-empty>
-						<template v-slot:table-busy>
-                            <div class="text-center text-warning my-2">
-                              <img src="/img/loader.svg" width="50px" />
-                            </div>
-                        </template>
-                        <template v-slot:cell(index)="data">
-                            {{ data.index + 1 }}
-                        </template>
-						<template v-slot:cell(lama)="row">
-							{{ parseInt(row.item.lama)/60+ " Menit" }}
-						</template>
-                    </b-table>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <p v-if="ujians.data"><i class="fa fa-bars"></i> {{ ujians.data.length }} item dari {{ ujians.meta.total }} total data</p>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="float-right">
-                                <b-pagination
-                                    v-model="page"
-                                    :total-rows="ujians.meta.total"
-                                    :per-page="ujians.meta.per_page"
-                                    aria-controls="products"
-                                    v-if="ujians.data && ujians.data.length > 0"
-                                    ></b-pagination>
-                            </div>
+					<div class="row">
+                        <div class="col-sm-5">
+                            <h4 id="traffic" class="card-title mb-0">Status ujian</h4>
+                            <div class="small text-muted">Atur sesi dan banksoal aktif dan rilis token agar token dapat digunakan</div>
                         </div>
                     </div>
+                    <br>
+                    <template>
+                    	<div class="text-center text-light my-2" v-show="isLoading">
+						  <b-spinner small type="grow"></b-spinner> Checking data ujian...
+		                </div>
+                    </template>
+                    <template >
+					<div class="form-group" v-show="!isLoading">
+						<div class="row">
+							<div class="col-2">
+								<label>Kelompok</label>
+							</div>
+							<div class="col-6">
+								<select class="form-control form-control-sm rounded-0" v-model="aktif.kelompok">
+									<option v-for="sesi in sesis.data" :value="sesi.sesi">{{ sesi.sesi }}</option>
+								</select>
+							</div>
+						</div>
+					</div>
+					<div class="form-group" v-show="!isLoading">
+						<div class="row">
+							<div class="col-2">
+								<label>Daftar ujian</label>
+							</div>
+							<div class="col-6">
+								<select class="form-control form-control-sm rounded-0" v-model="aktif.jadwal">
+									<option>Pilih</option>
+									<option v-for="ujian in ujians.data" :value="ujian.id">
+										<span v-if="!ujian.alias != ''" v-for="(banksol, index) in ujian.banksoal">{{ ' [ '+banksol.kode_banksoal+' ] ' }} </span>
+										<span v-if="ujian.alias != ''">{{ ujian.alias }}</span>
+									</option>
+								</select>
+							</div>
+						</div>
+					</div>
+					<div class="form-group" v-show="!isLoading">
+						<div class="row">
+							<div class="col-2">
+								<label>Token</label>
+							</div>
+							<div class="col-6">
+								<input type="text" readonly name="" class="form-control form-control-sm rounded-0" :value="((aktif.status_token == 1) ? aktif.token : '-') +' | 15 Menit | '+( aktif.status_token == 0 ? '(Belum release)' : '(Release)' )">
+								<input type="hidden" :value="aktif.token">
+							</div>
+							<div class="col-3">
+								<b-button variant="dark" size="sm" squared @click="ubahToken" v-show="aktif.status_token == 0">Rilis token </b-button>
+							</div>
+						</div>
+					</div>
+					<div class="form-group" v-show="!isLoading">
+						<b-button variant="dark" size="sm" squared @click="postStatus"> Simpan semua</b-button>
+					</div>
+					</template>
 				</div>
 				<div class="card-footer">
-					<small><font-awesome-icon icon="info-circle" class="text-info"/> &nbsp; Token berubah interval 15 menit </small>
+					<h1 v-show="aktif.status_token == 1" class="bg-info" style="max-width: 220px; text-align: center;">{{ aktif.token }}</h1>
 				</div>
 			</div>
 		</div>
 	</div>
 </template>
 <script>
-import { mapActions, mapState, mapMutations } from 'vuex'
+import vSelect from 'vue-select'
+import 'vue-select/dist/vue-select.css';
+import { mapActions, mapState, mapMutations, mapGetters } from 'vuex'
 
 export default {
-	name: 'DataUjian',
-	created() {
-		this.getUjians()
+	name: 'UjianStatus',
+	components: {
+		vSelect
 	},
 	data() {
 		return {
-			fields: [
-				{ key: 'index', label: 'No' },
-				{ key: 'banksoal.matpel.nama', label: 'Mata pelajaran' },
-				{ key: 'mulai', label: 'Waktu mulai' },
-				{ key: 'lama', label: 'Durasi' },
-				{ key: 'token', label: 'Token' }
-			],
-			search: '',
-			data: {
-				mulai: '',
-				berakhir: '',
-				lama: '',
-				tanggal: '',
-				banksoal_id: '',
-			},
-			isActive: '',
-			isBusy: true,
-			timeout: 0
+			timeout: 0,
+			dikerjakan: false,
+			selesai: false,
+			status: 1
 		}
+	},
+	created() {
+		this.getUjianAktif()
+		this.getUjians()
+		this.getSesi()
 	},
 	computed: {
-		...mapState(['errors']),
+		...mapGetters(['isLoading']),
+		...mapState(['error']),
 		...mapState('ujian', {
-			ujians: state => state.ujians
-		}),
-		page: {
-			get() {
-				return this.$store.state.ujian.page
-			},
-			set(val) {
-				this.$store.commit('ujian/SET_PAGE', val)
-			}
-		}
+			aktif: state => state.ujianAktif,
+			ujians: state => state.ujians,
+			fulled: state => state.aktif,
+			sesis: state => state.sesis
+		})
 	},
 	methods: {
-		...mapActions('ujian', ['getUjians','addUjian','setStatus','changeToken']),
-		...mapMutations(['CLEAR_ERROR', 'SET_LOADING'])
+		...mapActions('ujian', ['getUjians','getSesi','addUjian','setStatus','changeToken','getUjianAktif','pilihKelompok','pilihTest','rilistToken','changeToken','simpanStatus']),
+		postStatus() {
+			this.simpanStatus()
+			.then(() => {
+				this.$notify({
+		            group: 'foo',
+		            title: 'Sukses',
+		            type: 'success',
+		            text: 'Ujian aktif disimpan.'
+		        })
+			})
+			.catch(() => {
+				this.$notify({
+		            group: 'foo',
+		            title: 'Error',
+		            type: 'error',
+		            text: 'Masih ada peserta yang berstatus online.'
+		        })
+			})
+		},
+		ubahKelompok() {
+			this.pilihKelompok()
+			.then(() => {
+				this.$notify({
+		            group: 'foo',
+		            title: 'Sukses',
+		            type: 'success',
+		            text: 'Sesi disimpan.'
+		        })
+			})
+			.catch(() => {
+				this.$notify({
+		            group: 'foo',
+		            title: 'Error',
+		            type: 'error',
+		            text: 'Masih ada peserta yang berstatus online.'
+		        })
+			})
+		},
+		ubahTes() {
+			this.pilihTest()
+			.then(() => {
+				this.$notify({
+		            group: 'foo',
+		            title: 'Sukses',
+		            type: 'success',
+		            text: 'Ujian disimpan.'
+		        })
+			})
+			.catch(() => {
+				this.$notify({
+		            group: 'foo',
+		            title: 'Error',
+		            type: 'error',
+		            text: 'Masih ada peserta yang berstatus online.'
+		        })
+			})
+		},
+		ubahToken() {
+			this.rilistToken()
+			.then(() => {
+				this.$notify({
+					group: 'foo',
+					title: 'Sukses',
+					type: 'success',
+					text: 'Token berhasil dirilis'
+				})
+			})
+		}
 	},
 	watch: {
-		page() {
-			this.getUjians()
-		},
-		search() {
-			this.getUjians(this.search)
-		},
-		ujians() {
-			this.isBusy = false
-		},
 		timeout() {
-			const filter = this.ujians.data.filter((ujian) => {
-				return ujian.status_ujian == 1
-			})
-
-			filter.forEach((item) => {
-				this.changeToken({ id: item.id})
-			})
-
-			if(filter.length != 0) {
-				this.getUjians()
-			} 
+			this.changeToken()
 		}
 	},
 	mounted() {

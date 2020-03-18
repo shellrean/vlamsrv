@@ -22,9 +22,9 @@
                             <font-awesome-icon icon="clipboard-check" v-show="!row.item.uploaded == 0" class="text-success" />
                         </template>
 						<template v-slot:table-busy>
-                            <div class="text-center text-warning my-2">
-                              <img src="/img/loader.svg" width="50px" />
-                            </div>
+                            <div class="text-center text-dark my-2">
+							  <b-spinner small type="grow"></b-spinner> Loading...
+			                </div>
                         </template>
                         <template v-slot:cell(status)="row">
                             {{ row.item.status }}
@@ -90,7 +90,14 @@ export default {
 			})
 		},
 		refreshTable() {
+			this.isBusy = true;
 			this.getAllPeserta()
+			.then(() => {
+				isBusy = false;
+			})
+			.catch(() => {
+				isBusy = false;
+			})
 		},
 		uploadHasil() {
 			this.uploadNilai()

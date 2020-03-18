@@ -18132,9 +18132,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -18328,13 +18325,20 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   created: function created() {
     this.getServerIdentify();
     this.getServerConnect();
   },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])('pusat', {
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(['isAuth', 'isLoading']), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])('pusat', {
     identify: function identify(state) {
       return state.identify.data;
     },
@@ -18750,6 +18754,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'DataPeserat',
@@ -18833,7 +18842,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var vue_loading_overlay__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-loading-overlay */ "./node_modules/vue-loading-overlay/dist/vue-loading.min.js");
+/* harmony import */ var vue_loading_overlay__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_loading_overlay__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -18862,15 +18873,21 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'Hapus',
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])('pusat', {
+  components: {
+    Loading: vue_loading_overlay__WEBPACK_IMPORTED_MODULE_0___default.a
+  },
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapGetters"])(['isLoading']), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapState"])('pusat', {
     hapus: function hapus(state) {
       return state.hapus;
     }
   })),
-  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])('pusat', ['hapusDataLocal']), {
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])('pusat', ['hapusDataLocal']), {
     hapusData: function hapusData() {
       var _this = this;
 
@@ -19486,7 +19503,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       });
     },
     refreshTable: function refreshTable() {
-      this.getAllPeserta();
+      this.isBusy = true;
+      this.getAllPeserta().then(function () {
+        isBusy = false;
+      })["catch"](function () {
+        isBusy = false;
+      });
     },
     uploadHasil: function uploadHasil() {
       var _this2 = this;
@@ -19540,10 +19562,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/ujian/UjianStatus2.vue?vue&type=script&lang=js&":
-/*!************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/ujian/UjianStatus2.vue?vue&type=script&lang=js& ***!
-  \************************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/ujian/UjianStatus.vue?vue&type=script&lang=js&":
+/*!***********************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/ujian/UjianStatus.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -19560,7 +19582,6 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-//
 //
 //
 //
@@ -19745,17 +19766,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   watch: {
     timeout: function timeout() {
       this.changeToken();
-    },
-    fulled: function fulled() {
-      var date = new Date(this.fulled.jadwal.tanggal + ' ' + this.fulled.jadwal.mulai);
-      var date2 = new Date(this.fulled.jadwal.tanggal + ' ' + this.fulled.jadwal.berakhir);
-      var now = new Date();
-
-      if (now > date && now < date2) {
-        this.status = 2;
-      } else if (now > date2) {
-        this.status = 3;
-      }
     }
   },
   mounted: function mounted() {
@@ -57471,8 +57481,8 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("footer", { staticClass: "c-footer" }, [
       _c("div", [
-        _c("a", { attrs: { href: "https://coreui.io" } }, [_vm._v("Vlam srv")]),
-        _vm._v(" © 2019 shellrean.")
+        _c("a", { attrs: { href: "" } }, [_vm._v("Vlamsrv")]),
+        _vm._v(" 1.0.0-alpha.beta © 2020 shellrean.")
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "ml-auto" }, [
@@ -57527,16 +57537,6 @@ var render = function() {
           _vm._v(" "),
           _c("div", { staticClass: "dropdown-menu dropdown-menu-right pt-0" }, [
             _vm._m(4),
-            _vm._v(" "),
-            _c(
-              "a",
-              { staticClass: "dropdown-item", attrs: { href: "#" } },
-              [
-                _c("font-awesome-icon", { attrs: { icon: "user-lock" } }),
-                _vm._v("  Lock Account\n              ")
-              ],
-              1
-            ),
             _vm._v(" "),
             _c(
               "a",
@@ -57910,252 +57910,283 @@ var render = function() {
       _c("div", { staticClass: "container-fluid" }, [
         _c("div", { staticClass: "fade-in" }, [
           _c("div", { staticClass: "card" }, [
-            _c("div", { staticClass: "card-body" }, [
-              _vm.status
-                ? _c("div", { staticClass: "row" }, [
-                    _vm.status.status == 1
-                      ? _c(
-                          "div",
-                          { staticClass: "col-sm-6 col-md-4" },
-                          [
-                            _c("h5", { staticClass: "text-info" }, [
-                              _vm._v("AKTIF")
-                            ]),
-                            _vm._v(" "),
-                            _c(
+            _c(
+              "div",
+              { staticClass: "card-body" },
+              [
+                [
+                  _c(
+                    "div",
+                    {
+                      directives: [
+                        {
+                          name: "show",
+                          rawName: "v-show",
+                          value: _vm.isLoading,
+                          expression: "isLoading"
+                        }
+                      ],
+                      staticClass: "text-center text-light my-2"
+                    },
+                    [
+                      _c("b-spinner", { attrs: { small: "", type: "grow" } }),
+                      _vm._v(
+                        " Refresh status koneksi ke server pusat...\n\t\t\t                "
+                      )
+                    ],
+                    1
+                  )
+                ],
+                _vm._v(" "),
+                [
+                  _vm.status
+                    ? _c("div", { staticClass: "row" }, [
+                        _vm.status.status == 1
+                          ? _c(
                               "div",
-                              { staticClass: "alert alert-info rounded-0" },
-                              [_vm._v("CBTsync siap digunakan")]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "b-alert",
-                              {
-                                attrs: {
-                                  show: "",
-                                  squared: "",
-                                  variant: "secondary"
-                                }
-                              },
+                              { staticClass: "col-sm-6 col-md-4" },
                               [
-                                _vm._v("SERVER-ID  "),
+                                _c("h5", { staticClass: "text-info" }, [
+                                  _vm._v("AKTIF")
+                                ]),
+                                _vm._v(" "),
                                 _c(
-                                  "span",
+                                  "div",
+                                  { staticClass: "alert alert-info rounded-0" },
+                                  [_vm._v("CBTsync siap digunakan")]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "b-alert",
                                   {
-                                    staticClass:
-                                      "badge badge-info py-2 rounded-0"
+                                    attrs: {
+                                      show: "",
+                                      squared: "",
+                                      variant: "secondary"
+                                    }
                                   },
                                   [
-                                    _vm._v(
-                                      _vm._s(_vm.identify.kode_server) + " "
+                                    _vm._v("SERVER-ID  "),
+                                    _c(
+                                      "span",
+                                      {
+                                        staticClass:
+                                          "badge badge-info py-2 rounded-0"
+                                      },
+                                      [
+                                        _vm._v(
+                                          _vm._s(_vm.identify.kode_server) + " "
+                                        )
+                                      ]
                                     )
                                   ]
                                 )
-                              ]
+                              ],
+                              1
                             )
-                          ],
-                          1
-                        )
-                      : _vm._e(),
-                    _vm._v(" "),
-                    _vm.status == "unregistered"
-                      ? _c(
-                          "div",
-                          { staticClass: "col-sm-6 col-md-4" },
-                          [
-                            _c("h5", { staticClass: "text-warning" }, [
-                              _vm._v("STAND BY")
-                            ]),
-                            _vm._v(" "),
-                            _c(
-                              "b-alert",
-                              {
-                                attrs: {
-                                  show: "",
-                                  squared: "",
-                                  variant: "warning"
-                                }
-                              },
+                          : _vm._e(),
+                        _vm._v(" "),
+                        _vm.status == "unregistered"
+                          ? _c(
+                              "div",
+                              { staticClass: "col-sm-6 col-md-4" },
                               [
-                                _vm._v(
-                                  "ID Server tidak sesuai dengan data server pusat"
-                                )
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "b-alert",
-                              {
-                                attrs: {
-                                  show: "",
-                                  squared: "",
-                                  variant: "secondary"
-                                }
-                              },
-                              [
-                                _vm._v("SERVER-ID  "),
+                                _c("h5", { staticClass: "text-warning" }, [
+                                  _vm._v("STAND BY")
+                                ]),
+                                _vm._v(" "),
                                 _c(
-                                  "span",
+                                  "b-alert",
                                   {
-                                    staticClass:
-                                      "badge badge-warning py-2 rounded-0"
+                                    attrs: {
+                                      show: "",
+                                      squared: "",
+                                      variant: "warning"
+                                    }
                                   },
-                                  [_vm._v(_vm._s(_vm.identify.kode_server))]
-                                )
-                              ]
-                            )
-                          ],
-                          1
-                        )
-                      : _vm._e(),
-                    _vm._v(" "),
-                    _vm.status == "block"
-                      ? _c(
-                          "div",
-                          { staticClass: "col-sm-6 col-md-4" },
-                          [
-                            _c("h5", { staticClass: "text-primary" }, [
-                              _vm._v("STAND BY")
-                            ]),
-                            _vm._v(" "),
-                            _c(
-                              "b-alert",
-                              {
-                                attrs: {
-                                  show: "",
-                                  squared: "",
-                                  variant: "primary"
-                                }
-                              },
-                              [_vm._v("SN sudah terdaftar di server pusat")]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "b-alert",
-                              {
-                                attrs: {
-                                  show: "",
-                                  squared: "",
-                                  variant: "secondary"
-                                }
-                              },
-                              [
-                                _vm._v("SERVER-ID  "),
+                                  [
+                                    _vm._v(
+                                      "ID Server tidak sesuai dengan data server pusat"
+                                    )
+                                  ]
+                                ),
+                                _vm._v(" "),
                                 _c(
-                                  "span",
+                                  "b-alert",
                                   {
-                                    staticClass:
-                                      "badge badge-primary py-2 rounded-0"
+                                    attrs: {
+                                      show: "",
+                                      squared: "",
+                                      variant: "secondary"
+                                    }
                                   },
-                                  [_vm._v(_vm._s(_vm.identify.kode_server))]
+                                  [
+                                    _vm._v("SERVER-ID  "),
+                                    _c(
+                                      "span",
+                                      {
+                                        staticClass:
+                                          "badge badge-warning py-2 rounded-0"
+                                      },
+                                      [_vm._v(_vm._s(_vm.identify.kode_server))]
+                                    )
+                                  ]
                                 )
-                              ]
+                              ],
+                              1
                             )
-                          ],
-                          1
-                        )
-                      : _vm._e(),
-                    _vm._v(" "),
-                    _vm.status == "unconnect"
-                      ? _c(
-                          "div",
-                          { staticClass: "col-sm-6 col-md-4" },
-                          [
-                            _c("h5", { staticClass: "text-danger" }, [
-                              _vm._v("OFFLINE")
-                            ]),
-                            _vm._v(" "),
-                            _c(
-                              "b-alert",
-                              {
-                                attrs: {
-                                  show: "",
-                                  squared: "",
-                                  variant: "danger"
-                                }
-                              },
+                          : _vm._e(),
+                        _vm._v(" "),
+                        _vm.status == "block"
+                          ? _c(
+                              "div",
+                              { staticClass: "col-sm-6 col-md-4" },
                               [
-                                _vm._v(
-                                  "CBTsync tidak terkoneksi ke server pusat"
-                                )
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "b-alert",
-                              {
-                                attrs: {
-                                  show: "",
-                                  squared: "",
-                                  variant: "secondary"
-                                }
-                              },
-                              [
-                                _vm._v("SERVER-ID  "),
+                                _c("h5", { staticClass: "text-primary" }, [
+                                  _vm._v("STAND BY")
+                                ]),
+                                _vm._v(" "),
                                 _c(
-                                  "span",
+                                  "b-alert",
                                   {
-                                    staticClass:
-                                      "badge badge-danger py-2 rounded-0"
+                                    attrs: {
+                                      show: "",
+                                      squared: "",
+                                      variant: "primary"
+                                    }
                                   },
-                                  [_vm._v(_vm._s(_vm.identify.kode_server))]
-                                )
-                              ]
-                            )
-                          ],
-                          1
-                        )
-                      : _vm._e(),
-                    _vm._v(" "),
-                    _vm.status.status == 0
-                      ? _c(
-                          "div",
-                          { staticClass: "col-sm-6 col-md-4" },
-                          [
-                            _c("h5", { staticClass: "text-danger" }, [
-                              _vm._v("OFFLINE")
-                            ]),
-                            _vm._v(" "),
-                            _c(
-                              "b-alert",
-                              {
-                                attrs: {
-                                  show: "",
-                                  squared: "",
-                                  variant: "danger"
-                                }
-                              },
-                              [_vm._v("Server Non-Aktif pada server pusat")]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "b-alert",
-                              {
-                                attrs: {
-                                  show: "",
-                                  squared: "",
-                                  variant: "secondary"
-                                }
-                              },
-                              [
-                                _vm._v("SERVER-ID  "),
+                                  [_vm._v("SN sudah terdaftar di server pusat")]
+                                ),
+                                _vm._v(" "),
                                 _c(
-                                  "span",
+                                  "b-alert",
                                   {
-                                    staticClass:
-                                      "badge badge-danger py-2 rounded-0"
+                                    attrs: {
+                                      show: "",
+                                      squared: "",
+                                      variant: "secondary"
+                                    }
                                   },
-                                  [_vm._v(_vm._s(_vm.identify.kode_server))]
+                                  [
+                                    _vm._v("SERVER-ID  "),
+                                    _c(
+                                      "span",
+                                      {
+                                        staticClass:
+                                          "badge badge-primary py-2 rounded-0"
+                                      },
+                                      [_vm._v(_vm._s(_vm.identify.kode_server))]
+                                    )
+                                  ]
                                 )
-                              ]
+                              ],
+                              1
                             )
-                          ],
-                          1
-                        )
-                      : _vm._e()
-                  ])
-                : _vm._e()
-            ])
+                          : _vm._e(),
+                        _vm._v(" "),
+                        _vm.status == "unconnect"
+                          ? _c(
+                              "div",
+                              { staticClass: "col-sm-6 col-md-4" },
+                              [
+                                _c("h5", { staticClass: "text-danger" }, [
+                                  _vm._v("OFFLINE")
+                                ]),
+                                _vm._v(" "),
+                                _c(
+                                  "b-alert",
+                                  {
+                                    attrs: {
+                                      show: "",
+                                      squared: "",
+                                      variant: "danger"
+                                    }
+                                  },
+                                  [
+                                    _vm._v(
+                                      "CBTsync tidak terkoneksi ke server pusat"
+                                    )
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "b-alert",
+                                  {
+                                    attrs: {
+                                      show: "",
+                                      squared: "",
+                                      variant: "secondary"
+                                    }
+                                  },
+                                  [
+                                    _vm._v("SERVER-ID  "),
+                                    _c(
+                                      "span",
+                                      {
+                                        staticClass:
+                                          "badge badge-danger py-2 rounded-0"
+                                      },
+                                      [_vm._v(_vm._s(_vm.identify.kode_server))]
+                                    )
+                                  ]
+                                )
+                              ],
+                              1
+                            )
+                          : _vm._e(),
+                        _vm._v(" "),
+                        _vm.status.status == 0
+                          ? _c(
+                              "div",
+                              { staticClass: "col-sm-6 col-md-4" },
+                              [
+                                _c("h5", { staticClass: "text-danger" }, [
+                                  _vm._v("OFFLINE")
+                                ]),
+                                _vm._v(" "),
+                                _c(
+                                  "b-alert",
+                                  {
+                                    attrs: {
+                                      show: "",
+                                      squared: "",
+                                      variant: "danger"
+                                    }
+                                  },
+                                  [_vm._v("Server Non-Aktif pada server pusat")]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "b-alert",
+                                  {
+                                    attrs: {
+                                      show: "",
+                                      squared: "",
+                                      variant: "secondary"
+                                    }
+                                  },
+                                  [
+                                    _vm._v("SERVER-ID  "),
+                                    _c(
+                                      "span",
+                                      {
+                                        staticClass:
+                                          "badge badge-danger py-2 rounded-0"
+                                      },
+                                      [_vm._v(_vm._s(_vm.identify.kode_server))]
+                                    )
+                                  ]
+                                )
+                              ],
+                              1
+                            )
+                          : _vm._e()
+                      ])
+                    : _vm._e()
+                ]
+              ],
+              2
+            )
           ])
         ])
       ])
@@ -58725,12 +58756,14 @@ var render = function() {
                     return [
                       _c(
                         "div",
-                        { staticClass: "text-center text-warning my-2" },
+                        { staticClass: "text-center text-dark my-2" },
                         [
-                          _c("img", {
-                            attrs: { src: "/img/loader.svg", width: "50px" }
-                          })
-                        ]
+                          _c("b-spinner", {
+                            attrs: { small: "", type: "grow" }
+                          }),
+                          _vm._v(" Loading ...\n\t\t\t                ")
+                        ],
+                        1
                       )
                     ]
                   },
@@ -58891,6 +58924,25 @@ var render = function() {
               },
               scopedSlots: _vm._u([
                 {
+                  key: "table-busy",
+                  fn: function() {
+                    return [
+                      _c(
+                        "div",
+                        { staticClass: "text-center text-dark my-2" },
+                        [
+                          _c("b-spinner", {
+                            attrs: { small: "", type: "grow" }
+                          }),
+                          _vm._v(" Loading...\n\t\t\t                ")
+                        ],
+                        1
+                      )
+                    ]
+                  },
+                  proxy: true
+                },
+                {
                   key: "cell(reset)",
                   fn: function(row) {
                     return [
@@ -59004,51 +59056,65 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "c-body" }, [
-    _c("main", { staticClass: "c-main" }, [
-      _c("div", { staticClass: "container-fluid" }, [
-        _c("div", { staticClass: "fade-in" }, [
-          _c("div", { staticClass: "card" }, [
-            _c("div", { staticClass: "card-header" }, [
-              _vm._v(
-                "\n                        Hapus data lokal\n            \t\t"
-              )
-            ]),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "card-body" },
-              [
-                _c(
-                  "b-button",
-                  {
-                    attrs: { squared: "", size: "sm", variant: "info" },
-                    on: { click: _vm.hapusData }
-                  },
-                  [_vm._v("Hapus")]
-                ),
-                _vm._v(" "),
-                _c("br"),
-                _vm._v(" "),
-                _c("b-progress", {
-                  staticClass: "mt-2",
-                  attrs: {
-                    value: _vm.hapus,
-                    variant: "info",
-                    "show-progress": "",
-                    animated: ""
-                  }
-                })
-              ],
-              1
-            ),
-            _vm._v(" "),
-            _c("div", { staticClass: "card-footer" })
+  return _c(
+    "div",
+    { staticClass: "c-body" },
+    [
+      _c("loading", {
+        attrs: { active: _vm.isLoading, "is-full-page": true },
+        on: {
+          "update:active": function($event) {
+            _vm.isLoading = $event
+          }
+        }
+      }),
+      _vm._v(" "),
+      _c("main", { staticClass: "c-main" }, [
+        _c("div", { staticClass: "container-fluid" }, [
+          _c("div", { staticClass: "fade-in" }, [
+            _c("div", { staticClass: "card" }, [
+              _c("div", { staticClass: "card-header" }, [
+                _vm._v(
+                  "\n                        Hapus data lokal\n            \t\t"
+                )
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "card-body" },
+                [
+                  _c(
+                    "b-button",
+                    {
+                      attrs: { squared: "", size: "sm", variant: "info" },
+                      on: { click: _vm.hapusData }
+                    },
+                    [_vm._v("Hapus")]
+                  ),
+                  _vm._v(" "),
+                  _c("br"),
+                  _vm._v(" "),
+                  _c("b-progress", {
+                    staticClass: "mt-2",
+                    attrs: {
+                      value: _vm.hapus,
+                      variant: "info",
+                      "show-progress": "",
+                      animated: ""
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "card-footer" })
+            ])
           ])
         ])
       ])
-    ])
-  ])
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -59967,12 +60033,14 @@ var render = function() {
                       return [
                         _c(
                           "div",
-                          { staticClass: "text-center text-warning my-2" },
+                          { staticClass: "text-center text-dark my-2" },
                           [
-                            _c("img", {
-                              attrs: { src: "/img/loader.svg", width: "50px" }
-                            })
-                          ]
+                            _c("b-spinner", {
+                              attrs: { small: "", type: "grow" }
+                            }),
+                            _vm._v(" Loading...\n\t\t\t                ")
+                          ],
+                          1
                         )
                       ]
                     },
@@ -60137,10 +60205,10 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/ujian/UjianStatus2.vue?vue&type=template&id=b4519bd4&":
-/*!****************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/ujian/UjianStatus2.vue?vue&type=template&id=b4519bd4& ***!
-  \****************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/ujian/UjianStatus.vue?vue&type=template&id=26dade68&":
+/*!***************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/ujian/UjianStatus.vue?vue&type=template&id=26dade68& ***!
+  \***************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -60159,223 +60227,305 @@ var render = function() {
           _vm._v("\n\t\t\t\t\tStatus ujian\n\t\t\t\t")
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "card-body" }, [
-          _vm._m(0),
-          _vm._v(" "),
-          _c("br"),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group" }, [
-            _c("div", { staticClass: "row" }, [
-              _vm._m(1),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-8" }, [
-                _vm.status == 1
-                  ? _c(
-                      "span",
-                      { staticClass: "badge badge-danger rounded-0 py-1" },
-                      [_vm._v("Belum mulai")]
-                    )
-                  : _vm._e(),
-                _vm._v(" "),
-                _vm.status == 2
-                  ? _c(
-                      "span",
-                      { staticClass: "badge badge-primary rounded-0 py-1" },
-                      [_vm._v("Sedang dikerjakan")]
-                    )
-                  : _vm._e(),
-                _vm._v(" "),
-                _vm.status == 3
-                  ? _c(
-                      "span",
-                      { staticClass: "badge badge-success rounded-0 py-1" },
-                      [_vm._v("Selesai")]
-                    )
-                  : _vm._e()
-              ])
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group" }, [
-            _c("div", { staticClass: "row" }, [
-              _vm._m(2),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-6" }, [
-                _c(
-                  "select",
-                  {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.aktif.kelompok,
-                        expression: "aktif.kelompok"
-                      }
-                    ],
-                    staticClass: "form-control form-control-sm rounded-0",
-                    on: {
-                      change: function($event) {
-                        var $$selectedVal = Array.prototype.filter
-                          .call($event.target.options, function(o) {
-                            return o.selected
-                          })
-                          .map(function(o) {
-                            var val = "_value" in o ? o._value : o.value
-                            return val
-                          })
-                        _vm.$set(
-                          _vm.aktif,
-                          "kelompok",
-                          $event.target.multiple
-                            ? $$selectedVal
-                            : $$selectedVal[0]
-                        )
-                      }
+        _c(
+          "div",
+          { staticClass: "card-body" },
+          [
+            _vm._m(0),
+            _vm._v(" "),
+            _c("br"),
+            _vm._v(" "),
+            [
+              _c(
+                "div",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm.isLoading,
+                      expression: "isLoading"
                     }
-                  },
-                  _vm._l(_vm.sesis.data, function(sesi) {
-                    return _c("option", { domProps: { value: sesi.sesi } }, [
-                      _vm._v(_vm._s(sesi.sesi))
-                    ])
-                  }),
-                  0
-                )
-              ])
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group" }, [
-            _c("div", { staticClass: "row" }, [
-              _vm._m(3),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-6" }, [
-                _c(
-                  "select",
-                  {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.aktif.jadwal,
-                        expression: "aktif.jadwal"
-                      }
-                    ],
-                    staticClass: "form-control form-control-sm rounded-0",
-                    on: {
-                      change: function($event) {
-                        var $$selectedVal = Array.prototype.filter
-                          .call($event.target.options, function(o) {
-                            return o.selected
-                          })
-                          .map(function(o) {
-                            var val = "_value" in o ? o._value : o.value
-                            return val
-                          })
-                        _vm.$set(
-                          _vm.aktif,
-                          "jadwal",
-                          $event.target.multiple
-                            ? $$selectedVal
-                            : $$selectedVal[0]
-                        )
-                      }
+                  ],
+                  staticClass: "text-center text-light my-2"
+                },
+                [
+                  _c("b-spinner", { attrs: { small: "", type: "grow" } }),
+                  _vm._v(" Checking data ujian...\n\t\t                ")
+                ],
+                1
+              )
+            ],
+            _vm._v(" "),
+            [
+              _c(
+                "div",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: !_vm.isLoading,
+                      expression: "!isLoading"
                     }
-                  },
-                  [
-                    _c("option", [_vm._v("Pilih")]),
+                  ],
+                  staticClass: "form-group"
+                },
+                [
+                  _c("div", { staticClass: "row" }, [
+                    _vm._m(1),
                     _vm._v(" "),
-                    _vm._l(_vm.ujians.data, function(ujian) {
-                      return _c(
-                        "option",
-                        { domProps: { value: ujian.id } },
-                        [
-                          _vm._l(ujian.banksoal, function(banksol, index) {
-                            return [
-                              _vm._v(
-                                _vm._s(" [ " + banksol.kode_banksoal + " ] ") +
-                                  " "
+                    _c("div", { staticClass: "col-6" }, [
+                      _c(
+                        "select",
+                        {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.aktif.kelompok,
+                              expression: "aktif.kelompok"
+                            }
+                          ],
+                          staticClass: "form-control form-control-sm rounded-0",
+                          on: {
+                            change: function($event) {
+                              var $$selectedVal = Array.prototype.filter
+                                .call($event.target.options, function(o) {
+                                  return o.selected
+                                })
+                                .map(function(o) {
+                                  var val = "_value" in o ? o._value : o.value
+                                  return val
+                                })
+                              _vm.$set(
+                                _vm.aktif,
+                                "kelompok",
+                                $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
                               )
-                            ]
+                            }
+                          }
+                        },
+                        _vm._l(_vm.sesis.data, function(sesi) {
+                          return _c(
+                            "option",
+                            { domProps: { value: sesi.sesi } },
+                            [_vm._v(_vm._s(sesi.sesi))]
+                          )
+                        }),
+                        0
+                      )
+                    ])
+                  ])
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: !_vm.isLoading,
+                      expression: "!isLoading"
+                    }
+                  ],
+                  staticClass: "form-group"
+                },
+                [
+                  _c("div", { staticClass: "row" }, [
+                    _vm._m(2),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-6" }, [
+                      _c(
+                        "select",
+                        {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.aktif.jadwal,
+                              expression: "aktif.jadwal"
+                            }
+                          ],
+                          staticClass: "form-control form-control-sm rounded-0",
+                          on: {
+                            change: function($event) {
+                              var $$selectedVal = Array.prototype.filter
+                                .call($event.target.options, function(o) {
+                                  return o.selected
+                                })
+                                .map(function(o) {
+                                  var val = "_value" in o ? o._value : o.value
+                                  return val
+                                })
+                              _vm.$set(
+                                _vm.aktif,
+                                "jadwal",
+                                $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              )
+                            }
+                          }
+                        },
+                        [
+                          _c("option", [_vm._v("Pilih")]),
+                          _vm._v(" "),
+                          _vm._l(_vm.ujians.data, function(ujian) {
+                            return _c(
+                              "option",
+                              { domProps: { value: ujian.id } },
+                              [
+                                _vm._l(ujian.banksoal, function(
+                                  banksol,
+                                  index
+                                ) {
+                                  return !ujian.alias != ""
+                                    ? _c("span", [
+                                        _vm._v(
+                                          _vm._s(
+                                            " [ " +
+                                              banksol.kode_banksoal +
+                                              " ] "
+                                          ) + " "
+                                        )
+                                      ])
+                                    : _vm._e()
+                                }),
+                                _vm._v(" "),
+                                ujian.alias != ""
+                                  ? _c("span", [_vm._v(_vm._s(ujian.alias))])
+                                  : _vm._e()
+                              ],
+                              2
+                            )
                           })
                         ],
                         2
                       )
-                    })
-                  ],
-                  2
-                )
-              ])
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "form-group" }, [
-            _c("div", { staticClass: "row" }, [
-              _vm._m(4),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-6" }, [
-                _c("input", {
-                  staticClass: "form-control form-control-sm rounded-0",
-                  attrs: { type: "text", readonly: "", name: "" },
-                  domProps: {
-                    value:
-                      (_vm.aktif.status_token == 1 ? _vm.aktif.token : "-") +
-                      " | 15 Menit | " +
-                      (_vm.aktif.status_token == 0
-                        ? "(Belum release)"
-                        : "(Release)")
-                  }
-                }),
-                _vm._v(" "),
-                _c("input", {
-                  attrs: { type: "hidden" },
-                  domProps: { value: _vm.aktif.token }
-                })
-              ]),
+                    ])
+                  ])
+                ]
+              ),
               _vm._v(" "),
               _c(
                 "div",
-                { staticClass: "col-3" },
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: !_vm.isLoading,
+                      expression: "!isLoading"
+                    }
+                  ],
+                  staticClass: "form-group"
+                },
+                [
+                  _c("div", { staticClass: "row" }, [
+                    _vm._m(3),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-6" }, [
+                      _c("input", {
+                        staticClass: "form-control form-control-sm rounded-0",
+                        attrs: { type: "text", readonly: "", name: "" },
+                        domProps: {
+                          value:
+                            (_vm.aktif.status_token == 1
+                              ? _vm.aktif.token
+                              : "-") +
+                            " | 15 Menit | " +
+                            (_vm.aktif.status_token == 0
+                              ? "(Belum release)"
+                              : "(Release)")
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("input", {
+                        attrs: { type: "hidden" },
+                        domProps: { value: _vm.aktif.token }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "col-3" },
+                      [
+                        _c(
+                          "b-button",
+                          {
+                            directives: [
+                              {
+                                name: "show",
+                                rawName: "v-show",
+                                value: _vm.aktif.status_token == 0,
+                                expression: "aktif.status_token == 0"
+                              }
+                            ],
+                            attrs: { variant: "dark", size: "sm", squared: "" },
+                            on: { click: _vm.ubahToken }
+                          },
+                          [_vm._v("Rilis token ")]
+                        )
+                      ],
+                      1
+                    )
+                  ])
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: !_vm.isLoading,
+                      expression: "!isLoading"
+                    }
+                  ],
+                  staticClass: "form-group"
+                },
                 [
                   _c(
                     "b-button",
                     {
-                      directives: [
-                        {
-                          name: "show",
-                          rawName: "v-show",
-                          value: _vm.aktif.status_token == 0,
-                          expression: "aktif.status_token == 0"
-                        }
-                      ],
                       attrs: { variant: "dark", size: "sm", squared: "" },
-                      on: { click: _vm.ubahToken }
+                      on: { click: _vm.postStatus }
                     },
-                    [_vm._v("Rilis token ")]
+                    [_vm._v(" Simpan semua")]
                   )
                 ],
                 1
               )
-            ])
-          ]),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "form-group" },
-            [
-              _c(
-                "b-button",
-                {
-                  attrs: { variant: "dark", size: "sm", squared: "" },
-                  on: { click: _vm.postStatus }
-                },
-                [_vm._v(" Simpan semua")]
-              )
-            ],
-            1
-          )
-        ]),
+            ]
+          ],
+          2
+        ),
         _vm._v(" "),
-        _c("div", { staticClass: "card-footer" })
+        _c("div", { staticClass: "card-footer" }, [
+          _c(
+            "h1",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.aktif.status_token == 1,
+                  expression: "aktif.status_token == 1"
+                }
+              ],
+              staticClass: "bg-info",
+              staticStyle: { "max-width": "220px", "text-align": "center" }
+            },
+            [_vm._v(_vm._s(_vm.aktif.token))]
+          )
+        ])
       ])
     ])
   ])
@@ -60397,14 +60547,6 @@ var staticRenderFns = [
           )
         ])
       ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-2" }, [
-      _c("label", [_vm._v("Status")])
     ])
   },
   function() {
@@ -78055,7 +78197,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var $axios = axios__WEBPACK_IMPORTED_MODULE_0___default.a.create({
-  baseURL: "http://localhost:8000" + '/api/',
+  baseURL: "http://localhost" + '/api/',
   headers: {
     'Content-Type': 'application/json'
   }
@@ -78997,17 +79139,17 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/pages/ujian/UjianStatus2.vue":
-/*!***************************************************!*\
-  !*** ./resources/js/pages/ujian/UjianStatus2.vue ***!
-  \***************************************************/
+/***/ "./resources/js/pages/ujian/UjianStatus.vue":
+/*!**************************************************!*\
+  !*** ./resources/js/pages/ujian/UjianStatus.vue ***!
+  \**************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _UjianStatus2_vue_vue_type_template_id_b4519bd4___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./UjianStatus2.vue?vue&type=template&id=b4519bd4& */ "./resources/js/pages/ujian/UjianStatus2.vue?vue&type=template&id=b4519bd4&");
-/* harmony import */ var _UjianStatus2_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./UjianStatus2.vue?vue&type=script&lang=js& */ "./resources/js/pages/ujian/UjianStatus2.vue?vue&type=script&lang=js&");
+/* harmony import */ var _UjianStatus_vue_vue_type_template_id_26dade68___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./UjianStatus.vue?vue&type=template&id=26dade68& */ "./resources/js/pages/ujian/UjianStatus.vue?vue&type=template&id=26dade68&");
+/* harmony import */ var _UjianStatus_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./UjianStatus.vue?vue&type=script&lang=js& */ "./resources/js/pages/ujian/UjianStatus.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -79017,9 +79159,9 @@ __webpack_require__.r(__webpack_exports__);
 /* normalize component */
 
 var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _UjianStatus2_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _UjianStatus2_vue_vue_type_template_id_b4519bd4___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _UjianStatus2_vue_vue_type_template_id_b4519bd4___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  _UjianStatus_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _UjianStatus_vue_vue_type_template_id_26dade68___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _UjianStatus_vue_vue_type_template_id_26dade68___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
   null,
@@ -79029,38 +79171,38 @@ var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_
 
 /* hot reload */
 if (false) { var api; }
-component.options.__file = "resources/js/pages/ujian/UjianStatus2.vue"
+component.options.__file = "resources/js/pages/ujian/UjianStatus.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
 
 /***/ }),
 
-/***/ "./resources/js/pages/ujian/UjianStatus2.vue?vue&type=script&lang=js&":
-/*!****************************************************************************!*\
-  !*** ./resources/js/pages/ujian/UjianStatus2.vue?vue&type=script&lang=js& ***!
-  \****************************************************************************/
+/***/ "./resources/js/pages/ujian/UjianStatus.vue?vue&type=script&lang=js&":
+/*!***************************************************************************!*\
+  !*** ./resources/js/pages/ujian/UjianStatus.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_UjianStatus2_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./UjianStatus2.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/ujian/UjianStatus2.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_UjianStatus2_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_UjianStatus_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./UjianStatus.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/ujian/UjianStatus.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_UjianStatus_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
-/***/ "./resources/js/pages/ujian/UjianStatus2.vue?vue&type=template&id=b4519bd4&":
-/*!**********************************************************************************!*\
-  !*** ./resources/js/pages/ujian/UjianStatus2.vue?vue&type=template&id=b4519bd4& ***!
-  \**********************************************************************************/
+/***/ "./resources/js/pages/ujian/UjianStatus.vue?vue&type=template&id=26dade68&":
+/*!*********************************************************************************!*\
+  !*** ./resources/js/pages/ujian/UjianStatus.vue?vue&type=template&id=26dade68& ***!
+  \*********************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_UjianStatus2_vue_vue_type_template_id_b4519bd4___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./UjianStatus2.vue?vue&type=template&id=b4519bd4& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/ujian/UjianStatus2.vue?vue&type=template&id=b4519bd4&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_UjianStatus2_vue_vue_type_template_id_b4519bd4___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_UjianStatus_vue_vue_type_template_id_26dade68___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./UjianStatus.vue?vue&type=template&id=26dade68& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/ujian/UjianStatus.vue?vue&type=template&id=26dade68&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_UjianStatus_vue_vue_type_template_id_26dade68___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_UjianStatus2_vue_vue_type_template_id_b4519bd4___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_UjianStatus_vue_vue_type_template_id_26dade68___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
@@ -79089,7 +79231,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _pages_peserta_Peserta_vue__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./pages/peserta/Peserta.vue */ "./resources/js/pages/peserta/Peserta.vue");
 /* harmony import */ var _pages_peserta_ResetPeserta_vue__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./pages/peserta/ResetPeserta.vue */ "./resources/js/pages/peserta/ResetPeserta.vue");
 /* harmony import */ var _pages_ujian_Index_vue__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./pages/ujian/Index.vue */ "./resources/js/pages/ujian/Index.vue");
-/* harmony import */ var _pages_ujian_UjianStatus2_vue__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./pages/ujian/UjianStatus2.vue */ "./resources/js/pages/ujian/UjianStatus2.vue");
+/* harmony import */ var _pages_ujian_UjianStatus_vue__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./pages/ujian/UjianStatus.vue */ "./resources/js/pages/ujian/UjianStatus.vue");
 /* harmony import */ var _pages_ujian_UjianPeserta_vue__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./pages/ujian/UjianPeserta.vue */ "./resources/js/pages/ujian/UjianPeserta.vue");
 
 
@@ -79158,7 +79300,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
     children: [{
       path: 'status',
       name: 'ujian.status',
-      component: _pages_ujian_UjianStatus2_vue__WEBPACK_IMPORTED_MODULE_12__["default"],
+      component: _pages_ujian_UjianStatus_vue__WEBPACK_IMPORTED_MODULE_14__["default"],
       meta: {
         title: 'Status ujian'
       }
@@ -79725,9 +79867,19 @@ var actions = {
   getServerConnect: function getServerConnect(_ref3, payload) {
     var commit = _ref3.commit;
     return new Promise(function (resolve, reject) {
+      commit('SET_LOADING', true, {
+        root: true
+      });
       _api_js__WEBPACK_IMPORTED_MODULE_0__["default"].get("/pusat/connect").then(function (response) {
         commit('CONNECTIVITY', response.data);
+        commit('SET_LOADING', false, {
+          root: true
+        });
         resolve(response.data);
+      })["catch"](function (err) {
+        commit('SET_LOADING', false, {
+          root: true
+        });
       });
     });
   },
@@ -79812,7 +79964,7 @@ var actions = {
         }
       };
       _center_js__WEBPACK_IMPORTED_MODULE_1__["default"].post('pusat/cbt-sync', {
-        'server_name': state.identify.kode_server,
+        'server_name': state.identify.data.kode_server,
         'req': payload
       }, config).then(function (response) {
         if (payload == 'peserta') {
@@ -79883,6 +80035,9 @@ var actions = {
   hapusDataLocal: function hapusDataLocal(_ref9, payload) {
     var commit = _ref9.commit;
     return new Promise(function (resolve, reject) {
+      commit('SET_LOADING', true, {
+        root: true
+      });
       var config = {
         onUploadProgress: function onUploadProgress(progressEvent) {
           commit('HAPUS_DATA_PROGRESS', parseInt(Math.round(progressEvent.loaded / progressEvent.total * 100)));
@@ -79890,7 +80045,15 @@ var actions = {
       };
       _api_js__WEBPACK_IMPORTED_MODULE_0__["default"].post('/pusat/hapus-data', payload, config).then(function (response) {
         commit('HAPUS_DATA_PROGRESS', 100);
+        commit('SET_LOADING', false, {
+          root: true
+        });
         resolve(response.data);
+      })["catch"](function (err) {
+        commit('SET_LOADING', false, {
+          root: true
+        });
+        reject();
       });
     });
   },
@@ -79931,7 +80094,6 @@ var state = function state() {
   return {
     ujians: [],
     pesertas: [],
-    page: 1,
     hasilUjian: [],
     ujianAktif: {
       kelompok: '',
@@ -79978,9 +80140,19 @@ var actions = {
         state = _ref.state;
     var search = typeof payload != 'undefined' ? payload : '';
     return new Promise(function (resolve, reject) {
-      _api_js__WEBPACK_IMPORTED_MODULE_0__["default"].get("/ujian?page=".concat(state.page, "&q=").concat(search)).then(function (response) {
+      commit('SET_LOADING', true, {
+        root: true
+      });
+      _api_js__WEBPACK_IMPORTED_MODULE_0__["default"].get("/ujian").then(function (response) {
         commit('ASSIGN_DATA', response.data);
+        commit('SET_LOADING', false, {
+          root: true
+        });
         resolve(response.data);
+      })["catch"](function (err) {
+        commit('SET_LOADING', false, {
+          root: true
+        });
       });
     });
   },
@@ -80030,7 +80202,8 @@ var actions = {
     });
   },
   changeToken: function changeToken(_ref6, payload) {
-    var dispatch = _ref6.dispatch,
+    var commit = _ref6.commit,
+        dispatch = _ref6.dispatch,
         state = _ref6.state;
     return new Promise(function (resolve, reject) {
       _api_js__WEBPACK_IMPORTED_MODULE_0__["default"].post("/ujian/change-token", payload).then(function (response) {
@@ -80067,7 +80240,7 @@ var actions = {
       _api_js__WEBPACK_IMPORTED_MODULE_0__["default"].get("/ujian/aktif", payload).then(function (response) {
         commit('ASSIGN_UJIAN_AKTIF', response.data.data);
         resolve(response.data);
-      });
+      })["catch"](function (err) {});
     });
   },
   pilihKelompok: function pilihKelompok(_ref10, payload) {

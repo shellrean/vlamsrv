@@ -14,7 +14,7 @@ import PesertaData from './pages/peserta/Peserta.vue'
 import PesertaReset from './pages/peserta/ResetPeserta.vue'
 
 import UjianIndex from './pages/ujian/Index.vue'
-import UjianStatus from './pages/ujian/UjianStatus2.vue'
+import UjianStatus from './pages/ujian/UjianStatus.vue'
 import UjianPeserta from './pages/ujian/UjianPeserta.vue'
 
 Vue.use(Router)

@@ -1,5 +1,7 @@
 <template>
 	<div class="c-body">
+        <loading :active.sync="isLoading" 
+        :is-full-page="true"></loading>
         <main class="c-main">
           <div class="container-fluid">
             <div class="fade-in">
@@ -21,11 +23,16 @@
     </div>
 </template>
 <script>
-import { mapActions, mapState } from 'vuex'
+import Loading from 'vue-loading-overlay';
+import { mapActions, mapState, mapGetters } from 'vuex'
 
 export default {
     name: 'Hapus',
+    components: {
+        Loading
+    },
     computed: {
+        ...mapGetters(['isLoading']),
         ...mapState('pusat', {
             hapus: state => state.hapus
         })

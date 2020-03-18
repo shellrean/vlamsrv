@@ -3,7 +3,6 @@ import $axios from '../api.js'
 const state = () => ({
 	ujians: [],
 	pesertas: [],
-	page: 1,
 	hasilUjian: [],
 	ujianAktif: {
 		kelompok: '',
@@ -48,10 +47,15 @@ const actions = {
 	getUjians({ commit, state }, payload) {
 		let search = typeof payload != 'undefined' ? payload: ''
 		return new Promise((resolve, reject) => {
-			$axios.get(`/ujian?page=${state.page}&q=${search}`)
+			commit('SET_LOADING', true, { root: true })
+			$axios.get(`/ujian`)
 			.then((response) => {
 				commit('ASSIGN_DATA', response.data)
+				commit('SET_LOADING', false, { root: true })
 				resolve(response.data)
+			})
+			.catch((err) => {
+				commit('SET_LOADING', false, { root: true })
 			})
 		})
 	},
@@ -97,7 +101,7 @@ const actions = {
 			})
 		})
 	},
-	changeToken({ dispatch, state }, payload) {
+	changeToken({ commit, dispatch, state }, payload) {
 		return new Promise((resolve, reject) => {
 			$axios.post(`/ujian/change-token`, payload)
 			.then((response) => {
@@ -132,6 +136,8 @@ const actions = {
 			.then((response) => {
 				commit('ASSIGN_UJIAN_AKTIF', response.data.data)
 				resolve(response.data)
+			})
+			.catch((err) => {
 			})
 		})
 	},

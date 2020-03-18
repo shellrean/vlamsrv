@@ -5,6 +5,12 @@
             <div class="fade-in">
             	<div class="card">
             		<div class="card-body">
+            			<template>
+	                    	<div class="text-center text-light my-2" v-show="isLoading">
+							  <b-spinner small type="grow"></b-spinner> Refresh status koneksi ke server pusat...
+			                </div>
+	                    </template>
+	                    <template>
 				        <div class="row" v-if="status">
 				        	<div class="col-sm-6 col-md-4" v-if="status.status == 1">
 				        		<h5 class="text-info">AKTIF</h5>
@@ -32,6 +38,7 @@
 								<b-alert show squared variant="secondary">SERVER-ID&nbsp;&nbsp;<span class="badge badge-danger py-2 rounded-0">{{ identify.kode_server}}</span></b-alert>
 							</div>
 				        </div>
+				    	</template>
 				    </div>
 				</div>
             </div>
@@ -40,13 +47,14 @@
     </div>
 </template>
 <script>
-import { mapState, mapActions, mapMutations } from 'vuex'
+import { mapState, mapActions, mapGetters, mapMutations } from 'vuex'
 export default {
 	created() {
 		this.getServerIdentify()
 		this.getServerConnect()
 	},
 	computed: {
+		...mapGetters(['isAuth','isLoading']),
 		...mapState('pusat', {
 			identify: state => state.identify.data,
 			status: state => state.status.data

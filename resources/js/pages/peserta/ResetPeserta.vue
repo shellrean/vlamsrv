@@ -17,6 +17,11 @@
                     </div>
                     <br>
 					<b-table striped hover bordered small :fields="fields" :items="pesertas.data" :busy="isBusy" show-empty>
+						<template v-slot:table-busy>
+                            <div class="text-center text-dark my-2">
+							  <b-spinner small type="grow"></b-spinner> Loading...
+			                </div>
+                        </template>
 						<template v-slot:cell(reset)="row">
 							<b-button size="sm" variant="danger" squared @click="resetPeserta(row.item.id)"><font-awesome-icon icon="sync" /></b-button>
 						</template>
