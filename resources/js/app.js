@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import router from './router.js'
 import store from './store.js'
-import App from './App.vue'
+const App = () =>  import('./App.vue')
+const AppUjian = () =>  import('./AppUjian.vue')
 import Awesome from './awesome.js'
 
 import CoreuiVue from '@coreui/coreui'
@@ -16,11 +17,12 @@ Vue.use(Notifications)
 Vue.use(BootstrapVue)
 Vue.use(VueSweetalert2)
 
-new Vue({
+const app = new Vue({
 	el: '#app',
 	router,
 	store,
 	components: {
-		App
+		'app' : App,
+		'app-ujian' : AppUjian
 	}
 })

@@ -11,4 +11,5 @@
 |
 */
 
-Route::view('/{any}', 'index')->where('any','.*')->middleware(['ip']);
+Route::view('/', 'ujian');
+Route::view('/server', 'index')->middleware('ip');

@@ -3,7 +3,7 @@
       <div class="c-sidebar-brand"><img class="c-sidebar-brand-full" src="/img/brand/dki.png" height="46" alt="Vlam srv Logo"><img class="c-sidebar-brand-minimized" src="/img/brand/dki.png" height="46" alt="CoreUI Logo"></div>
       <ul class="c-sidebar-nav">
         <li class="c-sidebar-nav-item">
-          <router-link class="c-sidebar-nav-link" to="/">
+          <router-link class="c-sidebar-nav-link" to="/server">
             <i class="c-sidebar-nav-icon cil-speedometer"></i>
             Beranda
           </router-link>

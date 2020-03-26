@@ -9,7 +9,7 @@
     <meta name="description" content="This an exam system application for education future">
 
 
-    <title>VLam Server</title>
+    <title>ExtraordinaryCBT</title>
     
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 

@@ -1,47 +1,83 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import store from './store.js'
-import VueCookies from 'vue-cookies';
 
-import Login from './pages/Login.vue'
-import Home from './pages/Home.vue'
+const Login = () => import('./pages/Login.vue')
+const Home = () => import('./pages/Home.vue')
 
-import Sinkron from './pages/sinkron/Sinkron.vue'
-import DataHapus from './pages/sinkron/Hapus.vue'
+const Sinkron = () => import('./pages/sinkron/Sinkron.vue')
+const DataHapus = () => import('./pages/sinkron/Hapus.vue')
+ 
+const PesertaIndex = () => import('./pages/peserta/Index.vue')
+const PesertaData = () => import('./pages/peserta/Peserta.vue')
+const PesertaReset = () => import('./pages/peserta/ResetPeserta.vue')
 
-import PesertaIndex from './pages/peserta/Index.vue'
-import PesertaData from './pages/peserta/Peserta.vue'
-import PesertaReset from './pages/peserta/ResetPeserta.vue'
+const UjianIndex = () => import('./pages/ujian/Index.vue')
+const UjianStatus = () => import('./pages/ujian/UjianStatus.vue')
+const UjianPeserta = () => import('./pages/ujian/UjianPeserta.vue')
 
-import UjianIndex from './pages/ujian/Index.vue'
-import UjianStatus from './pages/ujian/UjianStatus.vue'
-import UjianPeserta from './pages/ujian/UjianPeserta.vue'
+const LoginUjian = () => import('./pages/siswa/LoginUjian.vue')
+const IndexUjian = () => import('./pages/siswa/Index.vue')
+const UjianKonfirm = () => import('./pages/siswa/UjianKonfirm.vue')
+const UjianPrepare = () => import('./pages/siswa/UjianPrepare.vue')
+const Kerjakan = () => import('./pages/siswa/Kerjakan.vue')
+const UjianSelesai = () => import('./pages/siswa/UjianSelesai.vue')
 
 Vue.use(Router)
-Vue.use(VueCookies);
 
 const router = new Router({
-	mode: 'history',
 	routes: [
 		{
-			path: '/login',
+			path: '/',
 			name: 'login',
+			component: LoginUjian,
+		},
+		{
+			path: '/ujian',
+			component: IndexUjian,
+			meta: { requiresAuth: true },
+			children: [
+				{
+					path: 'konfirm',
+					name: 'ujian.konfirm',
+					component: UjianKonfirm
+				},
+				{
+					path: 'prepare',
+					name: 'ujian.prepare',
+					component: UjianPrepare
+				},
+				{
+					path: 'while/:banksoal/:jadwal_id',
+					name: 'ujian.while',
+					component: Kerjakan
+				},
+				{
+					path: 'selesai',
+					name: 'ujian.selesai',
+					component: UjianSelesai
+				}
+			]
+		},
+		{
+			path: '/server/login',
+			name: 'server.login',
 			component: Login
 		},
 		{
-			path: '/',
-			name: 'home',
+			path: '/server',
+			name: 'server.home',
 			component: Home,
 			meta: { requiresAuth: true }
 		},
 		{
-			path: '/download',
+			path: '/server/download',
 			name: 'download',
 			component: Sinkron,
 			meta: { requiresAuth: true, title: 'Sync' }
 		},
 		{
-			path: '/peserta',
+			path: '/server/peserta',
 			component: PesertaIndex,
 			meta: { requiresAuth: true },
 			children: [
@@ -60,7 +96,7 @@ const router = new Router({
 			]
 		},
 		{
-			path: '/ujian',
+			path: '/server/ujian',
 			component: UjianIndex,
 			meta: { requiresAuth: true },
 			children: [
@@ -79,7 +115,7 @@ const router = new Router({
 			]
 		},
 		{
-			path: '/data/hapus',
+			path: '/server/data/hapus',
 			component: DataHapus,
 			name: 'hapus',
 			meta: { requiresAuth: true, title: 'Hapus data lokal' },

@@ -66,7 +66,7 @@
             </div>
           </div>
         </main>
-        <b-modal id="modal-selesai" hide-backdrop>
+        <b-modal id="modal-selesai">
 		    <template v-slot:modal-header="{ close }">
 		      <h5>Download status</h5>
 		    </template>
