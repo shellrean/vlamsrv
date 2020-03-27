@@ -115,10 +115,10 @@ class PusatController extends Controller
     	$server = IdentifyServer::first();
     	$ch = curl_init();
 
-  		curl_setopt($ch, CURLOPT_URL,"$hostname/api/pusat/connect");
+  		curl_setopt($ch, CURLOPT_URL,"$hostname/api/v1/pusat/connect");
   		curl_setopt($ch, CURLOPT_POST, 1);
   		curl_setopt($ch, CURLOPT_POSTFIELDS,
-  		            "server_name=$server->kode_server&serial_number=$server->serial_number");
+  		"server_name=$server->kode_server&serial_number=$server->serial_number");
   		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
   		$server_output = curl_exec($ch);
@@ -133,9 +133,9 @@ class PusatController extends Controller
   			return response()->json(['data' => 'unregistered']);
   		}
 
-          if($deco['data'] == 'block') {
-              return response()->json(['data' => 'block']);
-          }
+      if($deco['data'] == 'block') {
+        return response()->json(['data' => 'block']);
+      }
 
   		curl_close ($ch);
 
@@ -209,7 +209,7 @@ class PusatController extends Controller
 
   		$ch = curl_init();
 
-		  curl_setopt($ch, CURLOPT_URL,"$hostname/api/pusat/register-server");
+		  curl_setopt($ch, CURLOPT_URL,"$hostname/api/v1/pusat/register-server");
 		  curl_setopt($ch, CURLOPT_POST, 1);
 		  curl_setopt($ch, CURLOPT_POSTFIELDS,"server_name=$kode_server&serial_number=$serial_number&password=$password");
 		  curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -217,6 +217,10 @@ class PusatController extends Controller
 		  $server_output = curl_exec($ch);
 		  $deco = json_decode( $server_output, true );
 		  curl_close ($ch);
+
+      if(!$deco) {
+        return response()->json(['status' => 'Tidak dapat terkoneksi ke server pusat','type' => 'error']);
+      }
 
       if($deco['status'] == 'error') {
         return response()->json(['status' => 'Akses ditolak, servername telah teregister pdata server pusat','type' => 'error']);
@@ -253,7 +257,7 @@ class PusatController extends Controller
           'jadwal_id' => $ujian->ujian_id, 
           'uploaded' => 0,
           'status_ujian' => 1
-        ])->with('hasil');
+        ]);
 
         $listed = $siswa_ujians->pluck('peserta_id');
         
@@ -262,19 +266,15 @@ class PusatController extends Controller
         $datas = JawabanPeserta::where('jadwal_id', $ujian->ujian_id)
         ->whereIn('peserta_id', $listed)->get();
 
-        $esay = JawabanPeserta::where([
-          'jadwal_id' => $ujian->ujian_id
-        ])->where('jawab_essy', '!=',null)->get();
-
         $identify = IdentifyServer::first();
 
         $ch = curl_init();
 
         $hostname = env("SERVER_CENTER");
-        curl_setopt($ch, CURLOPT_URL,"$hostname/api/pusat/upload-hasil");
+        curl_setopt($ch, CURLOPT_URL,"$hostname/api/v1/pusat/upload-hasil");
         curl_setopt($ch, CURLOPT_POST, 1);
         curl_setopt($ch, CURLOPT_POSTFIELDS,
-                    "server_name=$identify->kode_server&req=$siswa_ujian&esay=$esay&datad=$datas");
+                    "server_name=$identify->kode_server&datad=$datas");
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
         $server_output = curl_exec($ch);
@@ -295,7 +295,6 @@ class PusatController extends Controller
             $siswa->save();
           }
         }
-
 
         return response()->json(['data' => $deco,'uj' => $siswa_ujian]);
     }

@@ -1,44 +1,60 @@
 <template>
-	<div class="wrapper">
-		<div class="bg"><img src="/unbk/img/bg-header.png"></div>
-		<div class="container">
-			<div class="header">
-				<div class="logo logo-center">
-					<img src="/unbk/img/logo-white.png">
-					<div>
-						<h2>PUSPENDIK</h2>
-						<h6>CBT Application</h6>
+	<div class="wrapper overlay-sidebar">
+      <div class="content">
+        <div class="panel-header bg-primary-gradient">
+          <div class="page-inner py-5">
+            <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
+              <div class="logo">
+                <img src="/unbk/img/logo-white.png">
+                <h2 class="text-white pb-2 fw-bold">ExtraordinaryCBT</h2>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="container">
+        	<div class="row justify-content-center">
+				<div class="col-lg-5">
+					<div class="card mt--5">
+						<div class="card-body">
+							<h4>Selamat Datang</h4>
+							<p>Silahkan login dengan username dan password yang anda miliki</p>
+							<form class="auth-form" @submit.prevent="postLogin">
+								<div class="input-group mb-3">
+									<div class="input-group-prepend rounded-0">
+						                <span class="input-group-text rounded-0">
+						                  <i class="cil-mood-good"></i>
+						                </span>
+						            </div>
+									<input type="text" autofocus="" class="form-control active" :class="{ 'is-invalid' : errors.no_ujian }" v-model="data.no_ujian" placeholder="No peserta" required @keyup="clearError"/>
+									<div class="invalid-feedback" v-if="errors.no_ujian">{{ errors.no_ujian[0] }}</div>
+								</div>
+								<div class="input-group mb-3">
+									<div class="input-group-prepend rounded-0">
+						                <span class="input-group-text rounded-0">
+						                  <i class="cil-lock-locked"></i>
+						                </span>
+						            </div>
+									<input type="password" class="form-control":class="{ 'is-invalid' : errors.password }"placeholder="Password" v-model="data.password" required @keyup="clearError"/>
+									<div class="invalid-feedback" v-if="errors.password">{{ errors.password[0] }} </div>
+									<p v-if="errors" class="text-danger" v-text="errors.invalid"></p>
+									<span class="line"></span>
+								</div>
+								<b-button variant="primary" size="lg" block  :disabled="isLoading" type="submit">
+									{{ isLoading ? 'Loading..' : 'Login' }}
+								</b-button>
+							</form>
+						</div>
+						<div class="card-footer">
+						</div>
 					</div>
 				</div>
 			</div>
-			<div class="card login">
-				<div class="card-body">
-					<h4>Selamat Datang</h4>
-					<p>Silahkan login dengan username dan password yang anda miliki</p>
-					<form class="auth-form" @submit.prevent="postLogin">
-						<div class="form-label-group">
-							<span class="fa fa-user"></span>
-							<input type="text" autofocus="" class="form-control active" :class="{ 'is-invalid' : errors.no_ujian }" v-model="data.no_ujian" placeholder="No peserta" required @keyup="clearError"/>
-							<div class="invalid-feedback" v-if="errors.no_ujian">{{ errors.no_ujian[0] }}</div>
-							<span class="line"></span>
-						</div>
-						<div class="form-label-group">
-							<span class="fa fa-lock"></span>
-							<input type="password" class="form-control":class="{ 'is-invalid' : errors.password }"placeholder="Password" v-model="data.password" required @keyup="clearError"/>
-							<div class="invalid-feedback" v-if="errors.password">{{ errors.password[0] }} </div>
-							<p v-if="errors" class="text-danger" v-text="errors.invalid"></p>
-							<span class="line"></span>
-						</div>
-						<b-button variant="primary" size="lg" block  :disabled="isLoading" type="submit">
-							{{ isLoading ? 'Loading..' : 'Login' }}
-						</b-button>
-					</form>
-				</div>
-				<div class="card-footer">
-				</div>
-			</div>
-		</div>
+        </div>
+        <div class="nav-fixed-bottom">
+        <p class="text-center">&copy; ExtraordinaryCBT 2020 by Shellrean & ICT Team</p>
+      </div>
     </div>
+</div>
 </template>
 <script>
 	import { mapActions, mapMutations, mapGetters, mapState } from 'vuex'

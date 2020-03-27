@@ -40,6 +40,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'IndexUjian',
@@ -123,32 +124,54 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
+    { staticClass: "wrapper overlay-sidebar" },
     [
-      _vm._m(0),
-      _vm._v(" "),
-      _c("div", { staticClass: "header mx-5 d-flex" }, [
-        _vm._m(1),
-        _vm._v(" "),
-        _c("div", { staticClass: "user" }, [
-          _c("div", { staticClass: "user-text" }, [
-            _c("h6", [_vm._v(_vm._s(_vm.peserta.nama))]),
-            _vm._v(" "),
+      _c("div", { staticClass: "content" }, [
+        _c("div", { staticClass: "panel-header bg-primary-gradient" }, [
+          _c("div", { staticClass: "page-inner py-6" }, [
             _c(
-              "a",
+              "div",
               {
-                staticClass: "btn btn-sm btn-white logout btnLogout",
-                attrs: { href: "javascript:;", id: "btnLogout" },
-                on: { click: _vm.logout }
+                staticClass:
+                  "d-flex align-items-left align-items-md-center flex-column flex-md-row px-3"
               },
-              [_vm._v("Logout")]
+              [
+                _vm._m(0),
+                _vm._v(" "),
+                _c("div", { staticClass: "ml-md-auto py-2 py-md-0" }, [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "text-white btn btn-round mr-2",
+                      attrs: { href: "#" }
+                    },
+                    [_vm._v(_vm._s(_vm.peserta.nama))]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "a",
+                    {
+                      staticClass: "btn btn-secondary btn-round",
+                      attrs: { href: "#" },
+                      on: {
+                        click: function($event) {
+                          $event.preventDefault()
+                          return _vm.logout($event)
+                        }
+                      }
+                    },
+                    [_vm._v("\n                Logout")]
+                  )
+                ])
+              ]
             )
-          ]),
-          _vm._v(" "),
-          _vm._m(2)
+          ])
         ])
       ]),
       _vm._v(" "),
-      _c("router-view")
+      _c("router-view"),
+      _vm._v(" "),
+      _vm._m(1)
     ],
     1
   )
@@ -158,21 +181,11 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "bg" }, [
-      _c("img", { attrs: { src: "/unbk/img/bg-header.png" } })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
     return _c("div", { staticClass: "logo" }, [
       _c("img", { attrs: { src: "/unbk/img/logo-white.png" } }),
       _vm._v(" "),
-      _c("div", [
-        _c("h2", [_vm._v("PUSPENDIK")]),
-        _vm._v(" "),
-        _c("h6", [_vm._v("CBT Application")])
+      _c("h2", { staticClass: "text-white pb-2 fw-bold" }, [
+        _vm._v("ExtraordinaryCBT")
       ])
     ])
   },
@@ -180,8 +193,10 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "user-icon" }, [
-      _c("span", { staticClass: "fa fa-user-graduate" })
+    return _c("div", { staticClass: "nav-fixed-bottom" }, [
+      _c("p", { staticClass: "text-center" }, [
+        _vm._v("© ExtraordinaryCBT 2020 by Shellrean & ICT Team")
+      ])
     ])
   }
 ]

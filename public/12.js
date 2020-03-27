@@ -58,6 +58,22 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -114,148 +130,154 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "wrapper" }, [
-    _vm._m(0),
-    _vm._v(" "),
-    _c("div", { staticClass: "container" }, [
-      _vm._m(1),
+  return _c("div", { staticClass: "wrapper overlay-sidebar" }, [
+    _c("div", { staticClass: "content" }, [
+      _vm._m(0),
       _vm._v(" "),
-      _c("div", { staticClass: "card login" }, [
-        _c("div", { staticClass: "card-body" }, [
-          _c("h4", [_vm._v("Selamat Datang")]),
-          _vm._v(" "),
-          _c("p", [
-            _vm._v(
-              "Silahkan login dengan username dan password yang anda miliki"
-            )
-          ]),
-          _vm._v(" "),
-          _c(
-            "form",
-            {
-              staticClass: "auth-form",
-              on: {
-                submit: function($event) {
-                  $event.preventDefault()
-                  return _vm.postLogin($event)
-                }
-              }
-            },
-            [
-              _c("div", { staticClass: "form-label-group" }, [
-                _c("span", { staticClass: "fa fa-user" }),
+      _c("div", { staticClass: "container" }, [
+        _c("div", { staticClass: "row justify-content-center" }, [
+          _c("div", { staticClass: "col-lg-5" }, [
+            _c("div", { staticClass: "card mt--5" }, [
+              _c("div", { staticClass: "card-body" }, [
+                _c("h4", [_vm._v("Selamat Datang")]),
                 _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.data.no_ujian,
-                      expression: "data.no_ujian"
-                    }
-                  ],
-                  staticClass: "form-control active",
-                  class: { "is-invalid": _vm.errors.no_ujian },
-                  attrs: {
-                    type: "text",
-                    autofocus: "",
-                    placeholder: "No peserta",
-                    required: ""
-                  },
-                  domProps: { value: _vm.data.no_ujian },
-                  on: {
-                    keyup: _vm.clearError,
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(_vm.data, "no_ujian", $event.target.value)
-                    }
-                  }
-                }),
-                _vm._v(" "),
-                _vm.errors.no_ujian
-                  ? _c("div", { staticClass: "invalid-feedback" }, [
-                      _vm._v(_vm._s(_vm.errors.no_ujian[0]))
-                    ])
-                  : _vm._e(),
-                _vm._v(" "),
-                _c("span", { staticClass: "line" })
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "form-label-group" }, [
-                _c("span", { staticClass: "fa fa-lock" }),
-                _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.data.password,
-                      expression: "data.password"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  class: { "is-invalid": _vm.errors.password },
-                  attrs: {
-                    type: "password",
-                    placeholder: "Password",
-                    required: ""
-                  },
-                  domProps: { value: _vm.data.password },
-                  on: {
-                    keyup: _vm.clearError,
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(_vm.data, "password", $event.target.value)
-                    }
-                  }
-                }),
-                _vm._v(" "),
-                _vm.errors.password
-                  ? _c("div", { staticClass: "invalid-feedback" }, [
-                      _vm._v(_vm._s(_vm.errors.password[0]) + " ")
-                    ])
-                  : _vm._e(),
-                _vm._v(" "),
-                _vm.errors
-                  ? _c("p", {
-                      staticClass: "text-danger",
-                      domProps: { textContent: _vm._s(_vm.errors.invalid) }
-                    })
-                  : _vm._e(),
-                _vm._v(" "),
-                _c("span", { staticClass: "line" })
-              ]),
-              _vm._v(" "),
-              _c(
-                "b-button",
-                {
-                  attrs: {
-                    variant: "primary",
-                    size: "lg",
-                    block: "",
-                    disabled: _vm.isLoading,
-                    type: "submit"
-                  }
-                },
-                [
+                _c("p", [
                   _vm._v(
-                    "\n\t\t\t\t\t\t\t" +
-                      _vm._s(_vm.isLoading ? "Loading.." : "Login") +
-                      "\n\t\t\t\t\t\t"
+                    "Silahkan login dengan username dan password yang anda miliki"
                   )
-                ]
-              )
-            ],
-            1
-          )
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "card-footer" })
-      ])
+                ]),
+                _vm._v(" "),
+                _c(
+                  "form",
+                  {
+                    staticClass: "auth-form",
+                    on: {
+                      submit: function($event) {
+                        $event.preventDefault()
+                        return _vm.postLogin($event)
+                      }
+                    }
+                  },
+                  [
+                    _c("div", { staticClass: "input-group mb-3" }, [
+                      _vm._m(1),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.data.no_ujian,
+                            expression: "data.no_ujian"
+                          }
+                        ],
+                        staticClass: "form-control active",
+                        class: { "is-invalid": _vm.errors.no_ujian },
+                        attrs: {
+                          type: "text",
+                          autofocus: "",
+                          placeholder: "No peserta",
+                          required: ""
+                        },
+                        domProps: { value: _vm.data.no_ujian },
+                        on: {
+                          keyup: _vm.clearError,
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(_vm.data, "no_ujian", $event.target.value)
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _vm.errors.no_ujian
+                        ? _c("div", { staticClass: "invalid-feedback" }, [
+                            _vm._v(_vm._s(_vm.errors.no_ujian[0]))
+                          ])
+                        : _vm._e()
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "input-group mb-3" }, [
+                      _vm._m(2),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.data.password,
+                            expression: "data.password"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        class: { "is-invalid": _vm.errors.password },
+                        attrs: {
+                          type: "password",
+                          placeholder: "Password",
+                          required: ""
+                        },
+                        domProps: { value: _vm.data.password },
+                        on: {
+                          keyup: _vm.clearError,
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(_vm.data, "password", $event.target.value)
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _vm.errors.password
+                        ? _c("div", { staticClass: "invalid-feedback" }, [
+                            _vm._v(_vm._s(_vm.errors.password[0]) + " ")
+                          ])
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _vm.errors
+                        ? _c("p", {
+                            staticClass: "text-danger",
+                            domProps: {
+                              textContent: _vm._s(_vm.errors.invalid)
+                            }
+                          })
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _c("span", { staticClass: "line" })
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "b-button",
+                      {
+                        attrs: {
+                          variant: "primary",
+                          size: "lg",
+                          block: "",
+                          disabled: _vm.isLoading,
+                          type: "submit"
+                        }
+                      },
+                      [
+                        _vm._v(
+                          "\n\t\t\t\t\t\t\t\t\t" +
+                            _vm._s(_vm.isLoading ? "Loading.." : "Login") +
+                            "\n\t\t\t\t\t\t\t\t"
+                        )
+                      ]
+                    )
+                  ],
+                  1
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "card-footer" })
+            ])
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _vm._m(3)
     ])
   ])
 }
@@ -264,23 +286,54 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "bg" }, [
-      _c("img", { attrs: { src: "/unbk/img/bg-header.png" } })
+    return _c("div", { staticClass: "panel-header bg-primary-gradient" }, [
+      _c("div", { staticClass: "page-inner py-5" }, [
+        _c(
+          "div",
+          {
+            staticClass:
+              "d-flex align-items-left align-items-md-center flex-column flex-md-row"
+          },
+          [
+            _c("div", { staticClass: "logo" }, [
+              _c("img", { attrs: { src: "/unbk/img/logo-white.png" } }),
+              _vm._v(" "),
+              _c("h2", { staticClass: "text-white pb-2 fw-bold" }, [
+                _vm._v("ExtraordinaryCBT")
+              ])
+            ])
+          ]
+        )
+      ])
     ])
   },
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "header" }, [
-      _c("div", { staticClass: "logo logo-center" }, [
-        _c("img", { attrs: { src: "/unbk/img/logo-white.png" } }),
-        _vm._v(" "),
-        _c("div", [
-          _c("h2", [_vm._v("PUSPENDIK")]),
-          _vm._v(" "),
-          _c("h6", [_vm._v("CBT Application")])
-        ])
+    return _c("div", { staticClass: "input-group-prepend rounded-0" }, [
+      _c("span", { staticClass: "input-group-text rounded-0" }, [
+        _c("i", { staticClass: "cil-mood-good" })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "input-group-prepend rounded-0" }, [
+      _c("span", { staticClass: "input-group-text rounded-0" }, [
+        _c("i", { staticClass: "cil-lock-locked" })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "nav-fixed-bottom" }, [
+      _c("p", { staticClass: "text-center" }, [
+        _vm._v("© ExtraordinaryCBT 2020 by Shellrean & ICT Team")
       ])
     ])
   }

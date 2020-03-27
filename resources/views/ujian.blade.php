@@ -7,20 +7,18 @@
     <meta name="theme-color" content="#317EFB">
     <link rel="shortcut icon" href="{{ asset('img/logo.ico') }}">
 
-    <title>CBT-Application</title>
+    <title>ExtraordinaryCBT</title>
 
-    <link rel="stylesheet" href="{{ asset('unbk/bootstrap/css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('unbk/fontawesome/css/all.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('unbk/css/roboto.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('unbk/css/tinymce.css') }}">
-    <link rel="stylesheet" href="{{ asset('unbk/css/custom.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('unbk/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('unbk/css/free.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('unbk/css/atlantis.css') }}">
 
     <noscript>Scripts are required</noscript>
   </head>
   <body class="c-app">
   	
     <div id="app">
-        <app-ujian></app-ujian>
+        <app></app>
     </div>
 
   	<script src="{{ asset('js/app.js') }}"></script>

@@ -1,13 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-import auth from './stores/auth.js'
-import pusat from './stores/pusat.js'
-import banksoal from './stores/banksoal.js'
-import ujian from './stores/ujian.js'
-import peserta from './stores/peserta.js'
-import user from './stores/user.js'
-
 import siswa_auth from './stores/siswa/auth.js'
 import siswa_user from './stores/siswa/user.js'
 import siswa_reference from './stores/siswa/reference.js'
@@ -20,11 +13,6 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
 	modules: {
-		auth,
-		pusat,
-		ujian,
-		peserta,
-		user,
 		siswa_auth,
 		siswa_user,
 		siswa_reference,

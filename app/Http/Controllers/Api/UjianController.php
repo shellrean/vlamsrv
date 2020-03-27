@@ -362,7 +362,8 @@ class UjianController extends Controller
                 'peserta_id'    => $request->peserta_id,
                 'mulai_ujian'   => '',
                 'sisa_waktu'    => $request->lama,
-                'status_ujian'  => 0
+                'status_ujian'  => 0,
+                'uploaded'      => 0
             ];
 
             $data = SiswaUjian::create($data);
@@ -412,7 +413,7 @@ class UjianController extends Controller
             'iscorrect'     => 0,
             'jadwal_id'     => $request->jadwal_id, 
             'peserta_id'    => $request->peserta_id,
-            'jawab_essy'    => null
+            'esay'    => null
         ])->get()->count();
 
         $benar = JawabanPeserta::where([
@@ -487,22 +488,39 @@ class UjianController extends Controller
 
         $peserta = Peserta::find($user_id);
 
-        $jadwal = UjianAktif::with(['jadwal'])->first();
+        $jadwal = UjianAktif::with(['jadwal'])->first()
+        ->makeHidden('token')
+        ->makeHidden('status_token')
+        ->makeHidden('created_at')
+        ->makeHidden('updated_at');
 
         $ids = array_column($jadwal->jadwal->ids, 'jurusan','id');
 
         $id_banksoal = '';
         foreach($ids as $key => $id) {
-            if(is_array($id)) {
-                foreach($id as $d) {
-                    if($d == $peserta->jurusan_id) {
+            $bks = Banksoal::with('matpel')->where('id', $key)->first();
 
-                        $id_banksoal =  $key;
+            if($bks) {
+                if($bks->matpel->agama_id != 0) {
+                    if($bks->matpel->agama_id == $peserta->agama_id) {
+                        $id_banksoal = $key;
+                        break;
                     }
-                }
-            } else {
-                if($id == 0) {
-                    $id_banksoal =  $key;
+                } else {
+                    if(is_array($id)) {
+                        foreach($id as $d) {
+                            if($d == $peserta->jurusan_id) {
+
+                                $id_banksoal =  $key;
+                                break;
+                            }
+                        }
+                    } else {
+                        if($id == 0) {
+                            $id_banksoal =  $key;
+                            break;
+                        }
+                    }
                 }
             }
         } 

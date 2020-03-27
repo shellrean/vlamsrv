@@ -13,7 +13,7 @@ class Jadwal extends Model
     ];
 
     protected $hidden = [
-        'banksoal','created_at','updated_at'
+        'banksoal','created_at','updated_at','ids','token'
     ];
 
     protected $casts = [

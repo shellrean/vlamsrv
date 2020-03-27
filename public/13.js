@@ -51,6 +51,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'PrepareUjian',
@@ -127,79 +133,92 @@ var render = function() {
   return _c("div", { staticClass: "container" }, [
     _c("div", { staticClass: "row" }, [
       _c("div", { staticClass: "col-sm-8" }, [
-        _vm.jadwal
-          ? _c("div", { staticClass: "card card-bg" }, [
-              _c("div", { staticClass: "card-body" }, [
-                _c("h4", [_vm._v("Konfirmasi Tes")]),
+        _c("div", { staticClass: "page-inner mt--5" }, [
+          _vm.jadwal
+            ? _c("div", { staticClass: "card card-bg" }, [
+                _vm._m(0),
                 _vm._v(" "),
-                _c(
-                  "form",
-                  {
-                    staticClass: "form-custom form-ajax",
-                    attrs: { id: "fmTes", name: "fmTes", method: "POST" }
-                  },
-                  [
-                    _c("div", { staticClass: "form-group" }, [
-                      _c("label", [_vm._v("Mata Pelajaran")]),
+                _c("div", { staticClass: "card-body" }, [
+                  _c(
+                    "form",
+                    {
+                      staticClass: "form-custom form-ajax",
+                      attrs: { id: "fmTes", name: "fmTes", method: "POST" }
+                    },
+                    [
+                      _c("div", { staticClass: "form-group" }, [
+                        _c("label", [_vm._v("Mata Pelajaran")]),
+                        _vm._v(" "),
+                        _c("p", { staticClass: "form-control-static" }, [
+                          _vm._v(_vm._s(_vm.jadwal.matpel) + " ")
+                        ])
+                      ]),
                       _vm._v(" "),
-                      _c("p", { staticClass: "form-control-static" }, [
-                        _vm._v(_vm._s(_vm.jadwal.matpel) + " ")
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "form-group" }, [
-                      _c("label", [_vm._v("Alokasi Waktu Tes")]),
+                      _c("div", { staticClass: "form-group" }, [
+                        _c("label", [_vm._v("Alokasi Waktu Tes")]),
+                        _vm._v(" "),
+                        _c("p", { staticClass: "form-control-static" }, [
+                          _vm._v(
+                            _vm._s(Math.floor(_vm.jadwal.jadwal.lama / 60)) +
+                              " Menit  "
+                          )
+                        ])
+                      ]),
                       _vm._v(" "),
-                      _c("p", { staticClass: "form-control-static" }, [
-                        _vm._v(
-                          _vm._s(Math.floor(_vm.jadwal.jadwal.lama / 60)) +
-                            " Menit  "
-                        )
+                      _c("div", { staticClass: "form-group" }, [
+                        _c("label", [_vm._v("Waktu mulai")]),
+                        _vm._v(" "),
+                        _c("p", { staticClass: "form-control-static" }, [
+                          _vm._v(_vm._s(_vm.mulai) + " ")
+                        ])
                       ])
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "form-group" }, [
-                      _c("label", [_vm._v("Waktu mulai")]),
-                      _vm._v(" "),
-                      _c("p", { staticClass: "form-control-static" }, [
-                        _vm._v(_vm._s(_vm.mulai) + " ")
-                      ])
-                    ])
-                  ]
-                )
+                    ]
+                  )
+                ])
               ])
-            ])
-          : _vm._e()
+            : _vm._e()
+        ])
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "col-sm-4" }, [
-        _vm.jadwal
-          ? _c("div", { staticClass: "card card-bg" }, [
-              _c("div", { staticClass: "card-body" }, [
-                _c("p", [
-                  _vm._v(
-                    "Tombol MULAI hanya akan aktif apabila waktu sekarang sudah melewati waktu mulai tes"
+        _c("div", { staticClass: "page-inner mt--5" }, [
+          _vm.jadwal
+            ? _c("div", { staticClass: "card card-bg" }, [
+                _c("div", { staticClass: "card-body" }, [
+                  _c("p", [
+                    _vm._v(
+                      "Tombol MULAI hanya akan aktif apabila waktu sekarang sudah melewati waktu mulai tes"
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass:
+                        "btn btn-primary w-100 rounded-pill btn-form-ajax",
+                      attrs: { type: "button", disabled: _vm.disable },
+                      on: { click: _vm.start }
+                    },
+                    [_vm._v("MULAI")]
                   )
-                ]),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    staticClass:
-                      "btn btn-primary w-100 rounded-pill btn-form-ajax",
-                    attrs: { type: "button", disabled: _vm.disable },
-                    on: { click: _vm.start }
-                  },
-                  [_vm._v("MULAI")]
-                )
+                ])
               ])
-            ])
-          : _vm._e()
+            : _vm._e()
+        ])
       ])
     ])
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-header" }, [
+      _c("h4", [_vm._v("Konfirmasi Tes")])
+    ])
+  }
+]
 render._withStripped = true
 
 

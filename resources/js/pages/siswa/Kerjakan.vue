@@ -3,7 +3,7 @@
 		<loading :active.sync="isLoading" 
         :is-full-page="true"></loading>
 
-		<div class="container exam" v-if="filleds">
+		<div class="container exam mt--5" v-if="filleds">
 			<div class="card">
 				<div class="card-body">
 					<div class="bar-top">
@@ -12,11 +12,10 @@
 						<div id="page-count" style="display:none"></div>
 						<div class="right">
 							<div class="timer js-ujian">
-								<div class="timer-label hidden-xs">Sisa Waktu</div>
-								<div class="timer-time" id="timer">{{ prettyTime }}</div>
+								<div class="timer-time" id="timer"><i class="cil-clock"></i> {{ prettyTime }}</div>
 							</div>
 							<b-button variant="primary" class="btn-soal" v-b-modal.nomorSoal :disabled="!listening">
-								Daftar Soal<span class="fa fa-th"></span>
+							<span class="cil-apps"></span> Daftar Soal
 							</b-button>
 						</div>
 					</div>
@@ -53,7 +52,7 @@
 					</div>
 					<div class="button-wrapper">
 						<b-button variant="primary" class="sebelum" size="md" @click="prev()" v-if="questionIndex != 0" :disabled="isLoadinger || !listening">
-							<span class="fa fa-chevron-circle-left"></span>
+							<span class="cil-chevron-left"></span>
 							<b-spinner small type="grow" v-show="isLoadinger"></b-spinner> Sebelumnya
 						</b-button>
 
@@ -62,13 +61,13 @@
 						</button>
 						<b-button variant="primary" class="sesudah" size="md" :disabled="isLoadinger || !listening" @click="next()" v-if="questionIndex+1 != filleds.length">
 							<b-spinner small type="grow" v-show="isLoadinger"></b-spinner>
-							Selanjutnya <span class="fa fa-chevron-circle-right"></span>
+							Selanjutnya <span class="cil-chevron-right"></span>
 						</b-button>
 		    			<b-button variant="success" class="sesudah" size="md" @click="$bvModal.show('modal-selesai')" v-if="questionIndex+1 == filleds.length && checkRagu() == false" :disabled="isLoadinger">
-		    				SELESAI <span class="fa fa-check-circle"></span>
+		    				SELESAI <i class="cil-check"></i>
 		    			</b-button>
 		    			<b-button variant="danger" class="sesudah" size="md" v-b-modal.modal-1 v-if="questionIndex+1 == filleds.length && checkRagu() == true">
-		    				SELESAI <span class="fa fa-check-circle"></span>
+		    				SELESAI <i class="cil-check"></i>
 		    			</b-button>
 					</div>
 				</div>
@@ -132,7 +131,7 @@
 import { mapActions, mapState, mapGetters, mapMutations} from 'vuex'
 import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/vue-loading.css';
-import AudioPlayer from '../../components/AudioPlayer.vue'
+import AudioPlayer from '../../components/siswa/AudioPlayer.vue'
 
 export default {
 	name: 'DataUjian',
@@ -375,8 +374,3 @@ export default {
 	}
 }
 </script>
-<style type="text/css">
-	.modal-backdrop {
-	    background-color: #00a3ea52 !important;
-	}
-</style>

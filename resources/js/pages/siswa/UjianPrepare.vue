@@ -2,31 +2,37 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-sm-8">
-				<div class="card card-bg" v-if="jadwal">
-					<div class="card-body">
-						<h4>Konfirmasi Tes</h4>
-						<form id="fmTes" name="fmTes" method="POST"  class="form-custom form-ajax">
-							<div class="form-group">
-								<label>Mata Pelajaran</label>
-								<p class="form-control-static">{{jadwal.matpel}}&nbsp;</p>
-							</div>
-							<div class="form-group">
-								<label>Alokasi Waktu Tes</label>
-								<p class="form-control-static">{{ Math.floor(jadwal.jadwal.lama / 60)}} Menit &nbsp;</p>
-							</div>
-							<div class="form-group">
-								<label>Waktu mulai</label>
-								<p class="form-control-static">{{mulai}}&nbsp;</p>
-							</div>
-						</form>
+				<div class="page-inner mt--5">
+					<div class="card card-bg" v-if="jadwal">
+						<div class="card-header">
+							<h4>Konfirmasi Tes</h4>								
+						</div>
+						<div class="card-body">
+							<form id="fmTes" name="fmTes" method="POST"  class="form-custom form-ajax">
+								<div class="form-group">
+									<label>Mata Pelajaran</label>
+									<p class="form-control-static">{{jadwal.matpel}}&nbsp;</p>
+								</div>
+								<div class="form-group">
+									<label>Alokasi Waktu Tes</label>
+									<p class="form-control-static">{{ Math.floor(jadwal.jadwal.lama / 60)}} Menit &nbsp;</p>
+								</div>
+								<div class="form-group">
+									<label>Waktu mulai</label>
+									<p class="form-control-static">{{mulai}}&nbsp;</p>
+								</div>
+							</form>
+						</div>
 					</div>
 				</div>
 			</div>
 			<div class="col-sm-4">
-				<div class="card card-bg" v-if="jadwal">
-					<div class="card-body">
-						<p>Tombol MULAI hanya akan aktif apabila waktu sekarang sudah melewati waktu mulai tes</p>
-						<button type="button" class="btn btn-primary w-100 rounded-pill btn-form-ajax" @click="start" :disabled="disable">MULAI</button>
+				<div class="page-inner mt--5">
+					<div class="card card-bg" v-if="jadwal">
+						<div class="card-body">
+							<p>Tombol MULAI hanya akan aktif apabila waktu sekarang sudah melewati waktu mulai tes</p>
+							<button type="button" class="btn btn-primary w-100 rounded-pill btn-form-ajax" @click="start" :disabled="disable">MULAI</button>
+						</div>
 					</div>
 				</div>
 			</div>

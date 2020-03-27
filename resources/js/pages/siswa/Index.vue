@@ -1,25 +1,26 @@
 <template>
-	<div>
-    <div class="bg"><img src="/unbk/img/bg-header.png"></div>
-      <div class="header mx-5 d-flex">
-        <div class="logo">
-            <img src="/unbk/img/logo-white.png">
-            <div>
-                <h2>PUSPENDIK</h2>
-                <h6>CBT Application</h6>
+	<div class="wrapper overlay-sidebar">
+      <div class="content">
+        <div class="panel-header bg-primary-gradient">
+          <div class="page-inner py-6">
+            <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row px-3">
+              <div class="logo">
+                <img src="/unbk/img/logo-white.png">
+                <h2 class="text-white pb-2 fw-bold">ExtraordinaryCBT</h2>
+              </div>
+              <div class="ml-md-auto py-2 py-md-0">
+                <a href="#" class="text-white btn btn-round mr-2">{{ peserta.nama }}</a>
+                <a href="#" @click.prevent="logout" class="btn btn-secondary btn-round">
+                Logout</a>
+              </div>
             </div>
-        </div>
-        <div class="user">
-          <div class="user-text">
-            <h6>{{ peserta.nama }}</h6>
-            <a href="javascript:;" @click="logout" id="btnLogout" class="btn btn-sm btn-white logout btnLogout">Logout</a>
-          </div>
-          <div class="user-icon">
-              <span class="fa fa-user-graduate"></span>
           </div>
         </div>
       </div>
       <router-view></router-view>
+      <div class="nav-fixed-bottom">
+        <p class="text-center">&copy; ExtraordinaryCBT 2020 by Shellrean & ICT Team</p>
+      </div>
   </div>
 </template>
 <script>
