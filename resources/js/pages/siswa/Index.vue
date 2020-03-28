@@ -1,7 +1,7 @@
 <template>
 	<div class="wrapper overlay-sidebar">
       <div class="content">
-        <div class="panel-header bg-primary-gradient">
+        <div class="panel-header bg-info-gradient">
           <div class="page-inner py-6">
             <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row px-3">
               <div class="logo">
@@ -10,7 +10,7 @@
               </div>
               <div class="ml-md-auto py-2 py-md-0">
                 <a href="#" class="text-white btn btn-round mr-2">{{ peserta.nama }}</a>
-                <a href="#" @click.prevent="logout" class="btn btn-secondary btn-round">
+                <a href="#" @click.prevent="logout" class="btn btn-light btn-round">
                 Logout</a>
               </div>
             </div>

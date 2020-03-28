@@ -7,7 +7,7 @@
 						<h4>Tes Selesai</h4>
 						<p>
 						Anda telah selesai mengerjakan ujian ini. Terimakasih, prestasi penting jujur yang utama</p>
-						<button type="button" class="btn btn-primary w-100 rounded-pill btn-form-ajax" @click="logout">Logout</button>
+						<button type="button" class="btn btn-info w-100 rounded-pill btn-form-ajax" @click="logout">Logout</button>
 					</div>
 				</div>
 			</div>

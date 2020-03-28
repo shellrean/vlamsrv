@@ -14,7 +14,7 @@
 							<div class="timer js-ujian">
 								<div class="timer-time" id="timer"><i class="cil-clock"></i> {{ prettyTime }}</div>
 							</div>
-							<b-button variant="primary" class="btn-soal" v-b-modal.nomorSoal :disabled="!listening">
+							<b-button variant="info" class="btn-soal" v-b-modal.nomorSoal :disabled="!listening">
 							<span class="cil-apps"></span> Daftar Soal
 							</b-button>
 						</div>
@@ -51,7 +51,7 @@
 				    	</table>
 					</div>
 					<div class="button-wrapper">
-						<b-button variant="primary" class="sebelum" size="md" @click="prev()" v-if="questionIndex != 0" :disabled="isLoadinger || !listening">
+						<b-button variant="info" class="sebelum" size="md" @click="prev()" v-if="questionIndex != 0" :disabled="isLoadinger || !listening">
 							<span class="cil-chevron-left"></span>
 							<b-spinner small type="grow" v-show="isLoadinger"></b-spinner> Sebelumnya
 						</b-button>
@@ -59,7 +59,7 @@
 						<button id="soal-ragu" class="btn btn-warning ml-auto">
 							<b-form-checkbox size="lg" value="1" v-model="ragu">Ragu ragu</b-form-checkbox>
 						</button>
-						<b-button variant="primary" class="sesudah" size="md" :disabled="isLoadinger || !listening" @click="next()" v-if="questionIndex+1 != filleds.length">
+						<b-button variant="info" class="sesudah" size="md" :disabled="isLoadinger || !listening" @click="next()" v-if="questionIndex+1 != filleds.length">
 							<b-spinner small type="grow" v-show="isLoadinger"></b-spinner>
 							Selanjutnya <span class="cil-chevron-right"></span>
 						</b-button>
@@ -116,7 +116,7 @@
 		<b-modal id="modal-direction" centered title="Direction" class="shadow">
 		    <template v-slot:modal-footer="{ cancel }">
 		     	<div class="button-wrapper">
-			      <b-button size="sm" variant="primary" @click="playDirection()">
+			      <b-button size="sm" variant="info" @click="playDirection()">
 			        Oke
 			      </b-button>
 		  		</div>

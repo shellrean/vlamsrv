@@ -1,7 +1,7 @@
 <template>
 	<div class="wrapper overlay-sidebar">
       <div class="content">
-        <div class="panel-header bg-primary-gradient">
+        <div class="panel-header bg-info-gradient">
           <div class="page-inner py-5">
             <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
               <div class="logo">
@@ -39,7 +39,7 @@
 									<p v-if="errors" class="text-danger" v-text="errors.invalid"></p>
 									<span class="line"></span>
 								</div>
-								<b-button variant="primary" size="lg" block  :disabled="isLoading" type="submit">
+								<b-button variant="info" size="lg" block  :disabled="isLoading" type="submit">
 									{{ isLoading ? 'Loading..' : 'Login' }}
 								</b-button>
 							</form>

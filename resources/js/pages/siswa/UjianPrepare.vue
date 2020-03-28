@@ -31,7 +31,7 @@
 					<div class="card card-bg" v-if="jadwal">
 						<div class="card-body">
 							<p>Tombol MULAI hanya akan aktif apabila waktu sekarang sudah melewati waktu mulai tes</p>
-							<button type="button" class="btn btn-primary w-100 rounded-pill btn-form-ajax" @click="start" :disabled="disable">MULAI</button>
+							<button type="button" class="btn btn-info w-100 rounded-pill btn-form-ajax" @click="start" :disabled="disable">MULAI</button>
 						</div>
 					</div>
 				</div>
