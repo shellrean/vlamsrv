@@ -13,8 +13,8 @@ use Illuminate\Http\Request;
 | 
 */
 
-Route::post('/v2/pusat/status', 'API\v2\PusatController@status');
-Route::post('/v2/pusat/register-server', 'API\v2\PusatController@registerServer');
+Route::post('/v2/pusat/status', 'Api\v2\PusatController@status');
+Route::post('/v2/pusat/register-server', 'Api\v2\PusatController@registerServer');
 
 Route::post('/v2/login', 'Auth\LoginController@login');
 Route::get('/v2/logout', 'Auth\LoginController@logout')->middleware('auth:api');
