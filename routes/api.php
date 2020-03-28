@@ -49,11 +49,11 @@ Route::group(['middleware' => 'auth:api', 'namespace' => 'Api'], function() {
     });
 });
 
-Route::post('/v2/pusat/sinkron', 'Api\v2\PusatController@sinkron');
-Route::post('/v2/pusat/ftp', 'Api\v2\PusatController@downloadFile');
-Route::get('/v2/pusat/check-data', 'Api\v2\PusatController@checkData');
+Route::post('v2/pusat/sinkron', 'Api\v2\PusatController@sinkron');
+Route::post('v2/pusat/ftp', 'Api\v2\PusatController@downloadFile');
+Route::get('v2/pusat/check-data', 'Api\v2\PusatController@checkData');
 
-Route::get('/v2/pusat/serial', 'Api\v2\PusatController@serial');
+Route::get('v2/pusat/serial', 'Api\v2\PusatController@serial');
 
 
 // Peserta
