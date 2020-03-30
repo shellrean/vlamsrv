@@ -1,0 +1,11 @@
+Options +FollowSysmLinks -Indexes
+RewriteEngine On
+
+RewriteBase /home/vlam/html/vlamsrv/public/
+
+RewrteCond %{HTTP:Authorization} .
+RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-F
+RewirteRule ^ index.php [L]

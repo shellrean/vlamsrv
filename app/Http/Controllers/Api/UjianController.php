@@ -166,7 +166,9 @@ class UjianController extends Controller
 
         
         $find = JawabanPeserta::with([
-            'soal','soal.jawabans'
+            'soal','soal.jawabans' => function($q) {
+		$q->inRandomOrder();	
+	   }
         ])->where([
             'peserta_id'    => $user_id,
             'jadwal_id'     => $jadwal_id,
@@ -243,9 +245,7 @@ class UjianController extends Controller
                 'peserta_id'    => $user_id
             ])->first();
 
-            /** 
-             * This using random order 
-             * 
+            
             $find = JawabanPeserta::with([
                 'soal','soal.jawabans' => function($q) {
                     $q->inRandomOrder();
@@ -255,15 +255,15 @@ class UjianController extends Controller
                 'jadwal_id'     => $jadwal_id,
             ])->get();
 
-            **/
-
+          
+	  /**
             $find = JawabanPeserta::with([
                 'soal','soal.jawabans'
             ])->where([
                 'peserta_id'    => $user_id, 
                 'jadwal_id'     => $jadwal_id,
             ])->get();
-    
+    		**/
             return response()->json(['data' => $find, 'detail' => $detail]);
         }
         
@@ -401,8 +401,9 @@ class UjianController extends Controller
      */
     public function selesai(Request $request)
     {
+	$aktif = UjianAktif::first();
         $ujian = SiswaUjian::where([
-            'jadwal_id'     => $request->jadwal_id, 
+            'jadwal_id'     => $aktif->ujian_id, 
             'peserta_id'    => $request->peserta_id
         ])->first();
 
@@ -411,24 +412,24 @@ class UjianController extends Controller
 
         $salah = JawabanPeserta::where([
             'iscorrect'     => 0,
-            'jadwal_id'     => $request->jadwal_id, 
+            'jadwal_id'     => $aktif->ujian_id, 
             'peserta_id'    => $request->peserta_id,
             'esay'    => null
         ])->get()->count();
 
         $benar = JawabanPeserta::where([
             'iscorrect'     => 1,
-            'jadwal_id'     => $request->jadwal_id, 
+            'jadwal_id'     => $aktif->ujian_id, 
             'peserta_id'    => $request->peserta_id
         ])->get()->count();
         
         $jml = JawabanPeserta::where([
-            'jadwal_id'     => $request->jadwal_id, 
+            'jadwal_id'     => $aktif->ujian_id, 
             'peserta_id'    => $request->peserta_id
         ])->get()->count();
 
         $null = JawabanPeserta::where([
-            'jadwal_id'     => $request->jadwal_id, 
+            'jadwal_id'     => $aktif->ujian_id, 
             'peserta_id'    => $request->peserta_id,
             'jawab'         => 0
         ])->get()->count();
@@ -437,7 +438,7 @@ class UjianController extends Controller
 
         HasilUjian::create([
             'peserta_id'      => $request->peserta_id,
-            'jadwal_id'       => $request->jadwal_id,
+            'jadwal_id'       => $aktif->ujian_id,
             'jumlah_salah'    => $salah,
             'jumlah_benar'    => $benar,
             'tidak_diisi'     => $null,

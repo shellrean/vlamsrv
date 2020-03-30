@@ -8963,7 +8963,8 @@ body {
   }
   .bar-top {
     display: flex;
-    align-items: center
+    align-items: center; 
+    flex-wrap: wrap;
 }
 
 .bar-top .soal-title {
@@ -9029,7 +9030,10 @@ body {
     border-top: 3px solid #eee;
     margin-top: 10px;
     margin-bottom: 10px;
-    padding: 10px
+    padding: 10px;
+}
+.soal-wrapper img {
+   max-width: 100%;
 }
 
 .nomor-soal {
@@ -9096,6 +9100,7 @@ body {
 }
 .button-wrapper {
     display: flex;
+   flex-wrap: wrap;
     align-items: center
 }
 
@@ -9151,3 +9156,20 @@ body {
   .logo-center {
       justify-content: center
   }
+@media(max-width: 500px) {
+ .button-wrapper .sesudah {
+  margin-left: 0;
+}
+.button-wrapper {
+ flex-direction: column;
+}
+.bar-top {
+ flex-direction: column;
+}
+.ml-auto {
+margin-left: 0 !important;
+}
+.bar-top .right {
+ margin-left: 0;
+}
+}

@@ -120,9 +120,10 @@ class PusatController extends Controller
   		curl_setopt($ch, CURLOPT_POSTFIELDS,
   		"server_name=$server->kode_server&serial_number=$server->serial_number");
   		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
 
   		$server_output = curl_exec($ch);
-
   		if(!$server_output) {
   			return response()->json(['data' => 'unconnect']);
   		}
@@ -198,6 +199,7 @@ class PusatController extends Controller
     	$data = $request->all();
 
     	$identify = IdentifyServer::first();
+
   	
   		if($identify) {
   			return response()->json(['status' => 'This device has been locked', 'type' => 'danger']);
@@ -208,14 +210,21 @@ class PusatController extends Controller
       $password = $data['server']['password'];
 
   		$ch = curl_init();
-
-		  curl_setopt($ch, CURLOPT_URL,"$hostname/api/v1/pusat/register-server");
+		$uerl = $hostname.'/api/v1/pusat/register-server';
+		  curl_setopt($ch, CURLOPT_URL,$uerl);
 		  curl_setopt($ch, CURLOPT_POST, 1);
-		  curl_setopt($ch, CURLOPT_POSTFIELDS,"server_name=$kode_server&serial_number=$serial_number&password=$password");
+		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+		  curl_setopt($ch, CURLOPT_POSTFIELDS,
+"server_name=$kode_server&serial_number=$serial_number&password=$password");
 		  curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
 		  $server_output = curl_exec($ch);
+		 $errmsg = curl_error($ch);
+		$header = curl_getinfo($ch);
+
 		  $deco = json_decode( $server_output, true );
+
 		  curl_close ($ch);
 
       if(!$deco) {
@@ -264,7 +273,7 @@ class PusatController extends Controller
         $siswa_ujian = $siswa_ujians->get();
         
         $datas = JawabanPeserta::where('jadwal_id', $ujian->ujian_id)
-        ->whereIn('peserta_id', $listed)->get();
+        ->whereIn('peserta_id', $listed)->get()->makeVisible('iscorrect');
 
         $identify = IdentifyServer::first();
 
@@ -273,12 +282,15 @@ class PusatController extends Controller
         $hostname = env("SERVER_CENTER");
         curl_setopt($ch, CURLOPT_URL,"$hostname/api/v1/pusat/upload-hasil");
         curl_setopt($ch, CURLOPT_POST, 1);
+	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+	curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
         curl_setopt($ch, CURLOPT_POSTFIELDS,
                     "server_name=$identify->kode_server&datad=$datas");
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
         $server_output = curl_exec($ch);
         $deco = json_decode( $server_output, true );
+	$header = curl_getinfo($ch);
 
         curl_close ($ch);
         

@@ -2,7 +2,7 @@
 	<div class="wrapper overlay-sidebar">
       <div class="content">
         <div class="panel-header bg-info-gradient">
-          <div class="page-inner py-6">
+          <div class="page-inner py-5">
             <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row px-3">
               <div class="logo">
                 <img src="/unbk/img/logo-white.png">
