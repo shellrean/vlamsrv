@@ -30,8 +30,8 @@
 				<div class="page-inner mt--5">
 					<div class="card card-bg" v-if="jadwal">
 						<div class="card-body">
-							<p>Tombol MULAI hanya akan aktif apabila waktu sekarang sudah melewati waktu mulai tes</p>
-							<button type="button" class="btn btn-info w-100 rounded-pill btn-form-ajax" @click="start" :disabled="disable">MULAI</button>
+							<p>Tombol MULAI hanya akan muncul apabila waktu sekarang sudah melewati waktu mulai tes</p>
+							<button type="button" class="btn btn-info w-100 rounded-pill btn-form-ajax" @click="start" v-if="!disable">MULAI</button>
 						</div>
 					</div>
 				</div>
@@ -56,8 +56,8 @@ export default {
 	},
 	computed: {
 		...mapState('siswa_jadwal', {
-			jadwal: state => state.banksoalAktif.data,
-			mulai: state => state.banksoalAktif.data.jadwal.mulai
+			jadwal: state => state.banksoalAktif,
+			mulai: state => state.banksoalAktif.jadwal.mulai
 		}),
 		...mapState('siswa_user', {
 		    peserta: state => state.pesertaDetail
@@ -66,15 +66,9 @@ export default {
 	methods: {
 	    ...mapActions('siswa_ujian',['pesertaMulai']),
 	    start() {
-	    	this.pesertaMulai({
-	    		peserta_id: this.peserta.id
-	    	})
-	    	this.$router.push({ 
-	    		name: 'ujian.while', 
-	    		params: { 
-	    			banksoal: this.jadwal.banksoal_id, 
-	    			jadwal_id: this.jadwal.jadwal.id
-	    		} 
+	    	this.pesertaMulai()
+	    	this.$router.replace({ 
+	    		name: 'ujian.while'
 	    	})
 	    },
 	    starTime() {

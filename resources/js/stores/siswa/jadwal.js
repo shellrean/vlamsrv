@@ -15,20 +15,11 @@ const mutations = {
 }
 
 const actions = {
-	ujianHariIni({ commit }) {
+	ujianAktif({ commit, state }) {
 		return new Promise(( resolve, reject) => {
-			$axios.get(`/jadwal/getday`)
-			.then( (response) => {
-				commit('UJIAN_HARI_INI',response.data.data)
-				resolve(response.data)
-			}) 
-		})
-	},
-	ujianAktif({ commit, state }, payload) {
-		return new Promise(( resolve, reject) => {
-			$axios.get(`/jadwal/aktif?peserta=${payload}`, payload)
+			$axios.get(`/jadwal/aktif`)
 			.then((response) => {
-				commit('ASSIGN_UJIAN_AKTIF', response.data)
+				commit('ASSIGN_UJIAN_AKTIF', response.data.data)
 				resolve(response.data)
 			})
 		})

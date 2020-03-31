@@ -36,9 +36,9 @@
 						            </div>
 									<input type="password" class="form-control":class="{ 'is-invalid' : errors.password }"placeholder="Password" v-model="data.password" required @keyup="clearError"/>
 									<div class="invalid-feedback" v-if="errors.password">{{ errors.password[0] }} </div>
-									<p v-if="errors" class="text-danger" v-text="errors.invalid"></p>
-									<span class="line"></span>
+									
 								</div>
+								<p v-if="errors" class="text-danger mb-2" v-text="errors.invalid"></p>
 								<b-button variant="info" size="lg" block  :disabled="isLoading" type="submit">
 									{{ isLoading ? 'Loading..' : 'Login' }}
 								</b-button>
@@ -69,7 +69,7 @@
 		},
 		created() {
 			if (this.isAuth) {
-				this.$router.push({ name: 'ujian.konfirm' })
+				this.$router.replace({ name: 'ujian.konfirm' })
 			}
 		},
 		computed: {
@@ -82,10 +82,11 @@
 			postLogin() {
 				this.SET_LOADING(true)
 				this.submit(this.data)
-				.then( () => {
+				.then((response) => {
 					if (this.isAuth) {
+						this.$store.commit('siswa_user/ASSIGN_PESERTA_DETAIL',response.data)
 						this.CLEAR_ERRORS()
-						this.$router.push({ name: 'ujian.konfirm' })
+						this.$router.replace({ name: 'ujian.konfirm' })
 					}
 				})
 				.catch( () => {

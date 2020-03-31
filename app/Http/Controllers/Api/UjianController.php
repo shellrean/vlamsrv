@@ -166,9 +166,9 @@ class UjianController extends Controller
 
         
         $find = JawabanPeserta::with([
-            'soal','soal.jawabans' => function($q) {
-		$q->inRandomOrder();	
-	   }
+          'soal','soal.jawabans' => function($q) {
+		  $q->inRandomOrder();	
+	    }
         ])->where([
             'peserta_id'    => $user_id,
             'jadwal_id'     => $jadwal_id,
@@ -351,17 +351,22 @@ class UjianController extends Controller
      */
     public function detUjian(Request $request) 
     {
+        $peserta = request()->get('peserta-auth');
+        $jadwal = UjianAktif::first();
+
+        $relate = Jadwal::find($jadwal->ujian_id); 
+
         $ujian = SiswaUjian::where([
-            'jadwal_id'     => $request->jadwal_id, 
-            'peserta_id'    => $request->peserta_id
+            'jadwal_id'     => $relate->id, 
+            'peserta_id'    => $peserta['id']
         ])->first();
 
         if(!$ujian) {
             $data = [
-                'jadwal_id'     => $request->jadwal_id,
-                'peserta_id'    => $request->peserta_id,
+                'jadwal_id'     => $relate->id,
+                'peserta_id'    => $peserta['id'],
                 'mulai_ujian'   => '',
-                'sisa_waktu'    => $request->lama,
+                'sisa_waktu'    => $relate->lama,
                 'status_ujian'  => 0,
                 'uploaded'      => 0
             ];
@@ -375,19 +380,16 @@ class UjianController extends Controller
             return response()->json(['data' => $ujian]);
         }
 
-        $deUjian = Jadwal::find($request->jadwal_id);
-
-
         $start = Carbon::createFromFormat('H:i:s', $ujian->mulai_ujian);
         $now = Carbon::createFromFormat('H:i:s', Carbon::now()->format('H:i:s'));
 
         $diff_in_minutes = $start->diffInSeconds($now);
 
-        if($diff_in_minutes > $deUjian->lama) {
+        if($diff_in_minutes > $relate->lama) {
             return response()->json(['data' => $ujian]);
         }
         
-        $ujian->sisa_waktu = $deUjian->lama-$diff_in_minutes;
+        $ujian->sisa_waktu = $relate->lama-$diff_in_minutes;
         $ujian->save();
 
         return response()->json(['data' => $ujian]);
@@ -485,9 +487,7 @@ class UjianController extends Controller
      */
     public function getUjianAktif()
     {
-        $user_id = request()->peserta;
-
-        $peserta = Peserta::find($user_id);
+        $peserta = request()->get('peserta-auth');
 
         $jadwal = UjianAktif::with(['jadwal'])->first()
         ->makeHidden('token')
@@ -503,14 +503,14 @@ class UjianController extends Controller
 
             if($bks) {
                 if($bks->matpel->agama_id != 0) {
-                    if($bks->matpel->agama_id == $peserta->agama_id) {
+                    if($bks->matpel->agama_id == $peserta['agama_id']) {
                         $id_banksoal = $key;
                         break;
                     }
                 } else {
                     if(is_array($id)) {
                         foreach($id as $d) {
-                            if($d == $peserta->jurusan_id) {
+                            if($d == $peserta['jurusan_id']) {
 
                                 $id_banksoal =  $key;
                                 break;
@@ -541,8 +541,14 @@ class UjianController extends Controller
      */
     public function mulaiPeserta(Request $request)
     {
+        $siswa = request()->get('peserta-auth');
+
         $jadwal = UjianAktif::first();
-        $peserta = SiswaUjian::where(['peserta_id' => $request->peserta_id, 'jadwal_id' => $jadwal->ujian_id])->first();
+        $peserta = SiswaUjian::where([
+            'peserta_id' => $siswa['id'], 
+            'jadwal_id' => $jadwal->ujian_id
+        ])->first();
+
         if($peserta->status_ujian != 3) {
             $peserta->mulai_ujian = now()->format('H:i:s');
             $peserta->status_ujian = 3;

@@ -44,8 +44,7 @@
 				    		</tr>
 				    		<tr v-if="filleds[questionIndex].soal.tipe_soal == 2">
 				    			<td>
-				    				<textarea class="form-control" autofocus="" placeholder="Tulis jawaban disini..." v-model="filleds[questionIndex].esay" @keyup.enter="inputJawabEssy" style="height: 150px"></textarea>
-				    				<p class="text-info">Press <b>enter</b> to submit your answer</p>
+				    				<textarea class="form-control" placeholder="Tulis jawaban disini..." v-model="filleds[questionIndex].esay" @input="onInput($event.target.value)" style="height: 150px"></textarea>
 				    			</td>
 				    		</tr>
 				    	</table>
@@ -53,14 +52,13 @@
 					<div class="button-wrapper">
 						<b-button variant="info" class="sebelum" size="md" @click="prev()" v-if="questionIndex != 0" :disabled="isLoadinger || !listening">
 							<span class="cil-chevron-left"></span>
-							<b-spinner small type="grow" v-show="isLoadinger"></b-spinner> Sebelumnya
+							 Sebelumnya
 						</b-button>
 
 						<button id="soal-ragu" class="btn btn-warning ml-auto">
 							<b-form-checkbox size="lg" value="1" v-model="ragu">Ragu ragu</b-form-checkbox>
 						</button>
 						<b-button variant="info" class="sesudah" size="md" :disabled="isLoadinger || !listening" @click="next()" v-if="questionIndex+1 != filleds.length">
-							<b-spinner small type="grow" v-show="isLoadinger"></b-spinner>
 							Selanjutnya <span class="cil-chevron-right"></span>
 						</b-button>
 		    			<b-button variant="success" class="sesudah" size="md" @click="$bvModal.show('modal-selesai')" v-if="questionIndex+1 == filleds.length && checkRagu() == false" :disabled="isLoadinger">
@@ -95,15 +93,15 @@
 		 </b-modal>
 		<b-modal id="nomorSoal" title="Nomor Soal" size="lg" class="shadow">
 			<template v-slot:modal-footer="{ cancel }">
-		      <b-button size="sm" variant="light" @click="cancel()">
-		        Close
+		      <b-button size="sm" variant="info" @click="cancel()">
+		        Tutup
 		      </b-button>
 		    </template>
 		    <template v-slot:default="{ hide }">
 			 	<ul class="nomor-soal" id="nomor-soal">
 			 		<li v-for="(fiel,index) in filleds" :key="index">
 			 			<a href="#" :class="{
-						'isi' : (fiel.jawab != 0),
+						'isi' : (fiel.jawab != 0 || fiel.esay != null),
 						'ragu' : (fiel.ragu_ragu == 1),
 						'active' : (index == questionIndex)}" @click.prevent="toLand(index)" :disabled="isLoadinger">
 			 				{{ index+1 }} 
@@ -132,12 +130,15 @@ import { mapActions, mapState, mapGetters, mapMutations} from 'vuex'
 import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/vue-loading.css';
 import AudioPlayer from '../../components/siswa/AudioPlayer.vue'
+import _ from 'lodash'
 
 export default {
 	name: 'DataUjian',
 	created() {
-		this.filledAllSoal()
-		this.start()
+		if(typeof this.jadwal.jadwal != 'undefined') {
+			this.filledAllSoal()
+			this.start()
+		}
 	},
 	components: {
 		AudioPlayer,
@@ -167,11 +168,13 @@ export default {
 	},
 	computed: {
 		...mapGetters(['isAuth','isLoading','isLoadinger']),
-		...mapMutations(['CLEAR_ERRORS','SET_LOADING']),
 		...mapState('siswa_ujian',{ 
 			jawabanPeserta: state => state.jawabanPeserta,
 			filleds: state => state.filledUjian.data,
 			detail: state => state.filledUjian.detail
+		}),
+		...mapState('siswa_jadwal', {
+			jadwal: state => state.banksoalAktif,
 		}),
 		...mapState('siswa_user', {
         	peserta: state => state.pesertaDetail
@@ -207,8 +210,8 @@ export default {
 		filledAllSoal() {
 			const payld = {
 				peserta_id: this.peserta.id,
-				banksoal: this.$route.params.banksoal,
-				jadwal_id: this.$route.params.jadwal_id
+				banksoal: this.jadwal.banksoal_id,
+				jadwal_id: this.jadwal.ujian_id
 			}
 			this.takeFilled(payld) 
 			.then((resp) => {
@@ -316,7 +319,10 @@ export default {
 				this.listening = true
 			}
 			this.$bvModal.hide('modal-direction')
-		}
+		},
+		onInput: _.debounce(function (value) {
+	      this.inputJawabEssy(value)
+	    }, 500)
 	},
 	watch: {
 		soals(val) {
@@ -370,6 +376,10 @@ export default {
 				}
 				this.$bvModal.show('modal-direction')
 			}
+		},
+		jadwal(val) {
+			this.filledAllSoal()
+			this.start()
 		}
 	}
 }

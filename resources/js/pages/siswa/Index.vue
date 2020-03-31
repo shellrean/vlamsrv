@@ -11,7 +11,7 @@
               <div class="ml-md-auto py-2 py-md-0">
                 <a href="#" class="text-white btn btn-round mr-2">{{ peserta.nama }}</a>
                 <a href="#" @click.prevent="logout" class="btn btn-light btn-round">
-                Logout</a>
+                {{ isLoading ? 'Loading...' : 'Logout' }}</a>
               </div>
             </div>
           </div>
@@ -24,12 +24,14 @@
   </div>
 </template>
 <script>
-  import { mapState, mapActions } from 'vuex'
+  import { mapState, mapActions, mapGetters } from 'vuex'
 
 	export default {
 		name: 'IndexUjian',
     created() {
-      this.setPesertaDetail()
+      if(typeof this.peserta.id != 'undefined') {
+        this.ujianAktif()
+      }
     },
     data() {
       return {
@@ -37,33 +39,27 @@
       } 
     },
     computed: {
+      ...mapGetters(['isLoading']),
       ...mapState('siswa_user', {
         peserta: state => state.pesertaDetail
       }),
       ...mapState('siswa_jadwal', {
-        jadwal: state => state.banksoalAktif.data
+        jadwal: state => state.banksoalAktif
       }),
     },
     methods: {
       ...mapActions('siswa_jadwal',['ujianAktif']),
-      ...mapActions('siswa_user',['setPesertaDetail']),
       ...mapActions('siswa_auth',['logoutPeserta']),
       ...mapActions('siswa_ujian',['getPesertaDataUjian']),
       logout() { 
         return new Promise((resolve, reject) => {
-            this.logoutPeserta({ no_ujian : localStorage.getItem('no_ujian') })
+            this.logoutPeserta()
             .then(() => {
               localStorage.removeItem('token')
-              localStorage.removeItem('no_ujian')
-              localStorage.removeItem('nama')
-              localStorage.removeItem('id')
               resolve()
             })
             .catch(() => {
               localStorage.removeItem('token')
-              localStorage.removeItem('no_ujian')
-              localStorage.removeItem('nama')
-              localStorage.removeItem('id')
               resolve()
             })
         }).then(() => {
@@ -72,16 +68,12 @@
         })
       },
       dataUjianPeserta() {
-        this.getPesertaDataUjian({
-          jadwal_id   :this.jadwal.jadwal.id,
-          peserta_id  : this.peserta.id,
-        lama    : this.jadwal.jadwal.lama
-        })
+        this.getPesertaDataUjian()
       }
     },
     watch: {
       peserta() {
-        this.ujianAktif(this.peserta.id)
+        this.ujianAktif()
       },
       jadwal(val) {
          if(typeof(val) != 'undefined') {

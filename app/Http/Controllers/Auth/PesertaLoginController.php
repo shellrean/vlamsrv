@@ -3,9 +3,12 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
+use Auth;
 use App\Peserta;
 use App\UjianAktif;
 use Illuminate\Support\Facades\Validator;
@@ -25,10 +28,16 @@ class PesertaLoginController extends Controller
             return response()->json(['errors'=>$validator->errors()],422);
         }
 
-
-        $peserta = Peserta::where(['no_ujian' => $request->no_ujian,'password' => $request->password])->first();
+        $peserta = Peserta::where([
+            'no_ujian' => $request->no_ujian,
+            'password' => $request->password
+        ])->first();
         $aktif = UjianAktif::first();
         
+        if(!$aktif) {
+            return response()->json(['status' => 'Ujian has not been set']);
+        }
+
         if($peserta) {
             if($peserta->api_token != '') {
                 return response()->json(['status' => 'loggedin']);
@@ -36,19 +45,32 @@ class PesertaLoginController extends Controller
             if($aktif->kelompok != $peserta->sesi) {
                 return response()->json(['status' => 'non-sesi']);
             }
-            $peserta->update(['api_token' => Str::random(80)]);
-            return response()->json(['status' => 'success', 'data' => $peserta],200);
+            $token = Str::random(128);
+            $peserta->update(['api_token' => $token]);
+            return response()
+            ->json([
+                'status'    => 'success', 
+                'data'      => $peserta,
+                'token'     => $token
+            ],200);
         }       
 
         return response()->json(['status' => 'error']); 
     }
 
-    public function logout(Request $request) 
+    public function logout() 
     {
-        $peserta = Peserta::where(['no_ujian' => $request->no_ujian])->first();
+        $user = request()->get('peserta-auth');
+
+        $peserta = Peserta::find($user['id']);
         $peserta->api_token = '';
         $peserta->save();
 
         return response()->json(['status' => 'success']);
+    }
+
+    public function authenticated()
+    {
+        return ['data' => request()->get('peserta-auth')];
     }
 }

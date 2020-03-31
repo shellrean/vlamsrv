@@ -1,7 +1,4 @@
 <?php
-
-use Illuminate\Http\Request;
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -13,11 +10,17 @@ use Illuminate\Http\Request;
 | 
 */
 
-Route::post('/v2/pusat/status', 'Api\v2\PusatController@status');
-Route::post('/v2/pusat/register-server', 'Api\v2\PusatController@registerServer');
+Route::post('login', 'Auth\LoginController@login');
+Route::group(['prefix' => 'v2', 'namespace' => 'Api\v2'], function() {
+    
+    Route::post('pusat/status', 'PusatController@status');
+    Route::post('pusat/register-server', 'PusatController@registerServer');
+    Route::get('pusat/serial', 'PusatController@serial');
 
-Route::post('/v2/login', 'Auth\LoginController@login');
-Route::get('/v2/logout', 'Auth\LoginController@logout')->middleware('auth:api');
+});
+Route::get('v2/logout', 'Auth\LoginController@logout')->middleware('auth:api');
+
+
 Route::group(['middleware' => 'auth:api', 'namespace' => 'Api'], function() {
 
     Route::group(['namespace' => 'v2', 'prefix' => 'v2'], function() {
@@ -36,33 +39,36 @@ Route::group(['middleware' => 'auth:api', 'namespace' => 'Api'], function() {
         Route::get('ujian/get-peserta', 'UjianController@pesertaAll');
         Route::post('peserta/reset', 'UjianController@resetPeserta');
 
-        Route::get('/ujian/aktif', 'UjianController@ujianAktif');
-        Route::post('/ujian/kelompok', 'UjianController@kelompok');
-        Route::post('/ujian/ubah-test', 'UjianController@ubahTest');
-        Route::post('/ujian/rilis-token', 'UjianController@rilisToken');
-        Route::post('/ujian/simpan-status', 'UjianController@simpanStatus');
-        Route::post('/ujian/selesai', 'UjianController@forceClose');
-        Route::post('/ujian/reset', 'UjianController@resetUjianPeserta');
-        Route::get('/ujian/sesi', 'UjianController@getAllSesi');
+        Route::get('ujian/aktif', 'UjianController@ujianAktif');
+        Route::post('ujian/kelompok', 'UjianController@kelompok');
+        Route::post('ujian/ubah-test', 'UjianController@ubahTest');
+        Route::post('ujian/rilis-token', 'UjianController@rilisToken');
+        Route::post('ujian/simpan-status', 'UjianController@simpanStatus');
+        Route::post('ujian/selesai', 'UjianController@forceClose');
+        Route::post('ujian/reset', 'UjianController@resetUjianPeserta');
+        Route::get('ujian/sesi', 'UjianController@getAllSesi');
 
-        Route::get('/sinkron-teeer', 'PusatController@sinkron_syc');
+        Route::get('sinkron-teeer', 'PusatController@sinkron_syc');
+        
+        Route::post('pusat/sinkron', 'PusatController@sinkron');
+        Route::post('pusat/ftp', 'PusatController@downloadFile');
+        Route::get('pusat/check-data', 'PusatController@checkData');
     });
 });
 
-Route::post('v2/pusat/sinkron', 'Api\v2\PusatController@sinkron');
-Route::post('v2/pusat/ftp', 'Api\v2\PusatController@downloadFile');
-Route::get('v2/pusat/check-data', 'Api\v2\PusatController@checkData');
 
-Route::get('v2/pusat/serial', 'Api\v2\PusatController@serial');
-
-
-// Peserta
+/*
+|--------------------------------------------------------------------------
+| API Routes Fo peserta
+|--------------------------------------------------------------------------
+|
+*/
 Route::post('/v2/logedin','Auth\PesertaLoginController@login');
+Route::get('/v2/peserta-authenticated', 'Auth\PesertaLoginController@authenticated')->middleware('peserta');
 
-Route::group(['middlewarde' => 'peserta', 'prefix' => 'v2'], function() {
-    Route::post('/logout','Auth\PesertaLoginController@logout');
-
-    Route::get('/jadwal/getday', 'Api\JadwalController@getday');
+Route::group(['middleware' => 'peserta', 'prefix' => 'v2'], function() {
+    Route::get('/peserta/logout','Auth\PesertaLoginController@logout');
+    
     Route::get('/jadwal/aktif', 'Api\UjianController@getUjianAktif');
 
     Route::get('/ujian/{id}','Api\UjianController@getsoal');

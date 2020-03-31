@@ -182,9 +182,9 @@ const actions = {
 			})
 		})
 	},
-	pesertaMulai({ commit, state }, payload) {
+	pesertaMulai({ commit, state }) {
 		return new Promise(( resolve, reject) => {
-			$axios.post(`/ujian/mulai-peserta`, payload) 
+			$axios.post(`/ujian/mulai-peserta`) 
 			.then((response) => {
 				resolve(response.data)
 			})

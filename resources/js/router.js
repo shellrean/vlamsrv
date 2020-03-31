@@ -2,9 +2,6 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import store from './store.js'
 
-const Login = () => import('./pages/Login.vue')
-const Home = () => import('./pages/Home.vue')
-
 const LoginUjian = () => import('./pages/siswa/LoginUjian.vue')
 const IndexUjian = () => import('./pages/siswa/Index.vue')
 const UjianKonfirm = () => import('./pages/siswa/UjianKonfirm.vue')
@@ -38,7 +35,7 @@ const router = new Router({
 					component: UjianPrepare
 				},
 				{
-					path: 'while/:banksoal/:jadwal_id',
+					path: 'extraordinary',
 					name: 'ujian.while',
 					component: Kerjakan
 				},

@@ -32,7 +32,7 @@
 								</div>
 								<div class="form-group" v-if="jadwal && ujian && ujian.status_ujian != '1'">
 									<button type="submit" class="btn btn-info w-100 btn-form-ajax" :disabled="isLoading">
-										<b-spinner small type="grow" v-show="isLoading"></b-spinner>Mulai
+										Mulai
 									</button>
 								</div>
 							</form>
@@ -44,14 +44,9 @@
 	</div>
 </template> 
 <script>
-	import Loading from 'vue-loading-overlay';
-	import 'vue-loading-overlay/dist/vue-loading.css';
 	import { mapActions, mapState,mapGetters, mapMutations } from 'vuex'
 	export default {
 		name: 'KonfirmUjian',
-		components: {
-			Loading
-		},
 	    data() {
 	      return {
 	        token_ujian : '',
@@ -61,7 +56,7 @@
 	    computed: {
 	    	...mapGetters(['isAuth','isLoading']),
 	    	...mapState('siswa_jadwal', {
-	    		jadwal: state => state.banksoalAktif.data
+	    		jadwal: state => state.banksoalAktif
 	    	}),
 	    	...mapState('siswa_user', {
 		        peserta: state => state.pesertaDetail
@@ -78,17 +73,10 @@
 	      		token: this.token_ujian
 	      	})
 	      	.then(() => {
-	      		this.$router.push({ name: 'ujian.prepare' })
+	      		this.$router.replace({ name: 'ujian.prepare' })
 	      	})
 	      	.catch(() => {
 	      		
-	      	})
-	      },
-	      dataUjianPeserta() {
-	      	this.getPesertaDataUjian({
-	      		jadwal_id 	:this.jadwal.jadwal.id,
-	      		peserta_id 	: this.peserta.id,
-	   			lama		: this.jadwal.jadwal.lama
 	      	})
 	      }
 	    }
