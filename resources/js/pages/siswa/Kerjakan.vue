@@ -43,8 +43,8 @@
 				    			<td :style="'font-size:'+range+'px !important'" v-html="jawab.text_jawaban"></td>
 				    		</tr>
 				    		<tr v-if="filleds[questionIndex].soal.tipe_soal == 2">
-				    			<td>
-				    				<textarea class="form-control" placeholder="Tulis jawaban disini..." v-model="filleds[questionIndex].esay" @input="onInput($event.target.value)" style="height: 150px"></textarea>
+				    			<td height="auto">
+				    				<textarea class="form-control" placeholder="Tulis jawaban disini..." rows="8" v-model="filleds[questionIndex].esay" @input="onInput($event.target.value)" style="height: 150px"></textarea>
 				    			</td>
 				    		</tr>
 				    	</table>

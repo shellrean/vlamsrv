@@ -936,7 +936,7 @@ var render = function() {
                         _vm._v(" "),
                         _vm.filleds[_vm.questionIndex].soal.tipe_soal == 2
                           ? _c("tr", [
-                              _c("td", [
+                              _c("td", { attrs: { height: "auto" } }, [
                                 _c("textarea", {
                                   directives: [
                                     {
@@ -950,7 +950,8 @@ var render = function() {
                                   staticClass: "form-control",
                                   staticStyle: { height: "150px" },
                                   attrs: {
-                                    placeholder: "Tulis jawaban disini..."
+                                    placeholder: "Tulis jawaban disini...",
+                                    rows: "8"
                                   },
                                   domProps: {
                                     value: _vm.filleds[_vm.questionIndex].esay

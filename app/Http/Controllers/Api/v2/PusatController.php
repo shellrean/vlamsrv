@@ -79,7 +79,7 @@ class PusatController extends Controller
           }
         }
         else {
-		  DB::table('files')->delete();
+		      DB::table('files')->delete();
           DB::table('files')->insert($request->all()['files']);
           foreach($request->all()['files'] as $file) {
             $exists = Storage::disk('ftp')->get($file['dirname']."/".$file['filename']);
@@ -120,8 +120,8 @@ class PusatController extends Controller
   		curl_setopt($ch, CURLOPT_POSTFIELDS,
   		"server_name=$server->kode_server&serial_number=$server->serial_number");
   		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+  		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+  		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
 
   		$server_output = curl_exec($ch);
   		if(!$server_output) {
