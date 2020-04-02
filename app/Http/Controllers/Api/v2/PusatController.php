@@ -284,17 +284,19 @@ class PusatController extends Controller
         curl_setopt($ch, CURLOPT_POST, 1);
 	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 	curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-        curl_setopt($ch, CURLOPT_POSTFIELDS,
-                    "server_name=$identify->kode_server&datad=$datas");
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, ['datad' => $datas, 'server_name' => $identify->kode_server]);
 
         $server_output = curl_exec($ch);
         $deco = json_decode( $server_output, true );
-	$header = curl_getinfo($ch);
-
+	     $header = curl_getinfo($ch);
         curl_close ($ch);
         
         if(!$deco) {
+          return response()->json(['status' => 'error'],500);
+        }
+
+        if(!isset($deco['data'])) {
           return response()->json(['status' => 'error'],500);
         }
 
