@@ -219,6 +219,8 @@ class UjianController extends Controller
             'status_token' => 0
         ]);
 
+        Peserta::where('api_token','!=','')->update(['api_token' => '']);
+
         return response()->json(['status' => 'OK']);
     }
 
