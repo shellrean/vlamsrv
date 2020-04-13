@@ -20,4 +20,9 @@ class Soal extends Model
     {
     	return $this->hasMany('App\JawabanSoal', 'soal_id','id');
     }
+
+    public function getPertanyaanAttribute($value)
+    {
+    	return str_replace('https://siwalidi.info', 'http://'.$_SERVER['SERVER_ADDR'], $value);
+    }
 }
