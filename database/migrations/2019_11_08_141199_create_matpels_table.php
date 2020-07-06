@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateIdentifyServerTable extends Migration
+class CreateMatpelsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,12 @@ class CreateIdentifyServerTable extends Migration
      */
     public function up()
     {
-        Schema::create('identify_server', function (Blueprint $table) {
+        Schema::create('matpels', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('kode_server');
-            $table->char('isregister');
-            $table->string('serial_number');
+            $table->string('kode_mapel',100);
+            $table->string('agama_id');
+            $table->string('jurusan_id');
+            $table->string('nama');
             $table->timestamps();
         });
     }
@@ -29,6 +30,6 @@ class CreateIdentifyServerTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('identify_server');
+        Schema::dropIfExists('matpels');
     }
 }

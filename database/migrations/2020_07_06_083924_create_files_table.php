@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSoalsTable extends Migration
+class CreateFilesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,14 @@ class CreateSoalsTable extends Migration
      */
     public function up()
     {
-        Schema::create('soals', function (Blueprint $table) {
+        Schema::create('files', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('banksoal_id');
-            $table->integer('tipe_soal');
-            $table->foreign('banksoal_id')->references('id')->on('banksoals')->onDelete('cascade');
-            $table->text('pertanyaan');
-            $table->timestamps();
+            $table->bigInteger('directory_id');
+            $table->string('dirname');
+            $table->string('filename');
+            $table->string('path');
+            $table->string('exstension');
+            $table->string('size');
         });
     }
 
@@ -30,6 +31,6 @@ class CreateSoalsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('soals');
+        Schema::dropIfExists('files');
     }
 }

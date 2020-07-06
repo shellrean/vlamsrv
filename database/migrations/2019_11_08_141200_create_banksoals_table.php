@@ -15,14 +15,12 @@ class CreateBanksoalsTable extends Migration
     {
         Schema::create('banksoals', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('server_name');
             $table->string('kode_banksoal',50);
             $table->integer('jumlah_soal');
             $table->integer('jumlah_pilihan');
-            $table->unsignedBigInteger('matpel_id');
-            $table->integer('author');
-            $table->foreign('matpel_id')->references('id')->on('matpels')->onDelete('cascade');
-            $table->timestamps();
+            $table->bigInteger('matpel_id');
+            $table->bigInteger('jumlah_soal_esay');
+            $table->bigInteger('directory_id');
         });
     }
 
