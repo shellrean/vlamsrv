@@ -10,7 +10,7 @@
 | 
 */
 
-Route::post('login', 'Auth\LoginController@login');
+Route::post('/v2/login', 'Auth\LoginController@login');
 Route::group(['prefix' => 'v2', 'namespace' => 'Api\v2'], function() {
     
     Route::post('pusat/status', 'PusatController@status');
