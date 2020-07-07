@@ -66,8 +66,8 @@ return [
         'ftp' => [
             'driver' => 'ftp',
             'host' => env('SERVER_FTP'),
-			'username' => 'client',
-			'password'	=> 'Wad00G4n'
+			'username' => env('SERVER_USER'),
+			'password'	=> env('SERVER_PASSWORD')
         ]
     ]
 
