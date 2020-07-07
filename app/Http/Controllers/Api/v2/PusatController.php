@@ -150,21 +150,31 @@ class PusatController extends Controller
      */
     public function serial() 
     {
-    	ob_start();  
+        $dev = DB::table('unique')->first();
+        if(!$dev) {
+            $num = strtoupper(md5(uniqid(rand(), true)));
+            DB::table('unique')->insert(
+                ['uuid_dev' => $num]
+            );
+            $inden = $num;
+        } else {
+            $inden = $dev->uuid_dev;
+        }
+    // 	ob_start();  
 
-		  system('ipconfig /all');  
+		  // system('ipconfig /all');  
 		
-		  $mycom=ob_get_contents();  
-		  ob_clean();  
+		  // $mycom=ob_get_contents();  
+		  // ob_clean();  
 		 
-		  $findme = "Physical";  
-		  $pmac = strpos($mycom, $findme);  
+		  // $findme = "Physical";  
+		  // $pmac = strpos($mycom, $findme);  
 		
-		  $mac=substr($mycom,($pmac+36),17);  
+		  // $mac=substr($mycom,($pmac+36),17);  
 	  
-		  $list = strtoupper(md5($mac));
+		  // $list = strtoupper(md5($mac));
 
-		  return response()->json(['data' => $list]);  
+		  return response()->json(['data' => $inden]);  
     }
 
     /**
@@ -241,7 +251,14 @@ class PusatController extends Controller
   		IdentifyServer::create([
   			'serial_number'		=> $serial_number,
   			'kode_server'		  => $kode_server,
-  			'isregister'		  => 1
+  			'isregister'		  => 1,
+            'peserta'=> 0,
+            'matpel' => 0,
+            'banksoal' => 0,
+            'soal' => 0,
+            'pilihan_soal' => 0,
+            'gambar' => 0,
+            'jadwal' => 0
   		]);
 
   		User::create([
