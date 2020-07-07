@@ -28,7 +28,7 @@
 						<table class="table table-borderless table-sm">
 				    		<tr v-if="audio != ''">
 				    			<td colspan="2">
-				    				<audio-player v-if="listening" :file="'http://192.168.0.200/storage/audio/'+audio"></audio-player>
+				    				<audio-player v-if="listening" :file="'/storage/audio/'+audio"></audio-player>
 				    			</td>
 				    		</tr>
 				    		<tr>
@@ -340,7 +340,7 @@ export default {
 			}
 
 			if(this.filleds[this.questionIndex].soal.direction != null) {
-				this.direction = new Audio('http://192.168.0.200/storage/audio/'+this.filleds[this.questionIndex].soal.direction)
+				this.direction = new Audio('/storage/audio/'+this.filleds[this.questionIndex].soal.direction)
 			} else {
 				if(this.direction != '') {
 					this.direction.pause()
