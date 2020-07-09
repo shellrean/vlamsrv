@@ -23,6 +23,6 @@ class Soal extends Model
 
     public function getPertanyaanAttribute($value)
     {
-    	return str_replace('https://siwalidi.info', 'http://'.$_SERVER['SERVER_ADDR'], $value);
+    	return str_replace(env('SERVER_CENTER'), '', $value);
     }
 }
