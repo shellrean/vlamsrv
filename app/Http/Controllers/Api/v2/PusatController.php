@@ -79,14 +79,19 @@ class PusatController extends Controller
           }
         }
         else {
-		      DB::table('files')->delete();
+		  DB::table('files')->delete();
           DB::table('files')->insert($request->all()['files']);
           foreach($request->all()['files'] as $file) {
             $exists = Storage::disk('ftp')->get($file['dirname']."/".$file['filename']);
             Storage::disk('public')->put($file['dirname']."/".$file['filename'], $exists);
-            $server->gambar = 1;
-            $server->save();
           }
+          $audios = Storage::disk('ftp')->allFiles('audio');
+          foreach ($audios as $audio) {
+            $data = Storage::disk('ftp')->get($audio);
+            Storage::disk('public')->put($audio, $data);
+          }
+          $server->gambar = 1;
+          $server->save();
         }
 
         return response()->json(['status' => 'OK']);
